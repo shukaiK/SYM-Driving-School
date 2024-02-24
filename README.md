@@ -1,7 +1,7 @@
 # Focus Driving School
 **Group Abilities**
   
-  Our group’s abilities range from previous experience with basic web development to no experience with web development, and at most minimal experience with APIs. Because of this, we are all willing and eager to learn the skills necessary to complete the project.
+&ensp Our group’s abilities range from previous experience with basic web development to no experience with web development, and at most minimal experience with APIs. Because of this, we are all willing and eager to learn the skills necessary to complete the project.
 
 **Solving the Problem**
   
