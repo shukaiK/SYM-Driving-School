@@ -10,7 +10,7 @@ public class Users {
     private int uid;
     private String name;
     private String password;
-    private int role;
+    private String role;
 
     // public Users(String name, String password, int role) {
     // this.name = name;
@@ -34,11 +34,11 @@ public class Users {
         this.password = password;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
