@@ -13,9 +13,9 @@ public class Users {
     private int role;
 
     // public Users(String name, String password, int role) {
-    //     this.name = name;
-    //     this.password = password;
-    //     this.role = role;
+    // this.name = name;
+    // this.password = password;
+    // this.role = role;
     // }
 
     public String getName() {
@@ -34,11 +34,11 @@ public class Users {
         this.password = password;
     }
 
-    public int getrole() {
+    public int getRole() {
         return role;
     }
 
-    public void setrole(int role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
