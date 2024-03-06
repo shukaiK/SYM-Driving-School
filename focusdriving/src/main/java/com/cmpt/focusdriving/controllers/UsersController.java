@@ -27,47 +27,46 @@ public class UsersController {
 
     @GetMapping("/users/all")
     public String getAllUsers(Model model) {
-    System.out.println("Hello from all users");
-    List<Users> users = usersRepository.findAll(); // db
-    model.addAttribute("users", users);
-    return "users/all";
+        System.out.println("Hello from all users");
+        List<Users> users = usersRepository.findAll(); // db
+        model.addAttribute("users", users);
+        return "users/all";
     }
 
-    @GetMapping("/login")
-    public String getLogin(Model model, HttpServletRequest request, HttpSession
-    session){
-    Users user = (Users) session.getAttribute("session_user");
-    if (user == null){
-    return "users/login";
-    }
-    else {
-    model.addAttribute("user",user);
-    return "users/protected";
-    }
-    }
+    // @GetMapping("/login")
+    // public String getLogin(Model model, HttpServletRequest request, HttpSession
+    // session) {
+    // Users user = (Users) session.getAttribute("session_user");
+    // if (user == null) {
+    // return "users/login";
+    // } else {
+    // model.addAttribute("user", user);
+    // return "/home.html";
+    // // return "users/protected";
+    // }
+    // }
 
     @PostMapping("/login")
-    public String login(@RequestParam Map<String,String> formData, Model model,
-    HttpServletRequest request, HttpSession session){
-    // processing login
-    String name = formData.get("name");
-    String pwd = formData.get("password");
-    List<Users> userlist = usersRepository.findByNameAndPassword(name, pwd);
-    if (userlist.isEmpty()){
-    return "users/login";
-    }
-    else {
-    // success
-    Users user = userlist.get(0);
-    request.getSession().setAttribute("session_user", user);
-    model.addAttribute("user", user);
-    return "users/protected";
-    }
+    public String login(@RequestParam Map<String, String> formData, Model model,
+            HttpServletRequest request, HttpSession session) {
+        // processing login
+        String name = formData.get("name");
+        String pwd = formData.get("password");
+        List<Users> userlist = usersRepository.findByNameAndPassword(name, pwd);
+        if (userlist.isEmpty()) {
+            return "users/login";
+        } else {
+            // success
+            Users user = userlist.get(0);
+            // request.getSession().setAttribute("session_user", user);
+            model.addAttribute("user", user);
+            return "users/dashboard";
+        }
     }
 
     @GetMapping("/logout")
-    public String destroySession(HttpServletRequest request){
-    request.getSession().invalidate();
-    return "/users/login";
+    public String destroySession(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "/users/login";
     }
 }
