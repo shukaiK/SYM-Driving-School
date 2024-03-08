@@ -33,7 +33,7 @@ public class UsersController {
         return "users/all";
     }
 
-    @GetMapping("/login")
+    @GetMapping("users/login")
     public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
         Users user = (Users) session.getAttribute("session_user");
         if (user == null) {
@@ -44,7 +44,7 @@ public class UsersController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("users/login")
     public String login(@RequestParam Map<String, String> formData, Model model,
             HttpServletRequest request, HttpSession session) {
         // processing login
@@ -62,7 +62,7 @@ public class UsersController {
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("users/logout")
     public String destroySession(HttpServletRequest request) {
         request.getSession().invalidate();
         return "/users/login";
