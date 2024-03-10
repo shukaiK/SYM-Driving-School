@@ -33,18 +33,16 @@ public class UsersController {
         return "users/all";
     }
 
-    // @GetMapping("/login")
-    // public String getLogin(Model model, HttpServletRequest request, HttpSession
-    // session) {
-    // Users user = (Users) session.getAttribute("session_user");
-    // if (user == null) {
-    // return "users/login";
-    // } else {
-    // model.addAttribute("user", user);
-    // return "/home.html";
-    // // return "users/protected";
-    // }
-    // }
+    @GetMapping("/login")
+    public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
+        Users user = (Users) session.getAttribute("session_user");
+        if (user == null) {
+            return "users/login";
+        } else {
+            model.addAttribute("user", user);
+            return "users/dashboard";
+        }
+    }
 
     @PostMapping("/login")
     public String login(@RequestParam Map<String, String> formData, Model model,
@@ -58,7 +56,7 @@ public class UsersController {
         } else {
             // success
             Users user = userlist.get(0);
-            // request.getSession().setAttribute("session_user", user);
+            request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             return "users/dashboard";
         }

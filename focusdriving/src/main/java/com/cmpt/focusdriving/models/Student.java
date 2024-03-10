@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
-public class Students {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sid;
@@ -12,14 +12,13 @@ public class Students {
     private String email;
     private String phoneNumber;
     private String requestMessage;
+    //location input?
+    //any other info?
     
-
-    
-    public Students() {
+    public Student() {
     }
 
-    public Students(int sid, String name, String email, String phoneNumber, String requestMessage) {
-        this.sid = sid;
+    public Student(String name, String email, String phoneNumber, String requestMessage) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
