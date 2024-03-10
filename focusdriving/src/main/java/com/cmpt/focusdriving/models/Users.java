@@ -1,22 +1,18 @@
 package com.cmpt.focusdriving.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
     private String name;
     private String password;
     private String role;
-
-    // public Users(String name, String password, int role) {
-    // this.name = name;
-    // this.password = password;
-    // this.role = role;
-    // }
 
     public String getName() {
         return name;
