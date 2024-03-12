@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Login Page</title>
+    <title>Sign Up</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,21 +16,27 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <h1 class="text-center mt-5 mb-4">Login</h1>
-                <form method="post" action="/login">
+                <h1 class="text-center mt-5 mb-4">Sign Up</h1>
+                <form method="post" action="../user/signup">
 
                     <div class="mb-3">
-
                         <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="Name"
                             required>
                     </div>
-                    <div class="mb-3">
 
-                        <input type="password" id="password" name="password" class="form-control form-control-lg"
+                    <div class="mb-3">
+                        <input type="text" id="password" name="password" class="form-control form-control-lg"
                             placeholder="Password" required>
                     </div>
-                    <!-- Submit button -->
 
+                    <div class="mb-3">
+                        <select class="form-select form-select-lg" aria-label=".form-select-lg" id="role" name="role">
+                            <option name="instructor" value="instructor">Instructor</option>
+                            <option name="admin" value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit button -->
                     <div class="d-grid gap-2">
                         <input class="btn btn-primary" type="submit" value="Sign in"></input>
                     </div>
