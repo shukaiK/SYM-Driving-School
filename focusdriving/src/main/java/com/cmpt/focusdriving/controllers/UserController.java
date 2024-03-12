@@ -51,7 +51,7 @@ public class UserController {
     public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
         User user = (User) session.getAttribute("session_user");
         if (user == null) {
-            return "users/login";
+            return "user/login";
         } else {
             model.addAttribute("user", user);
             if (user.getRole() == "admin") {

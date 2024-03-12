@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FocusdrivingApplication<focusdriving>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.cmpt.focusdriving.FocusdrivingApplication",
+            "projectName": "focusdriving",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
