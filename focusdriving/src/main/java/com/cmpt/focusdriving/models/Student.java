@@ -12,17 +12,47 @@ public class Student {
     private String email;
     private String phoneNumber;
     private String requestMessage;
+    private String time;
+    private String date;
+
     //location input?
     //any other info?
     
     public Student() {
     }
 
-    public Student(String name, String email, String phoneNumber, String requestMessage) {
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getData() {
+        return date;
+    }
+
+    public void setData(String data) {
+        this.date = data;
+    }
+
+
+    public Student(String name, String email, String phoneNumber, String requestMessage, String time) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.requestMessage=requestMessage;
+        this.requestMessage = requestMessage;
+        this.time = time;
+    }
+
+    public Student(String name, String email, String phoneNumber, String requestMessage, String time, String date) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.requestMessage = requestMessage;
+        this.time = time;
+        this.date = date;
     }
 
     public int getSid() {

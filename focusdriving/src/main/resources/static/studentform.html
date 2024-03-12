@@ -10,17 +10,26 @@
     <form class="m-auto mt-5 w-50"  action="/userrequest" method="post">
         <div class="mb-3">
             <label for="exampleFormControlSubject" class="form-label">Name and Last Name</label>
-             <input type="text" name="subject" class="form-control" id="subject">
+             <input type="text" name="name" class="form-control" id="name" >
         </div>
     <div class="mv-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email" name="email"/>
     </div>
-   
+    <div class="mv-3">
+        <label for="exampleInputEmail1" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" name="phone"/>
+    </div>
+    <div class="mv-3">
+        <label for="exampleInputEmail1" class="form-label">Date and Time</label>
+        <input type="datetime-local" class="form-control" id="time" name="time"/>
+    </div>
+  
+ 
    
     <div class="mv-3">
     <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-    <textarea class="form-control" id="message" name="message"  rows="3"></textarea>
+    <textarea class="form-control" id="message" name="message"  rows="3" value="Default Value"></textarea>
         
     </div>
     <input type="submit" class="btn btn-primary" value="SEND">
