@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class Users implements Serializable {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
@@ -14,7 +14,7 @@ public class Users implements Serializable {
     private String password;
     private String role;
 
-    public Users(String name, String password, String role) {
+    public User(String name, String password, String role) {
     this.name = name;
     this.password = password;
     this.role = role;

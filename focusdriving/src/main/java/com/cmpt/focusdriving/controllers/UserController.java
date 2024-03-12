@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.cmpt.focusdriving.models.Student;
 import com.cmpt.focusdriving.models.UserRepository;
-import com.cmpt.focusdriving.models.Users;
+import com.cmpt.focusdriving.models.User;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,74 +21,74 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class UsersController {
+public class UserController {
 
     @Autowired
-    private UserRepository usersRepository;
+    private UserRepository userRepository;
 
-    @GetMapping("/users/all")
+    @GetMapping("/user/all")
     public String getAllUsers(Model model) {
         System.out.println("Hello from all users");
-        List<Users> users = usersRepository.findAll(); // db
+        List<User> users = userRepository.findAll(); // db
         model.addAttribute("users", users);
-        return "users/all";
+        return "user/all";
     }
 
-    @PostMapping("/users/signup")
+    @PostMapping("/user/signup")
     public String addUser(@RequestParam Map<String, String> newuser,
             HttpServletResponse response) {
         System.out.println("ADD student");
         String newName = newuser.get("name");
         String newPwd = newuser.get("password");
         String newRole = newuser.get("role");
-        Users user =new Users(newName, newPwd, newRole);
-        usersRepository.save(user);
+        User user =new User(newName, newPwd, newRole);
+        userRepository.save(user);
         response.setStatus(201);
-        return "users/login";
+        return "user/login";
     }
 
-    @GetMapping("/login")
+    @GetMapping("user/login")
     public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
-        Users user = (Users) session.getAttribute("session_user");
+        User user = (User) session.getAttribute("session_user");
         if (user == null) {
             return "users/login";
         } else {
             model.addAttribute("user", user);
             if (user.getRole() == "admin") {
-                return "users/ownerdashboard";
+                return "user/ownerdashboard";
             } else {
-                return "users/dashboard";
+                return "user/dashboard";
 
             }
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("user/login")
     public String login(@RequestParam Map<String, String> formData, Model model,
             HttpServletRequest request, HttpSession session) {
         // processing login
         String name = formData.get("name");
         String pwd = formData.get("password");
-        List<Users> userlist = usersRepository.findByNameAndPassword(name, pwd);
+        List<User> userlist = userRepository.findByNameAndPassword(name, pwd);
         if (userlist.isEmpty()) {
-            return "users/login";
+            return "user/login";
         } else {
             // success
-            Users user = userlist.get(0);
+            User user = userlist.get(0);
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             if ((user.getRole()).equals("admin")) {
-                return "users/ownerdashboard";
+                return "user/ownerdashboard";
             } else {
-                return "users/dashboard";
+                return "user/dashboard";
             }
             // return "users/dashboard";
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/user/logout")
     public String destroySession(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "/users/login";
+        return "/user/login";
     }
 }
