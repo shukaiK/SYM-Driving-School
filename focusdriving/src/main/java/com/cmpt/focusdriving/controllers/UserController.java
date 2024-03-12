@@ -63,7 +63,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("user/login")
+    @PostMapping("/login")
     public String login(@RequestParam Map<String, String> formData, Model model,
             HttpServletRequest request, HttpSession session) {
         // processing login
