@@ -41,13 +41,13 @@ public class UserController {
         String newName = newuser.get("name");
         String newPwd = newuser.get("password");
         String newRole = newuser.get("role");
-        User user =new User(newName, newPwd, newRole);
+        User user = new User(newName, newPwd, newRole);
         userRepository.save(user);
         response.setStatus(201);
         return "user/login";
     }
 
-    @GetMapping("user/login")
+    @GetMapping("/login")
     public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
         User user = (User) session.getAttribute("session_user");
         if (user == null) {
