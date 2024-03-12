@@ -6,11 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.cmpt.focusdriving.models.Student;
 import com.cmpt.focusdriving.models.UserRepository;
 import com.cmpt.focusdriving.models.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
@@ -33,6 +34,18 @@ public class UsersController {
         return "users/all";
     }
 
+    @PostMapping("/users/signup")
+    public String addUser(@RequestParam Map<String, String> newuser,
+            HttpServletResponse response) {
+        System.out.println("ADD student");
+        String newName = newuser.get("name");
+        String newPwd = newuser.get("password");
+        String newRole = newuser.get("role");
+        UserRepository.save(new Users(newName, newPwd, newRole));
+        response.setStatus(201);
+        return "users/login";
+    }
+
     @GetMapping("/login")
     public String getLogin(Model model, HttpServletRequest request, HttpSession session) {
         Users user = (Users) session.getAttribute("session_user");
@@ -40,7 +53,12 @@ public class UsersController {
             return "users/login";
         } else {
             model.addAttribute("user", user);
-            return "users/dashboard";
+            if (user.getRole() == "admin") {
+                return "users/ownerdashboard";
+            } else {
+                return "users/dashboard";
+
+            }
         }
     }
 
@@ -58,7 +76,12 @@ public class UsersController {
             Users user = userlist.get(0);
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
-            return "users/dashboard";
+            if ((user.getRole()).equals("admin")) {
+                return "users/ownerdashboard";
+            } else {
+                return "users/dashboard";
+            }
+            // return "users/dashboard";
         }
     }
 
