@@ -41,7 +41,8 @@ public class UsersController {
         String newName = newuser.get("name");
         String newPwd = newuser.get("password");
         String newRole = newuser.get("role");
-        UserRepository.save(new Users(newName, newPwd, newRole));
+        Users user =new Users(newName, newPwd, newRole);
+        usersRepository.save(user);
         response.setStatus(201);
         return "users/login";
     }
