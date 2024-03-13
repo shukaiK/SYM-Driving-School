@@ -92,6 +92,6 @@ public String logout(HttpServletRequest request) {
     if (session != null && session.getAttribute("session_user") != null) {
         session.removeAttribute("session_user"); // Remove only the user attribute
     }
-    return "/user/login"; // Use redirect to avoid direct directory path
+    return "redirect:/login"; // Use redirect to avoid direct directory path
 }
 }
