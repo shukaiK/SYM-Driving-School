@@ -17,6 +17,8 @@ import com.cmpt.focusdriving.models.StudentRepository;
 import com.cmpt.focusdriving.models.email;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -62,4 +64,46 @@ public class StudentController {
       senderService.sendEmail(emailString, "Attention Your request has been sent", "Dear " + nameString + "\n" + "your request has been sent to our invoice and we will respond back shortly");
       return "redirect:/home.html";
    }
+
+   @GetMapping("/requestview")
+   public String showRequests(Model model)
+   {
+        List<Student> user = studentRepo.findAll();
+        model.addAttribute("data", user);
+        return "user/requestAction";
+    
+   }
+
+   @PostMapping("/confirm")
+   public String confrim(@RequestParam Map<String, String> userid, HttpServletResponse response) 
+   {
+        
+    int ID = Integer.parseInt(userid.get("ID"));
+    List<Student> student = studentRepo.findBySid(ID);
+   Student SendEmailConfirmation = student.get(0);
+   String emailString = SendEmailConfirmation.getEmail();
+   String timeString = SendEmailConfirmation.getTime();
+   String nameString = SendEmailConfirmation.getName();
+   senderService.sendEmail(emailString, "Your booking is confirmed", "Dear "+ nameString + "\n\nYour booking has been Confrimed for " + timeString);
+   System.out.println(emailString);
+    return "redirect:/home.html";
+   }
+
+   @PostMapping("/deny")
+   public String deny(@RequestParam Map<String, String> userid, HttpServletResponse response) 
+   {
+        
+    int ID = Integer.parseInt(userid.get("ID"));
+    List<Student> student = studentRepo.findBySid(ID);
+   Student SendEmailConfirmation = student.get(0);
+   String emailString = SendEmailConfirmation.getEmail();
+   String timeString = SendEmailConfirmation.getTime();
+   String nameString = SendEmailConfirmation.getName();
+   senderService.sendEmail(emailString, "Alternate Booking", "Dear "+ nameString + "\n\nYour booking time is full for " + timeString + "\n Here are some alternate booking times");
+   System.out.println(emailString);
+    return "redirect:/home.html";
+   }
+   
+   //@ModelAttribute Student student
+
 }
