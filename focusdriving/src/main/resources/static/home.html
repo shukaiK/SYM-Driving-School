@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Driving School</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    THIS IS THE HOME PAGE <br>
-    <a href="login">login</a> <br>
-    <a href="signup.html">sign up</a> <br>
-    <a href="studentform.html">Make a request</a> <br>
+    <header>
+    <div class="container">
+        <div class="logo">
+            <img src="./images/logo.png" alt="Driving School Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link">Testimonials</a></li>
+                <li><a href="#" class="nav-link">Services</a></li>
+            </ul>
+        </nav>
+        <div class="language buttons">
+            <button class="language-button" id="english">EN</button>
+            <button class="language-button" id="chinese">CN</button>
+        </div>
+        <div class="buttons">
+            <button class="log-in" onclick="window.location.href='/login'">Log In</button>
+            <button class="book-appointment" onclick="window.location.href='/studentform.html'">Book Appointment</button>
+        </div>
+    </div>
+    </header>
+    <div class="title">
+        <h1>Focus Driving School</h1>
+    </div>
+    <div class="subtitle">
+        <h1>Navigate the Road to Success with Our Lessons</h1>
+    </div>
 
+    <div class="main-content">
+        <p class="paragraph">Focus Driving School is where excellence meets experience! With over a decade of dedicated service, we have been shaping safe and confident drivers across British Columbia. Whether you're aiming for a Class 5 or Class 7 license, our experienced instructors are here to guide you through every turn and intersection.</p>
+        <p class="paragraph">Focus Driving School offers the flexibility for students to switch instructors until they find one that perfectly matches their learning style and preferences.</p>
+    </div>
 
+    <footer>
+        <p class="copyright">2024 Driving School. All rights reserved. </p>
+    </footer>
+    </div>
+    
 </body>
-
 </html>

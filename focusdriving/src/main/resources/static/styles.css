@@ -1,0 +1,174 @@
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo img {
+    max-height: 100px;
+    max-width: 200px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 50px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #333;
+    position: relative;
+  }
+
+  .nav-link:hover::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #333;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: auto;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .buttons button {
+    padding: 10px 20px;
+    margin-left: 0px;
+    border: none;
+    cursor: pointer;
+  }
+
+
+  .log-in {
+    background-color: #00050b;
+    color: #fff;
+  }
+  
+  .book-appointment {
+    background-color: #ea1d19;
+    color: #fff;
+  }
+
+  .language-buttons {
+    margin-top: 20px;
+  }
+
+  .language-button {
+    padding: 10px, 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 8px;
+  }
+
+  #english {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  #chinese {
+    background-color: #ec540e;
+    color: #fff;
+  }
+
+  #english:hover, #chinese:hover {
+    opacity: 0.8;
+  }
+
+  .title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .title h1 {
+    font-size: 96px;
+    color: #333;
+  }
+
+  .subtitle {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle h1 {
+    font-size: 48px;
+    color: #333;
+  }
+
+  .paragraph {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+    font-size: 30px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fafafa;
+  }
+
+  .copyright {
+    font-size: 14px;
+    color: #fc0808;
+  }
+  
+  header {
+    height: 20vh;
+  }
+  
+  .main-content {
+    height: calc(100vh - 100px); /* Adjust according to header and footer height */
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+    }
+  
+    nav ul li {
+      display: block;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .language-buttons {
+      margin-top: 20px;
+      order: 1;
+    }
+  }
