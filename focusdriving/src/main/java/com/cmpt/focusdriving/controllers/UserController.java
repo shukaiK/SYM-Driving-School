@@ -82,13 +82,12 @@ public class UserController {
             } else {
                 return "user/dashboard";
             }
-            // return "users/dashboard";
         }
     }
 
     @GetMapping("/user/logout")
     public String destroySession(HttpServletRequest request) {
-        //request.getSession().invalidate();
+        request.getSession().invalidate();
         return "/user/login";
     }
 }
