@@ -87,11 +87,8 @@ public class UserController {
     }
 
     @GetMapping("/user/logout")
-public String destroySession(HttpServletRequest request) {
-    HttpSession session = request.getSession(false); // Get existing session if it exists
-    if (session != null) {
-        session.invalidate();
+    public String destroySession(HttpServletRequest request) {
+        //request.getSession().invalidate();
+        return "/user/login";
     }
-    return "/user/login"; // Redirect to login page
-}
 }
