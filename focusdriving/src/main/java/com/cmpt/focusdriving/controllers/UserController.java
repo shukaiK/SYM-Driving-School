@@ -87,8 +87,11 @@ public class UserController {
     }
 
     @GetMapping("/user/logout")
-    public String destroySession(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "/user/login";
+public String logout(HttpServletRequest request) {
+    HttpSession session = request.getSession(false); // Get session without creating a new one
+    if (session != null && session.getAttribute("session_user") != null) {
+        session.removeAttribute("session_user"); // Remove only the user attribute
     }
+    return "/user/login"; // Use redirect to avoid direct directory path
+}
 }
