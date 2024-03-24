@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
-import com.cmpt.focusdriving.models.UserRepository;
-import com.cmpt.focusdriving.models.User;
+import com.cmpt.focusdriving.models.User.User;
+import com.cmpt.focusdriving.models.User.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,16 +41,26 @@ public class UserController {
 
     // Method to process the form submission
     @PostMapping("/signup")
-    public String processSignup(@ModelAttribute("user") User user) {
-        User newUser = new User();
-        newUser.setName(user.getName());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setRole(user.getRole());
-        // Set any default roles or additional properties as needed
-
-        userRepository.save(newUser);
-        return "redirect:/login"; // Redirect to login page after successful signup
+public String processSignup(@ModelAttribute("user") User user, Model model) {
+    // Check if user already exists
+    Optional<User> existingUser = userRepository.findByName(user.getName());
+    if (existingUser.isPresent()) {
+        // User exists, add an error message to the model
+        model.addAttribute("error", "Username already taken!");
+        model.addAttribute("user", new User()); // Optionally reset the form
+        return "user/signup"; // Return to the signup form
     }
+
+    // No existing user found, proceed to save new user
+    User newUser = new User();
+    newUser.setName(user.getName());
+    newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+    newUser.setRole(user.getRole());
+    // Set any default roles or additional properties as needed
+
+    userRepository.save(newUser);
+    return "redirect:/login"; // Redirect to login page after successful signup
+}
 
     @GetMapping("/login")
     public String showLoginForm(HttpServletRequest request, Model model, @RequestParam Optional<String> error) {
@@ -72,7 +82,7 @@ public class UserController {
         return "user/dashboard"; // Name of the Thymeleaf template without the .html extension
     }
 
-    @GetMapping("/admin/ownerdashboard")
+    @GetMapping("/admin/dashboard")
     public String showOwnerDashboard() {
         return "user/ownerdashboard"; // Name of the Thymeleaf template without the .html extension
     }

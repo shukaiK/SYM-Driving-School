@@ -18,6 +18,9 @@
                 <h1 class="text-center mt-5 mb-4">Sign Up</h1>
                 <!-- Thymeleaf action added, using the object for binding -->
                 <form th:action="@{/signup}" th:object="${user}" method="post">
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        Existing username or invalid password.
+                    </div>
                     <div class="mb-3">
                         <input type="text" th:field="*{name}" class="form-control form-control-lg" placeholder="Name" required>
                     </div>

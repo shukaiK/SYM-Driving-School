@@ -1,4 +1,4 @@
-package com.cmpt.focusdriving.models;
+package com.cmpt.focusdriving.models.Security;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -7,6 +7,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cmpt.focusdriving.models.User.UserRepository;
 
 import java.util.List; // Make sure this is the import statement for List
 

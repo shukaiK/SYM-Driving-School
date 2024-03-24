@@ -1,4 +1,4 @@
-package com.cmpt.focusdriving.models;
+package com.cmpt.focusdriving.models.User;
 
 import java.util.List;
 import java.util.Optional;

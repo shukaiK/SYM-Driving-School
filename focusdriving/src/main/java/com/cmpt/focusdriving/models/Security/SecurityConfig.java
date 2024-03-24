@@ -1,4 +1,4 @@
-package com.cmpt.focusdriving.models;
+package com.cmpt.focusdriving.models.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
