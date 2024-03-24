@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cmpt.focusdriving.models.Student;
-import com.cmpt.focusdriving.models.StudentRepository;
 import com.cmpt.focusdriving.models.email;
+import com.cmpt.focusdriving.models.Student.Student;
+import com.cmpt.focusdriving.models.Student.StudentRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestBody;

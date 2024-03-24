@@ -1,4 +1,4 @@
-package com.cmpt.focusdriving.models;
+package com.cmpt.focusdriving.models.User;
 
 import java.io.Serializable;
 
