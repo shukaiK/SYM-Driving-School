@@ -74,4 +74,9 @@ public class UserController {
     public String showDashboard() {
         return "user/dashboard"; // Name of the Thymeleaf template without the .html extension
     }
+
+    @GetMapping("/ownerdashboard")
+    public String showOwnerDashboard() {
+        return "user/ownerdashboard"; // Name of the Thymeleaf template without the .html extension
+    }
 }

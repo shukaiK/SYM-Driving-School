@@ -8,8 +8,10 @@
         <input type="password" id="password" th:field="*{password}" />
     </div>
     <div>
-        <label for="role">role</label>
-        <input type="role" id="role" th:field="*{role}" />
+        <select class="form-select form-select-lg" aria-label=".form-select-lg" id="role" name="role" th:field="*{role}">
+            <option th:value="USER">Instructor</option>
+            <option th:value="ADMIN">Admin</option>
+        </select>
     </div>
     <div>
         <button type="submit">Sign Up</button>
