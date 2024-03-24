@@ -1,0 +1,17 @@
+<form action="#" th:action="@{/signup}" th:object="${user}" method="post">
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" th:field="*{name}" />
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" th:field="*{password}" />
+    </div>
+    <div>
+        <label for="role">role</label>
+        <input type="role" id="role" th:field="*{role}" />
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
+</form>
