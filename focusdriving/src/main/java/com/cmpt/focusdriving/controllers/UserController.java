@@ -1,7 +1,6 @@
 package com.cmpt.focusdriving.controllers;
 
-import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
@@ -16,8 +15,6 @@ import com.cmpt.focusdriving.models.UserRepository;
 import com.cmpt.focusdriving.models.User;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 
@@ -70,12 +67,12 @@ public class UserController {
         return "user/login"; // name of the Thymeleaf template for the login page
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/user/dashboard")
     public String showDashboard() {
         return "user/dashboard"; // Name of the Thymeleaf template without the .html extension
     }
 
-    @GetMapping("/ownerdashboard")
+    @GetMapping("/admin/ownerdashboard")
     public String showOwnerDashboard() {
         return "user/ownerdashboard"; // Name of the Thymeleaf template without the .html extension
     }

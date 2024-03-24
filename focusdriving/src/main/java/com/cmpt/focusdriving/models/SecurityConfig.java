@@ -20,6 +20,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/user/logout", "/home.html", "/signup", "/studentform.html", "/styles.css", "/javascript/**", "/images/**")
                 .permitAll()
+                .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated())
             .csrf(csrf -> csrf.disable())
             .formLogin(form -> form
@@ -47,12 +49,10 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             var authorities = authentication.getAuthorities();
             if (authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-                response.sendRedirect("/ownerdashboard");
+                response.sendRedirect("/admin/dashboard");
             } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
-                response.sendRedirect("/dashboard");
-            } else {
-                response.sendRedirect("/"); // Default redirection
-            }
+                response.sendRedirect("/user/dashboard");
+            } 
         };
     }
 }

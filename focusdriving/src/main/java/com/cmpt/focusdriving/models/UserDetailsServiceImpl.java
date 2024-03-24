@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.cmpt.focusdriving.models.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List; // Make sure this is the import statement for List
