@@ -62,20 +62,31 @@ public String processSignup(@ModelAttribute("user") User user, Model model) {
     return "redirect:/login"; // Redirect to login page after successful signup
 }
 
-    @GetMapping("/login")
-    public String showLoginForm(HttpServletRequest request, Model model, @RequestParam Optional<String> error) {
-        // You can add any attributes to the model here if needed
-        // For example, to show an error message on login failure
-        error.ifPresent(e -> model.addAttribute("loginError", true));
+@GetMapping("/login")
+public String showLoginForm(HttpServletRequest request, Model model, @RequestParam Optional<String> error) {
+    // You can add any attributes to the model here if needed
+    // For example, to show an error message on login failure
+    error.ifPresent(e -> model.addAttribute("loginError", true));
 
-        // Check if the user is already authenticated, then redirect them away from the login page
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/user/dashboard"; // or wherever you want to redirect authenticated users
+    // Check if the user is already authenticated, then redirect them to the correct dashboard based on their role
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+        // Check roles and redirect accordingly
+        boolean isAdmin = authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        boolean isUser = authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+                            
+        if (isAdmin) {
+            return "redirect:/admin/dashboard";
+        } else if (isUser) {
+            return "redirect:/user/dashboard";
         }
-
-        return "user/login"; // name of the Thymeleaf template for the login page
     }
+
+    return "user/login"; // name of the Thymeleaf template for the login page
+}
+
 
     @GetMapping("/user/dashboard")
     public String showDashboard() {
