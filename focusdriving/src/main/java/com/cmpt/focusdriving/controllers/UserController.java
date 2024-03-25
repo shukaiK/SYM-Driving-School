@@ -87,7 +87,6 @@ public String showLoginForm(HttpServletRequest request, Model model, @RequestPar
     return "user/login"; // name of the Thymeleaf template for the login page
 }
 
-
     @GetMapping("/user/dashboard")
     public String showDashboard() {
         return "user/dashboard"; // Name of the Thymeleaf template without the .html extension
