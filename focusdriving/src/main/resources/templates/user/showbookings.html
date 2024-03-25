@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Booking View</title>
+</head>
+
+<body>
+
+    <!-- add new booking -->
+    <div class="row">
+        Add a new booking
+        <form action="/addbooking" method="post">
+            <label for="sid">Student ID:</label>
+            <input type="text" id="sid" name="sid" required> <br>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required> <br>
+
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required> <br>
+
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required> <br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- display all bookings -->
+    <div class="row">
+        <div class="col-md-4" th:each="booking : ${books}">
+            <div class="mb-4">
+                <div class="p-3 bg-info bg-opacity-10 border border-info rounded">
+                    <span th:text="${booking.startTime}"></span><br>
+                    <span th:text="${booking.endTime}"></span> <br>
+                    <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
+    <form th:action="@{/login}" method="post">
+        <button type="submit" class="btn btn-default">Back to Dashboard</button>
+    </form>
+
+
+</body>
+
+</html>

@@ -3,29 +3,41 @@ package com.cmpt.focusdriving.models.Booking;
 import com.cmpt.focusdriving.models.Student.Student;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "bookings")
-public class Booking implements Serializable {
+public class Booking implements Serializable, Comparable<Booking> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bid;
     private Student student;
-    private String date;
-    private String time;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public Booking() {
     };
 
-    public Booking(Student student, String date, String time) {
+    public Booking(Student student, LocalDateTime startTime, LocalDateTime endTime) {
         this.student = student;
-        this.date = date;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
+
+    @Override
+    public int compareTo(Booking otherBooking) {
+        // compare bookings based on start time
+        return this.startTime.compareTo(otherBooking.startTime);
+    }
+
+    // public Booking(Student student, LocalDateTime startTime, LocalDateTime
+    // endTime) {
+    // this.student = student;
+    // this.startTime = startTime;
+    // this.endTime = endTime;
+    // }
 
     public Student getStudent() {
         return student;
@@ -35,20 +47,20 @@ public class Booking implements Serializable {
         this.student = student;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setData(String date) {
-        this.date = date;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public String getTime() {
-        return time;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public int getBid() {
