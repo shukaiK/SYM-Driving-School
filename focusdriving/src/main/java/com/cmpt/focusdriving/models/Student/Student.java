@@ -1,4 +1,4 @@
-package com.cmpt.focusdriving.models;
+package com.cmpt.focusdriving.models.Student;
 
 import jakarta.persistence.*;
 
