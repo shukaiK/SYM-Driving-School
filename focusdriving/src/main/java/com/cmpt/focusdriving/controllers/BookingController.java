@@ -38,7 +38,7 @@ public class BookingController {
         return "user/showbookings";
     }
 
-    @PostMapping("/users/addbooking")
+    @PostMapping("/user/addbooking")
     public void submitBooking(@RequestParam("sid") int sid,
             @RequestParam("date") LocalDate date,
             @RequestParam("startTime") LocalTime startTime,
