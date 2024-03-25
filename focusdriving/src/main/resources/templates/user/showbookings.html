@@ -3,11 +3,25 @@
 
 <head>
     <title>Booking View</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+
 </head>
 
 <body>
+    <div class="">
+        <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
+        <div class="buttons">
+            <form th:action="@{/login}" method="post">
+                <button type="submit" class="log-in">Back to Dashboard</button>
+            </form>
+        </div>
+        <!-- add new booking -->
+        <div class="subtitle">
+            <h1>Bookings</h1>
+        </div>
 
-    <!-- add new booking -->
+    </div>
+
     <div class="row">
         Add a new booking
         <form action="/user/addbooking" method="post">
@@ -25,10 +39,11 @@
 
             <button type="submit">Submit</button>
         </form>
-    </div>
+    </div> <br>
 
     <!-- display all bookings -->
     <div class="row">
+        Current Bookings
         <div class="col-md-4" th:each="booking : ${books}">
             <div class="mb-4">
                 <div class="p-3 bg-info bg-opacity-10 border border-info rounded">
@@ -40,10 +55,7 @@
         </div>
     </div>
 
-    <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
-    <form th:action="@{/login}" method="post">
-        <button type="submit" class="btn btn-default">Back to Dashboard</button>
-    </form>
+
 
 
 </body>

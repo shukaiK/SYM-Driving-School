@@ -3,24 +3,32 @@
 
 <head>
     <title>USER Dashboard</title>
-    <!-- Include your CSS and other head content here -->
+    <link rel="stylesheet" href="../stylesheets/styles.css">
 </head>
 
 <body>
+    <div class="">
+        <!-- Logout Link -->
+        <div class="buttons d-flex justify-content-end">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="log-in ">Logout</button>
+            </form>
+        </div>
+        <div class="subtitle">
+            <h1>Instructor Dashboard</h1>
+        </div>
+    </div>
 
     <div class="main-content">
         <!-- <div>Click here to see all students:</div> -->
 
-        <div>Click here to view all bookings:</div>
+        <div>Click the button to view all bookings:</div>
         <form th:action="@{/bookingview}" method="get">
             <button type="submit" class="btn btn-default">View Bookings</button>
         </form><br><br>
     </div>
 
-    <!-- Logout Link -->
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="btn btn-default">Logout</button>
-    </form>
+
 
     <!-- Include your scripts here -->
 
