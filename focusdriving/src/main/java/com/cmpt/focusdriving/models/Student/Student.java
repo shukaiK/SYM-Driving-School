@@ -1,13 +1,16 @@
 package com.cmpt.focusdriving.models.Student;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
-public class Student {
+public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sid;
+
     private String name;
     private String email;
     private String phoneNumber;
@@ -15,9 +18,9 @@ public class Student {
     private String time;
     private String date;
 
-    //location input?
-    //any other info?
-    
+    // location input?
+    // any other info?
+
     public Student() {
     }
 
@@ -36,7 +39,6 @@ public class Student {
     public void setData(String data) {
         this.date = data;
     }
-
 
     public Student(String name, String email, String phoneNumber, String requestMessage, String time) {
         this.name = name;
@@ -96,6 +98,3 @@ public class Student {
     }
 
 }
-
-
-    
