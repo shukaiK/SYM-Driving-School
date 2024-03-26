@@ -32,6 +32,7 @@ public class Booking implements Serializable, Comparable<Booking> {
         return this.startTime.compareTo(otherBooking.startTime);
     }
 
+    // constructor
     // public Booking(Student student, LocalDateTime startTime, LocalDateTime
     // endTime) {
     // this.student = student;
