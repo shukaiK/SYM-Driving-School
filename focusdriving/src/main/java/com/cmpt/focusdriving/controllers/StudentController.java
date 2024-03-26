@@ -27,7 +27,7 @@ public class StudentController {
     private email senderService;
 
     // sendinformation to the database
-    @PostMapping("/userForm")
+    @PostMapping("/html/form")
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
         String emailString = (String)user.get("email");
         String nameString = (String)user.get("name");

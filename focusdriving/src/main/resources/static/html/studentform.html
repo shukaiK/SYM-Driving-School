@@ -20,17 +20,19 @@
         .timetable
         {
             width: 70%;
+            margin-left: 15%;
+            border-color: black;
+            border-width: 2px;
         }
 
         
 
         
-
     </style>
 </head>
 <body>
 
-    <form class="m-auto mt-5 w-50"  action="/userForm" method="post">
+    <form class="m-auto mt-5 w-50"  action="/html/form" method="post">
         <div class="mb-3">
             <label for="exampleFormControlSubject" class="form-label">Name and Last Name</label>
              <input type="text" name="name" class="form-control" id="name" placeholder="First Name and Last Name" required>
@@ -53,7 +55,7 @@
     <input type="submit" id="formbutton" style="display: none;">
     </form>
     
-<div class="timetable">
+<div class="timetable" >
 <table class="table" id="scheduleTable" >
     <thead>
         <tr>
@@ -72,7 +74,7 @@
 </table> 
 </div>
 
-    <button id="submitButton" class="btn btn-primary">Submit</button>
+    <button id="submitButton" class="btn btn-primary" style="margin-left: 15%;">Submit</button>
 
 <!-- Add a submit button -->
 
