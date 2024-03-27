@@ -8,15 +8,12 @@
 </head>
 
 <body>
-    <!-- <header> -->
     <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
     <div class="container dashheader">
         <form th:action="@{/login}" method="post">
             <button type="submit" class="dashbutton">Back to Dashboard</button>
         </form>
     </div>
-    <!-- </header> -->
-
 
     <div class="subtitle">
         <h1>Bookings</h1>
@@ -48,8 +45,9 @@
         <div class="col-md-4" th:each="booking : ${books}">
             <div class="mb-4">
                 <div class="p-3 bookingblob">
-                    <span th:text="${booking.startTime}"></span><br>
-                    <span th:text="${booking.endTime}"></span> <br>
+                    Student name: <span th:text="${booking.student.name}"></span> <br>
+                    Start time: <span th:text="${booking.startTime}"></span><br>
+                    End time: <span th:text="${booking.endTime}"></span> <br>
                     <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
                 </div>
             </div>

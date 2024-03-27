@@ -39,7 +39,7 @@ public class BookingController {
     }
 
     @PostMapping("/user/addbooking")
-    public void submitBooking(@RequestParam("sid") String sid,
+    public String submitBooking(@RequestParam("sid") String sid,
             @RequestParam("date") LocalDate date,
             @RequestParam("startTime") LocalTime startTime,
             @RequestParam("endTime") LocalTime endTime) {
@@ -53,6 +53,15 @@ public class BookingController {
 
         // save new booking
         bookingRepo.save(booking);
+        return "user/showbookings";
+    }
+
+    @PostMapping("/user/delete/{bid}")
+    public String deleteBooking(@PathVariable Integer bid,
+            HttpServletResponse response) {
+        Booking booking = (bookingRepo.findByBid(bid)).get(0); //.orElse(null)
+        bookingRepo.delete(booking);
+        return "redirect:/user/showbookings";
     }
 
 }
