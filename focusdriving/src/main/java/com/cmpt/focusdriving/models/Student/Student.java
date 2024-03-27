@@ -11,6 +11,9 @@ public class Student {
     private String name;
     private String email;
     private String phoneNumber;
+    private String licenseNum;
+    private String experience;
+    private String address;
    
     private String Monday;
     private String Tuesday;
@@ -20,6 +23,26 @@ public class Student {
     private String Saturday;
     private String Sunday;
     
+    
+
+
+    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
+            String monday, String tuesday, String wednesday, String thursday, String friday, String saturday,
+            String sunday) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.licenseNum = licenseNum;
+        this.experience = experience;
+        this.address = address;
+        Monday = monday;
+        Tuesday = tuesday;
+        Wednesday = wednesday;
+        Thursday = thursday;
+        Friday = friday;
+        Saturday = saturday;
+        Sunday = sunday;
+    }
 
     public Student(String name, String email, String phoneNumber, String monday,
             String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday) {
@@ -37,6 +60,30 @@ public class Student {
     }
     
     public Student() {
+    }
+
+    public String getLicenseNum() {
+        return licenseNum;
+    }
+
+    public void setLicenseNum(String licenseNum) {
+        this.licenseNum = licenseNum;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getSid() {

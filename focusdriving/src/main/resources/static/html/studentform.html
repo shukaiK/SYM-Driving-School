@@ -1,204 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Form</title>
+    <title>Sign up form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!--leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     <style>
-        .title
-        {
+        .title {
             display: flex;
             justify-content: center;
         }
+
         .checkbox-wrapper {
             border: 1px solid #ccc;
             padding: 5px;
             margin: 5px;
         }
-        .timetable
-        {
-            width: 70%;
-            margin-left: 15%;
+
+        .timetable {
+            width: 50%;
+            margin-left: 25%;
             border-color: black;
             border-width: 2px;
         }
 
-        
-
-        
+        #map {
+            height: 180px;
+        }
     </style>
+
 </head>
+
 <body>
 
-    <form class="m-auto mt-5 w-50"  action="/html/form" method="post">
+    <form class="m-auto mt-5 w-50" action="/html/form" method="post">
+       <!-- name  -->
         <div class="mb-3">
             <label for="exampleFormControlSubject" class="form-label">Name and Last Name</label>
-             <input type="text" name="name" class="form-control" id="name" placeholder="First Name and Last Name" required>
+            <input type="text" name="name" class="form-control" id="name" placeholder="First Name and Last Name"
+                required>
         </div>
-    <div class="mv-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="example@Emailservice.com" required/>
-    </div>
-    <div class="mv-3">
-        <label for="exampleInputEmail1" class="form-label">Phone Number</label>
-        <input type="tel" class="form-control" id="phone" name="phone" placeholder="eg. ###-###-####" required/>
-    </div>
-    <input type="text" name="Monday" id="Monday" class="Monday" style="display: none;">
-    <input type="text" name="Tuesday" id="Tuesday" class="Tuesday" style="display: none;">
-    <input type="text" name="Wednesday" id="Wednesday" class="Wednesday" style="display: none;">
-    <input type="text" name="Thursday" id="Thursday" class="Thursday" style="display: none;">
-    <input type="text" name="Friday" id="Friday" class="Friday" style="display: none;">
-    <input type="text" name="Saturday" id="Saturday" class="Saturday" style="display: none;">
-    <input type="text" name="Sunday" id="Sunday" class="Sunday" style="display: none;">
-    <input type="submit" id="formbutton" style="display: none;">
+        <!-- email  -->
+        <div class="mv-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="example@Emailservice.com"
+                required />
+        </div>
+         <!-- phone number  -->
+        <div class="mv-3">
+            <label for="exampleInputEmail1" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="eg. ###-###-####" required />
+             <!-- license  -->
+            <div class="mv-3">
+                <label for="exampleInputEmail1" class="form-label">License number</label>
+                <input type="number" class="form-control" id="licenseNum" name="licenseNum" required />
+            </div>
+             <!-- Class level  -->
+            <div class="mv-3">
+                <label for="exampleInputEmail1" class="form-label">Driving experience</label>
+                <select class="form-select" id="experience" name="experience" required>
+                    <option value="">Select</option>
+                    <option value="learner">Learner (Getting class 7)</option>
+                    <option value="class7">Class 7 (Getting class 5)</option>
+                </select>
+            </div>
+
+             <!-- Map  -->
+            <br>
+            <p>Your location helps us offer our pick-up service efficiently. If you're close 
+            by, our instructors can pick you up for your lesson. Otherwise, we will arrange a meeting spot.</p>
+            <div id="map"></div>
+            <p>If you would like to change the location that is provided, simply click on a location on the map.
+            If no location has been provided, our instructors will decide on the meeting spot.</p>
+            <br>
+            <input type="hidden" id="address" name="address" value="">  
+            <br>
+        
+            <!-- Dates -->
+        </div>
+        <input type="text" name="Monday" id="Monday" class="Monday" style="display: none;">
+        <input type="text" name="Tuesday" id="Tuesday" class="Tuesday" style="display: none;">
+        <input type="text" name="Wednesday" id="Wednesday" class="Wednesday" style="display: none;">
+        <input type="text" name="Thursday" id="Thursday" class="Thursday" style="display: none;">
+        <input type="text" name="Friday" id="Friday" class="Friday" style="display: none;">
+        <input type="text" name="Saturday" id="Saturday" class="Saturday" style="display: none;">
+        <input type="text" name="Sunday" id="Sunday" class="Sunday" style="display: none;">
+        <input type="submit" id="formbutton" style="display: none;">
     </form>
-    
-<div class="timetable" >
-<table class="table" id="scheduleTable" >
-    <thead>
-        <tr>
-            <th scope="col">Time</th>
-            <th scope="col">Monday</th>
-            <th scope="col">Tuesday</th>
-            <th scope="col">Wednesday</th>
-            <th scope="col">Thursday</th>
-            <th scope="col">Friday</th>
-            <th scope="col">Saturday</th>
-            <th scope="col">Sunday</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody">
-    </tbody>
-</table> 
-</div>
 
-    <button id="submitButton" class="btn btn-primary" style="margin-left: 15%;">Submit</button>
+    <div class="timetable">
+        <table class="table" id="scheduleTable">
+            <thead>
+                <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                    <th scope="col">Sunday</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
 
-<!-- Add a submit button -->
+    <button id="submitButton" class="btn btn-primary" style="margin-left: 25%;">Submit</button>
+
+    <!-- Add a submit button -->
 
 
-<script>
-    // Define the time slots and days of the week
-    var timeSlots = ["8am-9am ", "9am-10am ", "10am-11am ", "11am-12pm ", "12pm-1pm ", "1pm-2pm ","2pm-3pm ","3pm-4pm ","4pm-5pm ","5pm-6pm ","6pm-7pm ","7pm-8pm "];
-    var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    <script>
+        // Define the time slots and days of the week
+        var timeSlots = ["8am-9am ", "9am-10am ", "10am-11am ", "11am-12pm ", "12pm-1pm ", "1pm-2pm ", "2pm-3pm ", "3pm-4pm ", "4pm-5pm ", "5pm-6pm ", "6pm-7pm ", "7pm-8pm "];
+        var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-    // Function to dynamically populate the table
-    function populateTable() {
-        var tableBody = document.getElementById("tableBody");
+        // Function to dynamically populate the table
+        function populateTable() {
+            var tableBody = document.getElementById("tableBody");
 
-        // Loop through each time slot
-        for (var i = 0; i < timeSlots.length; i++) {
-            var row = document.createElement("tr");
+            // Loop through each time slot
+            for (var i = 0; i < timeSlots.length; i++) {
+                var row = document.createElement("tr");
 
-            // Add the time slot in the first column
-            var timeCell = document.createElement("th");
-            timeCell.setAttribute("scope", "row");
-            timeCell.textContent = timeSlots[i];
-            row.appendChild(timeCell);
+                // Add the time slot in the first column
+                var timeCell = document.createElement("th");
+                timeCell.setAttribute("scope", "row");
+                timeCell.textContent = timeSlots[i];
+                row.appendChild(timeCell);
 
-            // Loop through each day of the week to create cells with checkboxes
-            for (var j = 0; j < daysOfWeek.length; j++) {
-                var cell = document.createElement("td");
-                var checkboxWrapper = document.createElement("div");
-                checkboxWrapper.className = "checkbox-wrapper";
-                var checkbox = document.createElement("input");
-                checkbox.setAttribute("type", "checkbox");
-                checkboxWrapper.appendChild(checkbox);
-                cell.appendChild(checkboxWrapper);
-                row.appendChild(cell);
+                // Loop through each day of the week to create cells with checkboxes
+                for (var j = 0; j < daysOfWeek.length; j++) {
+                    var cell = document.createElement("td");
+                    var checkboxWrapper = document.createElement("div");
+                    checkboxWrapper.className = "checkbox-wrapper";
+                    var checkbox = document.createElement("input");
+                    checkbox.setAttribute("type", "checkbox");
+                    checkboxWrapper.appendChild(checkbox);
+                    cell.appendChild(checkboxWrapper);
+                    row.appendChild(cell);
+                }
+
+                // Append the row to the table body
+                tableBody.appendChild(row);
             }
+        }
 
-            // Append the row to the table body
-            tableBody.appendChild(row);
+        // Call the function to populate the table
+        populateTable();
+
+        // Add event listener to the submit button
+        document.getElementById("submitButton").addEventListener("click", function () {
+            // Function to store information of checked checkboxes
+            storeCheckedCheckboxes();
+        });
+
+        // Function to store information of checked checkboxes
+        function storeCheckedCheckboxes() {
+
+            let M = "Monday: ";
+            let T = "Tuesday: ";
+            let W = "Wednesday: ";
+            let Th = "Thursday: "
+            let F = "Friday: "
+            let S = "Saturday: "
+            let Sun = "Sunday: "
+            let x = 0;
+            let time
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+
+                if (x % 7 == 0) {
+                    time = timeSlots[x / 7];
+                }
+
+                if (checkbox.checked) {
+                    // Store information of checked checkboxes as needed
+
+                    if (x % 7 == 0) {
+                        M += time
+                    }
+                    else if (x % 7 == 1) {
+                        T += time
+                    }
+                    else if (x % 7 == 2) {
+                        W += time
+                    }
+                    else if (x % 7 == 3) {
+                        Th += time
+                    }
+                    else if (x % 7 == 4) {
+                        F += time
+                    }
+                    else if (x % 7 == 5) {
+                        S += time
+                    }
+                    else {
+                        Sun += time
+                    }
+
+                }
+
+                x++;
+
+
+            });
+            document.getElementById("Monday").value = M;
+            document.getElementById("Tuesday").value = T;
+            document.getElementById("Wednesday").value = W;
+            document.getElementById("Thursday").value = Th;
+            document.getElementById("Friday").value = F;
+            document.getElementById("Saturday").value = S;
+            document.getElementById("Sunday").value = Sun;
+            console.log(M); // For testing, you can change this to whatever action you want
+            console.log(T);
+            console.log(W);
+            console.log(Th);
+            console.log(F);
+            console.log(S);
+            console.log(Sun);
+            document.getElementById("formbutton").click();
+        }
+        var map = L.map('map');
+    var geocodeUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}';
+    var marker;
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Function to add marker at a specific location
+    function addMarker(latlng) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(latlng).addTo(map);
+        reverseGeocode(latlng);
+    }
+
+    // Function to perform reverse geocoding
+    function reverseGeocode(latlng) {
+        fetch(geocodeUrl.replace('{lat}', latlng.lat).replace('{lon}', latlng.lng))
+            .then(response => response.json())
+            .then(data => {
+                const address = data.display_name || "Location not provided";
+                document.getElementById('address').value = address;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const address = "Location not provided";
+                document.getElementById('address').value = address;
+            });
+    }
+
+    // Set user's location as default marker
+    function setDefaultMarker(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const accuracy = pos.coords.accuracy;
+
+        const latlng = L.latLng(lat, lng);
+        addMarker(latlng);
+
+        map.setView(latlng, 13);
+    }
+
+    // Handle errors in getting user's location
+    function error(err) {
+        if (err.code == 1) {
+            console.log("Location access denied, location has not been recorded");
+        } else {
+            console.log("Failed to get user location, location has not been recorded");
         }
     }
 
-    // Call the function to populate the table
-    populateTable();
+    // Get user's location and set default marker
+    navigator.geolocation.getCurrentPosition(setDefaultMarker, error);
 
-    // Add event listener to the submit button
-    document.getElementById("submitButton").addEventListener("click", function() {
-        // Function to store information of checked checkboxes
-        storeCheckedCheckboxes();
+    // Allow user to click on the map to place a marker
+    map.on('click', function(e) {
+        addMarker(e.latlng);
     });
-    
-    // Function to store information of checked checkboxes
-    function storeCheckedCheckboxes() {
-       
-        let M = "Monday: ";
-        let T = "Tuesday: ";
-        let W = "Wednesday: ";
-        let Th = "Thursday: "
-        let F = "Friday: "
-        let S = "Saturday: "
-        let Sun = "Sunday: "
-        let x = 0;
-        let time
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            
-            if (x%7 == 0)
-            {
-                time = timeSlots[x/7];
-            }
-            
-            if (checkbox.checked) {
-                // Store information of checked checkboxes as needed
-                 
-            if (x % 7 == 0)
-            {
-                M += time 
-            }
-            else if(x%7 == 1)
-            {
-                T += time
-            } 
-            else if(x%7 == 2)
-            {
-                W += time
-            }
-            else if (x%7 == 3)
-            {
-                Th += time
-            }
-            else if(x%7 == 4)
-            {
-                F += time
-            }
-            else if (x%7 == 5)
-            {
-                S+= time
-            }
-            else
-            {
-                Sun += time
-            }
-              
-            }
-            
-            x++;
-           
-            
-        });
-        document.getElementById("Monday").value = M;
-        document.getElementById("Tuesday").value = T;
-        document.getElementById("Wednesday").value = W;
-        document.getElementById("Thursday").value = Th;
-        document.getElementById("Friday").value = F;
-        document.getElementById("Saturday").value = S;
-        document.getElementById("Sunday").value = Sun;
-        console.log(M); // For testing, you can change this to whatever action you want
-        console.log(T);
-        console.log(W);
-        console.log(Th);
-        console.log(F);
-        console.log(S);
-        console.log(Sun);
-        document.getElementById("formbutton").click();
-    }
-</script>
+    </script>
 
 </body>
+
 </html>

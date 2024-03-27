@@ -32,6 +32,10 @@ public class StudentController {
         String emailString = (String)user.get("email");
         String nameString = (String)user.get("name");
         String phoneString = (String)user.get("phone");
+
+        String addressString = (String)user.get("address");
+        String licenseNum =  (String)user.get("licenseNum");
+        String experienceStr =  (String)user.get("experience");
         String Monday = (String)user.get("Monday");
         String Tuesday = (String)user.get("Tuesday");
         String Wednesday = (String)user.get("Wednesday");
@@ -39,12 +43,12 @@ public class StudentController {
         String Friday = (String)user.get("Friday");
         String Saturday = (String)user.get("Saturday");
         String Sunday = (String)user.get("Sunday");
-        String messageConcat = nameString + "\n" + emailString + "\n" + phoneString + "\n";
-        String dates = Monday + "\n" + Tuesday + "\n" +
-        Wednesday + "\n" + Thursday + "\n" + Friday + "\n" + Saturday + "\n" + Sunday + "\n";
-        senderService.sendEmail("cmpt276.groupproject@gmail.com", "New Request by" + nameString,messageConcat+dates);
+        
+        String messageConcat = nameString + "\nEmail: " + emailString + "\nPhoneNumber:" + phoneString + "\nAddress: " + addressString +  "\nExperience: " + experienceStr + "\nLicense: " + licenseNum + "\n";
+        String dates = Monday + "\n" + Tuesday + "\n" + Wednesday + "\n" + Thursday + "\n" + Friday + "\n" + Saturday + "\n" + Sunday + "\n";
+        senderService.sendEmail("cmpt276.groupproject@gmail.com", "New Request by " + nameString,messageConcat+dates);
         senderService.sendEmail(emailString, "Attention Your request has been sent", "Dear " + nameString + "\n" + "your request has been sent to our invoice and we will respond back shortly");
-        Student student = new Student(nameString,emailString,phoneString,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
+        Student student = new Student(nameString,emailString,phoneString,licenseNum,experienceStr,addressString,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
         studentRepo.save(student);
         return "redirect:/html/home.html";
     }
