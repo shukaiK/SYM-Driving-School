@@ -16,6 +16,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    width: 100%; /* made a change here */
   }
   
   .logo img {
@@ -172,3 +173,4 @@
       order: 1;
     }
   }
+
