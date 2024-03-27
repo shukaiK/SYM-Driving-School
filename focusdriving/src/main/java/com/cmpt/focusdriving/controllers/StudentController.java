@@ -1,21 +1,17 @@
 package com.cmpt.focusdriving.controllers;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.cmpt.focusdriving.models.email;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
-
-import jakarta.servlet.http.HttpServletResponse;
-
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class StudentController {
@@ -26,32 +22,45 @@ public class StudentController {
     @Autowired
     private email senderService;
 
-    // sendinformation to the database
     @PostMapping("/html/form")
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
-        String emailString = (String)user.get("email");
-        String nameString = (String)user.get("name");
-        String phoneString = (String)user.get("phone");
-        String addressString = (String)user.get("address");
-        String licenseNum =  (String)user.get("licenseNum");
-        String experienceStr =  (String)user.get("experience");
-        String Monday = (String)user.get("Monday");
-        String Tuesday = (String)user.get("Tuesday");
-        String Wednesday = (String)user.get("Wednesday");
-        String Thursday = (String)user.get("Thursday");
-        String Friday = (String)user.get("Friday");
-        String Saturday = (String)user.get("Saturday");
-        String Sunday = (String)user.get("Sunday");
-        
-        String messageConcat = nameString + "\nEmail: " + emailString + "\nPhoneNumber:" + phoneString + "\nAddress: " + addressString +  "\nExperience: " + experienceStr + "\nLicense: " + licenseNum + "\n";
-        String dates = Monday + "\n" + Tuesday + "\n" + Wednesday + "\n" + Thursday + "\n" + Friday + "\n" + Saturday + "\n" + Sunday + "\n";
-        senderService.sendEmail("cmpt276.groupproject@gmail.com", "New Request by " + nameString,messageConcat+dates);
-        senderService.sendEmail(emailString, "Attention Your request has been sent", "Dear " + nameString + "\n" + "your request has been sent to our invoice and we will respond back shortly");
-        Student student = new Student(nameString,emailString,phoneString,licenseNum,experienceStr,addressString,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
+        // Extracting basic information
+        String emailString = user.get("email");
+        String nameString = user.get("name");
+        String phoneString = user.get("phone");
+        String addressString = user.get("address");
+        String licenseNum = user.get("licenseNum");
+        String experienceStr = user.get("experience");
+
+        // Building the list of availabilities
+        List<String> availability = new ArrayList<>();
+        String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        for (String day : daysOfWeek) {
+            String availabilityStatus = user.getOrDefault(day, "Not Available");
+            availability.add(day + ": " + availabilityStatus);
+        }
+
+        // Constructing the message for email
+        StringBuilder messageConcat = new StringBuilder();
+        messageConcat.append("Name: ").append(nameString)
+                .append("\nEmail: ").append(emailString)
+                .append("\nPhoneNumber: ").append(phoneString)
+                .append("\nAddress: ").append(addressString)
+                .append("\nLicense Number: ").append(licenseNum)
+                .append("\nExperience: ").append(experienceStr)
+                .append("\n\nAvailability:\n");
+
+        availability.forEach(avail -> messageConcat.append(avail).append("\n"));
+
+        // Sending emails
+        senderService.sendEmail("cmpt276.groupproject@gmail.com", "New Request by " + nameString, messageConcat.toString());
+        senderService.sendEmail(emailString, "Attention: Your request has been sent", "Dear " + nameString + ",\nYour request has been sent to our invoice, and we will respond back shortly.");
+
+        // Creating and saving the Student object
+        Student student = new Student(nameString, emailString, phoneString, licenseNum, experienceStr, addressString, availability);
         studentRepo.save(student);
+
+        // Redirecting to the home page
         return "redirect:/html/home.html";
     }
-
-   
-    
 }
