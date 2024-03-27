@@ -20,8 +20,8 @@ public class Student {
     private String address;
 
     @ElementCollection // This annotation is used to store a list of elements.
-    @CollectionTable(name = "student_availability", joinColumns = @JoinColumn(name = "sid"))
-    @Column(name = "day_availability")
+    @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "sid"))
+    @Column(name = "availability")
     private List<String> availability;
 
     public Student() {
