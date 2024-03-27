@@ -289,3 +289,39 @@ header {
     }
   }
 
+}
+.bookingbox {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 800px;
+  font-size: 20px;
+  padding: 10px;
+
+  border: solid black;
+  border-width: 5px;
+}
+
+.dashbutton {
+  padding: 10px 20px;
+  margin-left: 0px;
+  border: none;
+  cursor: pointer;
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.bookingblob {
+  padding: 10px 20px;
+  margin-left: 0px;
+  border: gray;
+}
+
+.dashheader {
+  padding: 20px;
+}
+
+.dashcontent {
+  padding: 40px;
+  font-size: 30px;
+
+}
