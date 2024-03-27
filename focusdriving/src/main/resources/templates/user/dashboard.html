@@ -8,10 +8,10 @@
 
 <body>
     <div class="">
-        <!-- Logout Link -->
-        <div class="buttons d-flex justify-content-end">
+        <!-- logout button -->
+        <div class="d-flex justify-content-end dashheader">
             <form th:action="@{/logout}" method="post">
-                <button type="submit" class="log-in ">Logout</button>
+                <button type="submit" class="dashbutton">Logout</button>
             </form>
         </div>
         <div class="subtitle">
@@ -19,18 +19,13 @@
         </div>
     </div>
 
+    <!-- button to go to bookingsview page -->
     <div class="main-content">
-        <!-- <div>Click here to see all students:</div> -->
-
         <div>Click the button to view all bookings:</div>
         <form th:action="@{/bookingview}" method="get">
-            <button type="submit" class="btn btn-default">View Bookings</button>
+            <button type="submit" class="dashbutton">View Bookings</button>
         </form><br><br>
     </div>
-
-
-
-    <!-- Include your scripts here -->
 
 </body>
 

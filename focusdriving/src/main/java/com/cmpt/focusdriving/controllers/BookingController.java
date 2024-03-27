@@ -32,7 +32,7 @@ public class BookingController {
     private StudentRepository studentRepo;
 
     @GetMapping("/bookingview")
-    public String getAllStudents(Model model) {
+    public String getAllBookings(Model model) {
         List<Booking> bookings = bookingRepo.findAll();
         model.addAttribute("books", bookings);
         return "user/showbookings";

@@ -8,25 +8,25 @@
 </head>
 
 <body>
-    <div class="">
-        <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
-        <div class="buttons">
-            <form th:action="@{/login}" method="post">
-                <button type="submit" class="log-in">Back to Dashboard</button>
-            </form>
-        </div>
-        <!-- add new booking -->
-        <div class="subtitle">
-            <h1>Bookings</h1>
-        </div>
+    <!-- <header> -->
+    <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
+    <div class="container dashheader">
+        <form th:action="@{/login}" method="post">
+            <button type="submit" class="dashbutton">Back to Dashboard</button>
+        </form>
+    </div>
+    <!-- </header> -->
 
+
+    <div class="subtitle">
+        <h1>Bookings</h1>
     </div>
 
-    <div class="row">
-        Add a new booking
+    <div class="row bookingbox">
+        <h2>Add a new booking</h2> <br>
         <form action="/user/addbooking" method="post">
             <label for="sid">Student ID:</label>
-            <input type="text" id="sid" name="sid" required> <br>
+            <input class="form-control form-control-lg" type="text" id="sid" name="sid" required> <br>
 
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required> <br>
@@ -35,18 +35,19 @@
             <input type="time" id="startTime" name="startTime" required> <br>
 
             <label for="endTime">End Time:</label>
-            <input type="time" id="endTime" name="endTime" required> <br>
+            <input type="time" id="endTime" name="endTime" required> <br> <br>
 
-            <button type="submit">Submit</button>
+            <button class="dashbutton" type="submit">Submit</button>
+
         </form>
     </div> <br>
 
     <!-- display all bookings -->
-    <div class="row">
-        Current Bookings
+    <div class="row bookingbox">
+        <h2>Current Bookings</h2>
         <div class="col-md-4" th:each="booking : ${books}">
             <div class="mb-4">
-                <div class="p-3 bg-info bg-opacity-10 border border-info rounded">
+                <div class="p-3 bookingblob">
                     <span th:text="${booking.startTime}"></span><br>
                     <span th:text="${booking.endTime}"></span> <br>
                     <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
