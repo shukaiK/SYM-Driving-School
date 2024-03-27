@@ -24,6 +24,10 @@ public class Student implements Serializable {
     public Student() {
     }
 
+    public Student(String name) {
+        this.name = name;
+    }
+
     public String getTime() {
         return time;
     }

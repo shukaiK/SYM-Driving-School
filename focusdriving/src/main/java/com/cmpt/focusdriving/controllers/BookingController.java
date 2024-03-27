@@ -39,11 +39,11 @@ public class BookingController {
     }
 
     @PostMapping("/user/addbooking")
-    public void submitBooking(@RequestParam("sid") int sid,
+    public void submitBooking(@RequestParam("sid") String sid,
             @RequestParam("date") LocalDate date,
             @RequestParam("startTime") LocalTime startTime,
             @RequestParam("endTime") LocalTime endTime) {
-        Student student = (studentRepo.findBySid(sid)).get(0); // Retrieve student from repository
+        Student student = (studentRepo.findBySid(Integer.parseInt(sid))).get(0); // Retrieve student from repository
 
         // create new booking
         Booking booking = new Booking();
