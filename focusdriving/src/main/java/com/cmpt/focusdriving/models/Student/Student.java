@@ -3,7 +3,7 @@ package com.cmpt.focusdriving.models.Student;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "studentAvailability")
+@Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
