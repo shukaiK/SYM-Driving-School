@@ -13,7 +13,7 @@ import com.cmpt.focusdriving.models.Student.StudentRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,7 +32,6 @@ public class StudentController {
         String emailString = (String)user.get("email");
         String nameString = (String)user.get("name");
         String phoneString = (String)user.get("phone");
-
         String addressString = (String)user.get("address");
         String licenseNum =  (String)user.get("licenseNum");
         String experienceStr =  (String)user.get("experience");
@@ -52,4 +51,7 @@ public class StudentController {
         studentRepo.save(student);
         return "redirect:/html/home.html";
     }
+
+   
+    
 }

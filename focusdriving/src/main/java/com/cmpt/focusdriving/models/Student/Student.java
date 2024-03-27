@@ -22,8 +22,6 @@ public class Student {
     private String Friday;
     private String Saturday;
     private String Sunday;
-    
-    
 
 
     public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
