@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Booking View</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+
+</head>
+
+<body>
+    <!-- back button to dashboard (to login mapping which should redirect to dashboard)-->
+    <div class="container dashheader">
+        <form th:action="@{/login}" method="post">
+            <button type="submit" class="dashbutton">Back to Dashboard</button>
+        </form>
+    </div>
+
+    <div class="subtitle">
+        <h1>Bookings</h1>
+    </div>
+
+    <div class="row bookingbox">
+        <h2>Add a new booking</h2> <br>
+        <form action="/user/addbooking" method="post">
+            <label for="sid">Student ID:</label>
+            <input class="form-control form-control-lg" type="text" id="sid" name="sid" required> <br>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required> <br>
+
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required> <br>
+
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required> <br> <br>
+
+            <button class="dashbutton" type="submit">Submit</button>
+
+        </form>
+    </div> <br>
+
+    <!-- display all bookings -->
+    <div class="row bookingbox">
+        <h2>Current Bookings</h2> <br>
+        <div class="col-md-4" th:each="booking : ${books}">
+            <div class="mb-4">
+                <div class="p-3 bookingblob">
+                    Student name: <span th:text="${booking.student.name}"></span> <br>
+                    Start time: <span th:text="${booking.startTime}"></span><br>
+                    End time: <span th:text="${booking.endTime}"></span> <br>
+                    <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
+                </div>
+            </div>
+            </form>
+            <!-- edit button -->
+            <!-- <form th:action="@{/editbooking/{bid}(bid=${booking.bid})}" method="get">
+                <input class="dashbutton" type="submit" value="Edit Booking"></input>
+            </form> -->
+            <!-- delete button -->
+            <form th:action="@{/user/deletebooking/{bid}(bid=${booking.bid})}" method="post">
+                <input class="dashbutton" type="submit" value="Delete Booking"></input>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

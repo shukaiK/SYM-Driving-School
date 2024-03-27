@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>USER Dashboard</title>
-    <!-- Include your CSS and other head content here -->
+    <link rel="stylesheet" href="../stylesheets/styles.css">
 </head>
+
 <body>
+    <div class="">
+        <!-- logout button -->
+        <div class="d-flex justify-content-end dashheader">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="dashbutton">Logout</button>
+            </form>
+        </div>
+        <div class="subtitle">
+            <h1>Instructor Dashboard</h1>
+        </div>
+    </div>
 
-<!-- Your dashboard content goes here -->
-
-<!-- Logout Link -->
-<form th:action="@{/logout}" method="post">
-    <button type="submit" class="btn btn-default">Logout</button>
-</form>
-
-<!-- Include your scripts here -->
+    <!-- button to go to bookingsview page -->
+    <div class="main-content">
+        <div>Click the button to view all bookings:</div>
+        <form th:action="@{/bookingview}" method="get">
+            <button type="submit" class="dashbutton">View Bookings</button>
+        </form><br><br>
+    </div>
 
 </body>
+
 </html>
