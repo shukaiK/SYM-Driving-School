@@ -41,7 +41,7 @@
 
     <!-- display all bookings -->
     <div class="row bookingbox">
-        <h2>Current Bookings</h2>
+        <h2>Current Bookings</h2> <br>
         <div class="col-md-4" th:each="booking : ${books}">
             <div class="mb-4">
                 <div class="p-3 bookingblob">
@@ -51,6 +51,15 @@
                     <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
                 </div>
             </div>
+            </form>
+            <!-- edit button -->
+            <!-- <form th:action="@{/editbooking/{bid}(bid=${booking.bid})}" method="get">
+                <input class="dashbutton" type="submit" value="Edit Booking"></input>
+            </form> -->
+            <!-- delete button -->
+            <form th:action="@{/user/deletebooking/{bid}(bid=${booking.bid})}" method="post">
+                <input class="dashbutton" type="submit" value="Delete Booking"></input>
+            </form>
         </div>
     </div>
 
