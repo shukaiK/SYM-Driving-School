@@ -29,7 +29,7 @@ public class BookingController {
     private BookingRepository bookingRepo;
 
     @Autowired
-    StudentRepository studentRepo;
+    private StudentRepository studentRepo;
 
     @GetMapping("/bookingview")
     public String getAllStudents(Model model) {
