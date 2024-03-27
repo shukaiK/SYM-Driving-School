@@ -23,6 +23,9 @@ public class Student {
     private String Saturday;
     private String Sunday;
 
+    public Student(String name) {
+        this.name = name;
+    }
 
     public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
             String monday, String tuesday, String wednesday, String thursday, String friday, String saturday,
