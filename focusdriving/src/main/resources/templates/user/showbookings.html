@@ -19,6 +19,7 @@
         <h1>Bookings</h1>
     </div>
 
+    <!-- add new booking form -->
     <div class="row bookingbox">
         <h2>Add a new booking</h2> <br>
         <form action="/user/addbooking" method="post">
@@ -44,28 +45,25 @@
         <h2>Current Bookings</h2> <br>
         <div class="col-md-4" th:each="booking : ${books}">
             <div class="mb-4">
-                <div class="p-3 bookingblob">
+                <div class="p-3">
+                    <!-- display each booking's info -->
                     Student name: <span th:text="${booking.student.name}"></span> <br>
+                    Date: <span th:text="${booking.date}"></span> <br>
                     Start time: <span th:text="${booking.startTime}"></span><br>
                     End time: <span th:text="${booking.endTime}"></span> <br>
-                    <!-- <td><a th:href="@{/editbooking/{bid}(bid=${booking.bid})}">Edit</a></td> <br> -->
                 </div>
             </div>
             </form>
             <!-- edit button -->
-            <td><a th:href="@{/edit/{bid}(bid=${booking.bid})}">Edit</a></td> <br>
-            <!-- <form th:action="@{/user/editbooking/{bid}(bid=${booking.bid})}" method="get">
+            <form th:action="@{/edit/{bid}(bid=${booking.bid})}" method="get">
                 <input class="dashbutton" type="submit" value="Edit Booking"></input>
-            </form> -->
+            </form> <br>
             <!-- delete button -->
             <form th:action="@{/user/deletebooking/{bid}(bid=${booking.bid})}" method="post">
                 <input class="dashbutton" type="submit" value="Delete Booking"></input>
             </form>
         </div>
     </div>
-
-
-
 
 </body>
 
