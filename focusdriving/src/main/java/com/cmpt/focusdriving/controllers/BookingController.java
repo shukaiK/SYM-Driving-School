@@ -56,28 +56,28 @@ public class BookingController {
         return "redirect:/bookingview";
     }
 
-    // @GetMapping("/editbooking/{bid}")
-    // public String showEditForm(@PathVariable("bid") Integer bid, Model model) {
-    // Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
-    // if (booking == null) {
-    // return "error";
-    // }
-    // model.addAttribute("booking", booking);
-    // return "/user/editbooking";
-    // }
+    @GetMapping("/edit/{bid}")
+    public String showEditForm(@PathVariable("bid") Integer bid, Model model) {
+        Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
+        if (booking == null) {
+            return "error";
+        }
+        model.addAttribute("booking", booking);
+        // return "redirect:/bookingview";
+        return "user/editbooking";
+    }
 
-    // @PostMapping("/user/editinfo/{bid}")
-    // public String editBooking(@PathVariable Integer bid, @RequestParam
-    // Map<String, String> newinfo,
-    // HttpServletResponse response) {
-    // Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(nul
-    // // booking.setStudent(Student.parseStudent(newinfo.get("student")));
-    // // booking.setStartTime(newinfo.get("startTime"));
-    // // booking.setEndTime(newinfo.get("endTime"));
-    // // bookingRepo.save(booking);
-    // // return "redirect:/bookingview";
-    // return "/user/dashboard";
-    // }
+    @PostMapping("/user/editinfo/{bid}")
+    public String editBooking(@PathVariable Integer bid, @RequestParam Map<String, String> newinfo,
+            HttpServletResponse response) {
+        // Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(nul
+        // booking.setStudent(Student.parseStudent(newinfo.get("student")));
+        // booking.setStartTime(newinfo.get("startTime"));
+        // booking.setEndTime(newinfo.get("endTime"));
+        // bookingRepo.save(booking);
+        return "redirect:/bookingview";
+        // return "/user/dashboard";
+    }
 
     @PostMapping("/user/deletebooking/{bid}")
     public String deleteBooking(@PathVariable Integer bid,

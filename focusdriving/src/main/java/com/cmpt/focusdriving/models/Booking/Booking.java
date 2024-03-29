@@ -3,7 +3,12 @@ package com.cmpt.focusdriving.models.Booking;
 import com.cmpt.focusdriving.models.Student.Student;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.time.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+// import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import jakarta.persistence.*;
 
@@ -14,8 +19,11 @@ public class Booking implements Serializable, Comparable<Booking> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bid;
     private Student student;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    // private Date date;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
 
     public Booking() {
     };
