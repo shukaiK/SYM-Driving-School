@@ -2,6 +2,7 @@ package com.cmpt.focusdriving.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,11 @@ import java.util.Map;
 import com.cmpt.focusdriving.models.email;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 @Controller
 public class StudentController {
@@ -26,18 +32,19 @@ public class StudentController {
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
         // Extracting basic information
         String emailString = user.get("email");
-        String nameString = user.get("name");
+        String nameFString = user.get("name");
+        String nameLString = user.get("name1");
         String phoneString = user.get("phone");
         String addressString = user.get("address");
         String licenseNum = user.get("licenseNum");
         String experienceStr = user.get("experience");
-
+        String nameString = nameFString + " " + nameLString;
         // Building the list of availabilities
         List<String> availability = new ArrayList<>();
         String[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         for (String day : daysOfWeek) {
             String availabilityStatus = user.getOrDefault(day, "Not Available");
-            availability.add(day + ": " + availabilityStatus);
+            availability.add(day + ":   " + "\n" +availabilityStatus);
         }
 
         // Constructing the message for email
@@ -66,4 +73,42 @@ public class StudentController {
         // Redirecting to the home page
         return "redirect:/html/home.html";
     }
+
+    @GetMapping("/admin/pending")
+    public String getMethodName(Model model) 
+    {
+        List<Student> user = studentRepo.findAll();
+        model.addAttribute("data", user);
+        
+        return "user/requestAction";
+    }
+
+    @PostMapping("/admin/Action")
+public String assign(@RequestParam Map<String, String> user, HttpServletResponse response,@ModelAttribute Student student) {
+   
+    String instuctorString = user.get("instructors");
+    int ID = Integer.parseInt(user.get("ID"));
+    List<Student> students = studentRepo.findBySid(ID);
+    Student SendEmailConfirmation = students.get(0);
+    String compare = "Remove";
+    if (compare.equals(instuctorString))
+    {
+        String getName = SendEmailConfirmation.getName();
+        String getEmail = SendEmailConfirmation.getEmail();
+        senderService.sendEmail(getEmail, "Alternate Booking", "Dear "+ getName + "\n\nYour booking time is full for the availabitly you have sent. ");
+        studentRepo.delete(SendEmailConfirmation);
+    } 
+    else
+    {
+        SendEmailConfirmation.setInstructor(instuctorString);
+        studentRepo.save(SendEmailConfirmation); // Save changes including setting instructor
+    }
+    return "redirect:/admin/pending";
+}
+
+
+    
+    
+    
+    
 }

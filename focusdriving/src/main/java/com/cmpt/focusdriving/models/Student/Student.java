@@ -2,13 +2,12 @@ package com.cmpt.focusdriving.models.Student;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 @Entity
 @Table(name = "students")
-public class Student implements Serializable {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sid;
@@ -19,7 +18,7 @@ public class Student implements Serializable {
     private String licenseNum;
     private String experience;
     private String address;
-
+    private String instructor;
     @ElementCollection
     @CollectionTable(name = "student_availability", joinColumns = @JoinColumn(name = "sid"))
     @Column(name = "availability")
@@ -35,13 +34,14 @@ public class Student implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    
+
     public Student(String name) {
         this.name = name;
     }
 
     // Full constructor including availability
-    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
-            List<String> availability) {
+    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address, List<String> availability) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -49,6 +49,8 @@ public class Student implements Serializable {
         this.experience = experience;
         this.address = address;
         this.availability = availability;
+        this.instructor = "Pending";
+        
     }
 
     // Getters and setters (only showing new or modified ones for brevity)
@@ -60,6 +62,7 @@ public class Student implements Serializable {
     public void setAvailability(List<String> availability) {
         this.availability = availability;
     }
+
 
     public String getLicenseNum() {
         return licenseNum;
@@ -116,5 +119,16 @@ public class Student implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-}
 
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+}
+  
+
+
+    
