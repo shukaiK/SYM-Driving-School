@@ -18,9 +18,9 @@ public class Student {
     private String licenseNum;
     private String experience;
     private String address;
-
-    @ElementCollection // This annotation is used to store a list of elements.
-    @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "sid"))
+    private String instructor;
+    @ElementCollection
+    @CollectionTable(name = "student_availability", joinColumns = @JoinColumn(name = "sid"))
     @Column(name = "availability")
     private List<String> availability;
 
@@ -49,6 +49,8 @@ public class Student {
         this.experience = experience;
         this.address = address;
         this.availability = availability;
+        this.instructor = "Pending";
+        
     }
 
     // Getters and setters (only showing new or modified ones for brevity)
@@ -109,6 +111,14 @@ public class Student {
     }
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
     }
 }
   

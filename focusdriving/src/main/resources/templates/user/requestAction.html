@@ -5,28 +5,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .students_display {
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+      
+
+       
+
+        form {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        select {
+            margin-top: 10px;
+            width: 200px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .students_display {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .student_info {
+        flex: 1;
+        border: 2px solid #5c5b5b;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between; /* Align children to take up entire space */
+       
+    }
+
+    .stu_data {
+        width: 16.5%; /* Adjust width as needed to accommodate all 6 items */
+        color: #007bff;
+        
+    }
+
+    </style>
 </head>
 
 <body>
-    <div>
+    <div class="students_display">
         <div th:each="user:${data}">
-            <div style="border-color: black; border: 2px solid; margin-bottom: 5%;">
+            <div style="border: 2px solid #5c5b5b; margin-bottom: 20px; padding: 20px; border-radius: 5px;">
 
-                <form action="/confirm" method="post" style="display: inline-block;">
-
-                    <span th:text="${user.name}"></span> <br>
-                    <span th:text="${user.email}"></span> <br>
-                    <span th:text="${user.phoneNumber}"></span> <br>
-                    <span th:text="${user.time}"></span> <br>
-                    <input th:value="${user.sid}" style="display: none;" name="ID" id="ID"></input>
-                    <input type="submit" value="confirm">
-                </form>
-                <form action="/deny" method="post" style="display: inline-block; margin-left: -3%;">
-               
-                    <button>reject</button>
-                    <input th:value="${user.sid}" style="display: none;" name="ID" id="ID"></input>
-                </form>
-
+                 <form action="/admin/Action" method="post">
+                        <span>Name: </span>
+                        <span th:text="${user.name}" class="stu_data"> </span> 
+                        <span>Email: </span>
+                        <span th:text="${user.email}" class="stu_data"></span> 
+                        <span>Number: </span>
+                        <span th:text="${user.phoneNumber}" class="stu_data"></span> 
+                        <span>License: </span>
+                        <span th:text="${user.licenseNum}" class="stu_data"></span> 
+                        <span>Class: </span>
+                        <span th:text="${user.experience}" class="stu_data"></span> 
+                        <span><Address></Address>: </span>
+                        <span th:text="${user.address}" class="stu_data"></span> 
+                  
+                    <div class="user-availability">
+                        
+                        <span th:text="${user.availability[0]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[1]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[2]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[3]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[4]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[5]}"></span>
+                    </div>
+                    <div class="user-availability">
+                        <span th:text="${user.availability[6]}"></span>
+                    </div> <br>
+                    <div class="user-availability">
+                        <span th:text="${user.Instructor}" class="stu_data"></span> 
+                    </div>
+                   
+                    
+                    <br>
+                    <input th:value="${user.sid}" type="hidden" name="ID" id="ID">
+                    <label for="exampleInputEmail1" class="form-label">Select Instructor</label>
+                    <select name="instructors" id="instructors" class="form-select">
+                        <option value="">Select</option>
+                        <option value="Remove">Remove Availability</option>
+                        <option value="Blue Man">Blue Man</option>
+                        <option value="Red Man">Red Man</option>
+                        <option value="Purple Man">Purple Man</option>
+                    </select>
+                    <input type="submit" value="Confirm">
+                </form> 
 
             </div>
         </div>
