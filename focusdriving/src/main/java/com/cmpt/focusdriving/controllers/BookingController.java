@@ -1,8 +1,6 @@
 package com.cmpt.focusdriving.controllers;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 import java.util.Map;
 
@@ -48,41 +46,43 @@ public class BookingController {
         // create new booking
         Booking booking = new Booking();
         booking.setStudent(student);
-        booking.setStartTime(LocalDateTime.of(date, startTime));
-        booking.setEndTime(LocalDateTime.of(date, endTime));
+        booking.setDate(date);
+        booking.setStartTime(startTime);
+        booking.setEndTime(endTime);
 
         // save new booking
         bookingRepo.save(booking);
         return "redirect:/bookingview";
     }
 
-    // @GetMapping("/editbooking/{bid}")
-    // public String showEditForm(@PathVariable("bid") Integer bid, Model model) {
-    // Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
-    // if (booking == null) {
-    // return "error";
-    // }
-    // model.addAttribute("booking", booking);
-    // return "/user/editbooking";
-    // }
+    @GetMapping("/edit/{bid}")
+    public String showEditForm(@PathVariable("bid") Integer bid, Model model) {
+        Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
+        if (booking == null) {
+            return "error";
+        }
+        // pass the booking so its info appears on edit page
+        model.addAttribute("booking", booking);
+        return "user/editbooking";
+    }
 
-    // @PostMapping("/user/editinfo/{bid}")
-    // public String editBooking(@PathVariable Integer bid, @RequestParam
-    // Map<String, String> newinfo,
-    // HttpServletResponse response) {
-    // Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(nul
-    // // booking.setStudent(Student.parseStudent(newinfo.get("student")));
-    // // booking.setStartTime(newinfo.get("startTime"));
-    // // booking.setEndTime(newinfo.get("endTime"));
-    // // bookingRepo.save(booking);
-    // // return "redirect:/bookingview";
-    // return "/user/dashboard";
-    // }
+    @PostMapping("/user/editinfo/{bid}")
+    public String editBooking(@PathVariable Integer bid, @RequestParam Map<String, String> newinfo,
+            HttpServletResponse response) {
+        // get and save new info to the booking
+        Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(nul
+        booking.setDate(LocalDate.parse(newinfo.get("date")));
+        booking.setStartTime(LocalTime.parse(newinfo.get("startTime")));
+        booking.setEndTime(LocalTime.parse(newinfo.get("endTime")));
+
+        bookingRepo.save(booking);
+        return "redirect:/bookingview";
+    }
 
     @PostMapping("/user/deletebooking/{bid}")
     public String deleteBooking(@PathVariable Integer bid,
             HttpServletResponse response) {
-        Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);x
+        Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
         bookingRepo.delete(booking);
         return "redirect:/bookingview";
     }

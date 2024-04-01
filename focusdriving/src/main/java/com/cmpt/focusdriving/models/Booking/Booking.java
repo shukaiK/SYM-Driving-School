@@ -3,7 +3,7 @@ package com.cmpt.focusdriving.models.Booking;
 import com.cmpt.focusdriving.models.Student.Student;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.*;
 
 import jakarta.persistence.*;
 
@@ -14,14 +14,17 @@ public class Booking implements Serializable, Comparable<Booking> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bid;
     private Student student;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public Booking() {
     };
 
-    public Booking(Student student, LocalDateTime startTime, LocalDateTime endTime) {
+    public Booking(Student student, LocalDate date, LocalTime startTime, LocalTime endTime) {
         this.student = student;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -32,14 +35,6 @@ public class Booking implements Serializable, Comparable<Booking> {
         return this.startTime.compareTo(otherBooking.startTime);
     }
 
-    // constructor
-    // public Booking(Student student, LocalDateTime startTime, LocalDateTime
-    // endTime) {
-    // this.student = student;
-    // this.startTime = startTime;
-    // this.endTime = endTime;
-    // }
-
     public Student getStudent() {
         return student;
     }
@@ -48,19 +43,27 @@ public class Booking implements Serializable, Comparable<Booking> {
         this.student = student;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date){
+        this.date = date;
+    }
+
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
