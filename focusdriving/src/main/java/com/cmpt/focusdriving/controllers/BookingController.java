@@ -31,7 +31,7 @@ public class BookingController {
     @Autowired
     private StudentRepository studentRepo;
 
-    @GetMapping("/bookingview")
+    @GetMapping("/user/bookingview")
     public String getAllBookings(Model model) {
         List<Booking> bookings = bookingRepo.findAll();
         model.addAttribute("books", bookings);

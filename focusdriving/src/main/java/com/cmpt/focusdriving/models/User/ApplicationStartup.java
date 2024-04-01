@@ -35,6 +35,12 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             Student newStudent = new Student("student");
             studentRepository.save(newStudent);
 
+            User newUser2 = new User();
+            newUser2.setName("user");
+            newUser2.setPassword(passwordEncoder.encode("password"));
+            newUser2.setRole("USER");
+            userRepository.save(newUser2);
+
             return userRepository.save(newUser);
         });
     }
