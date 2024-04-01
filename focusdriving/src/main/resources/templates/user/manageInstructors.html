@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons form, .action-buttons a {
+            margin: 0;
+            display: inline-block; /* Make sure the link behaves like a block for sizing */
+        }
+        .action-buttons button, .action-buttons a {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            text-align: center;
+            padding: 6px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .action-buttons a:hover, .action-buttons button:hover {
+            background-color: #0056b3; /* Darker shade for hover effect */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>User Management</h1>
+        <a th:href="@{/signup}" class="add-user-button">Add User</a>
+        <a th:href="@{/admin/dashboard}" class="return-button">Dashboard Home</a>
+    </nav>
+    <h2>User List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.name}"></td>
+                <td class="action-buttons">
+                    <!-- Delete Form -->
+                    <form th:action="@{'/admin/deleteUser/' + ${user.uid}}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <!-- Edit Link styled as Button -->
+                    <a th:href="@{/admin/editUser/{uid}(uid=${user.uid})}" class="edit-button">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
