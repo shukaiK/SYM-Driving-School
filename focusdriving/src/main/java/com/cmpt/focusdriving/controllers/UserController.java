@@ -36,6 +36,8 @@ public class UserController {
     @Autowired
 private PasswordValidator passwordValidator;
 
+
+
     // Method to show the signup form
     @GetMapping("/signup")
     public String showSignupForm(Model model) {

@@ -13,7 +13,11 @@ public class Booking implements Serializable, Comparable<Booking> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bid;
+
+    @ManyToOne
+@JoinColumn(name = "student")
     private Student student;
+    
     // @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private LocalTime startTime;

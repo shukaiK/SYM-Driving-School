@@ -79,59 +79,57 @@
 
 <body>
     <div class="students_display">
-        <div th:each="user:${data}">
+        <div th:each="student:${students}">
             <div style="border: 2px solid #5c5b5b; margin-bottom: 20px; padding: 20px; border-radius: 5px;">
 
-                 <form action="/admin/Action" method="post">
+                 <form action="/admin/assignStudent" method="post">
                         <span>Name: </span>
-                        <span th:text="${user.name}" class="stu_data"> </span> 
+                        <span th:text="${student.name}" class="stu_data"> </span> 
                         <span>Email: </span>
-                        <span th:text="${user.email}" class="stu_data"></span> 
+                        <span th:text="${student.email}" class="stu_data"></span> 
                         <span>Number: </span>
-                        <span th:text="${user.phoneNumber}" class="stu_data"></span> 
+                        <span th:text="${student.phoneNumber}" class="stu_data"></span> 
                         <span>License: </span>
-                        <span th:text="${user.licenseNum}" class="stu_data"></span> 
+                        <span th:text="${student.licenseNum}" class="stu_data"></span> 
                         <span>Class: </span>
-                        <span th:text="${user.experience}" class="stu_data"></span> 
+                        <span th:text="${student.experience}" class="stu_data"></span> 
                         <span><Address></Address>: </span>
-                        <span th:text="${user.address}" class="stu_data"></span> 
+                        <span th:text="${student.address}" class="stu_data"></span> 
                   
-                    <div class="user-availability">
+                    <div class="student-availability">
                         
-                        <span th:text="${user.availability[0]}"></span>
+                        <span th:text="${student.availability[0]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[1]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[1]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[2]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[2]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[3]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[3]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[4]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[4]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[5]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[5]}"></span>
                     </div>
-                    <div class="user-availability">
-                        <span th:text="${user.availability[6]}"></span>
+                    <div class="student-availability">
+                        <span th:text="${student.availability[6]}"></span>
                     </div> <br>
-                    <div class="user-availability">
-                        <span th:text="${user.Instructor}" class="stu_data"></span> 
+                    <div class="student-availability">
+                        <span th:text="${student.Instructor}" class="stu_data"></span> 
                     </div>
                    
                     
                     <br>
-                    <input th:value="${user.sid}" type="hidden" name="ID" id="ID">
+                    <input th:value="${student.sid}" type="hidden" name="ID" id="ID">
                     <label for="exampleInputEmail1" class="form-label">Select Instructor</label>
                     <select name="instructors" id="instructors" class="form-select">
                         <option value="">Select</option>
                         <option value="Remove">Remove Availability</option>
-                        <option value="Blue Man">Blue Man</option>
-                        <option value="Red Man">Red Man</option>
-                        <option value="Purple Man">Purple Man</option>
+                        <option th:each="user : ${users}" th:value="${user.name}" th:text="${user.name}"></option>
                     </select>
                     <input type="submit" value="Confirm">
                 </form> 

@@ -24,7 +24,10 @@
         <h2>Add a new booking</h2> <br>
         <form action="/user/addbooking" method="post">
             <label for="sid">Student ID:</label>
-            <input class="form-control form-control-lg" type="text" id="sid" name="sid" required> <br>
+            <select name="sid" id="sid" class="form-select">
+                <option value="">Select</option>
+                <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}"></option>
+            </select> <br>
 
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required> <br>

@@ -1,5 +1,6 @@
 package com.cmpt.focusdriving.controllers;
 
+import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.cmpt.focusdriving.models.email;
+import com.cmpt.focusdriving.models.Booking.Booking;
+import com.cmpt.focusdriving.models.Booking.BookingRepository;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
+import com.cmpt.focusdriving.models.User.User;
+import com.cmpt.focusdriving.models.User.UserRepository;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +32,13 @@ public class StudentController {
     private StudentRepository studentRepo;
 
     @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
     private email senderService;
+
+    @Autowired
+    private BookingRepository bookingRepo;
 
     @PostMapping("/html/form")
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
@@ -77,21 +89,34 @@ public class StudentController {
     @GetMapping("/admin/pending")
     public String getMethodName(Model model) 
     {
-        List<Student> user = studentRepo.findAll();
-        model.addAttribute("data", user);
+        List<Student> students = studentRepo.findAll();
+        List<User> users = userRepo.findAll();
+        model.addAttribute("students", students);
+        model.addAttribute("users",users);
         
         return "user/requestAction";
     }
 
-    @PostMapping("/admin/Action")
-public String assign(@RequestParam Map<String, String> user, HttpServletResponse response,@ModelAttribute Student student) {
+    @PostMapping("/admin/assignStudent")
+public String assign(@RequestParam Map<String, String> submission, HttpServletResponse response,@ModelAttribute Student student) {
    
-    String instuctorString = user.get("instructors");
-    int ID = Integer.parseInt(user.get("ID"));
+    
+    String instructorString = submission.get("instructors");
+    int ID = Integer.parseInt(submission.get("ID"));
     List<Student> students = studentRepo.findBySid(ID);
+
+    if(students.get(0).getInstructor()!=instructorString){
+    List<Booking> bookingsToReset=  bookingRepo.findByStudent_InstructorContaining(students.get(0).getInstructor());
+        for (Booking booking : bookingsToReset) {
+            if (booking.getStudent().getInstructor().equals(students.get(0).getInstructor())) {
+                bookingRepo.deleteById(booking.getBid()); // Save the updated student back to the repository
+            }
+        }
+    }
+    
     Student SendEmailConfirmation = students.get(0);
     String compare = "Remove";
-    if (compare.equals(instuctorString))
+    if (compare.equals(instructorString))
     {
         String getName = SendEmailConfirmation.getName();
         String getEmail = SendEmailConfirmation.getEmail();
@@ -100,7 +125,7 @@ public String assign(@RequestParam Map<String, String> user, HttpServletResponse
     } 
     else
     {
-        SendEmailConfirmation.setInstructor(instuctorString);
+        SendEmailConfirmation.setInstructor(instructorString);
         studentRepo.save(SendEmailConfirmation); // Save changes including setting instructor
     }
     return "redirect:/admin/pending";

@@ -2,7 +2,6 @@ package com.cmpt.focusdriving.controllers;
 
 //import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cmpt.focusdriving.models.Booking.Booking;
+import com.cmpt.focusdriving.models.Booking.BookingRepository;
 import com.cmpt.focusdriving.models.Security.PasswordValidator;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
@@ -36,11 +36,16 @@ public class UserManagementController {
 
     @Autowired
     private StudentRepository studentRepo;
+
+    @Autowired
+    private BookingRepository bookingRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private PasswordValidator passwordValidator;
+
+    
 
     @GetMapping("/admin/manageInstructors")
     public String getAllStudents(Model model) {
@@ -61,6 +66,7 @@ public String deleteStudent(@PathVariable("uid") int uid, HttpServletResponse re
         User user = userRepo.findById(uid).orElseThrow(() -> new RuntimeException("User not found"));
         // Fetch students assigned to this instructor
         List<Student> studentsToReset = studentRepo.findByInstructor(user.getName());
+
         
         // Iterate through each student and reset their instructor to "Pending"
         for (Student student : studentsToReset) {
@@ -69,7 +75,16 @@ public String deleteStudent(@PathVariable("uid") int uid, HttpServletResponse re
                 studentRepo.save(student); // Save the updated student back to the repository
             }
         }
+
+        List<Booking> bookingsToReset=  bookingRepo.findByStudent_InstructorContaining(user.getName());
+        for (Booking booking : bookingsToReset) {
+            if (booking.getStudent().getInstructor().equals(user.getName())) {
+                bookingRepo.deleteById(booking.getBid()); // Save the updated student back to the repository
+            }
+        }
+
         
+
         // After resetting students, delete the instructor
         userRepo.deleteById(uid);
         // Set HTTP response status to 200 OK
