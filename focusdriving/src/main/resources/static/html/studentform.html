@@ -47,8 +47,11 @@
     <form class="m-auto mt-5 w-50" action="/html/form" method="post">
        <!-- name  -->
         <div class="mb-3">
-            <label for="exampleFormControlSubject" class="form-label">Name and Last Name</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="First Name and Last Name"
+            <label for="exampleFormControlSubject" class="form-label">First Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="First Name"
+                required>
+            <label for="exampleFormControlSubject1" class="form-label">Last Name</label>
+            <input type="text" name="name1" class="form-control" id="name1" placeholder="Last Name"
                 required>
         </div>
         <!-- email  -->
@@ -171,15 +174,16 @@
         // Function to store information of checked checkboxes
         function storeCheckedCheckboxes() {
 
-            let M = "Monday: ";
-            let T = "Tuesday: ";
-            let W = "Wednesday: ";
-            let Th = "Thursday: "
-            let F = "Friday: "
-            let S = "Saturday: "
-            let Sun = "Sunday: "
+            let M = "";
+            let T = "";
+            let W = "";
+            let Th = ""
+            let F = ""
+            let S = ""
+            let Sun = ""
             let x = 0;
             let time
+            let Min_1 = 0;
             var checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(function (checkbox) {
 
@@ -189,27 +193,27 @@
 
                 if (checkbox.checked) {
                     // Store information of checked checkboxes as needed
-
+                    Min_1++;
                     if (x % 7 == 0) {
-                        M += time
+                        M += time + "\n,"
                     }
                     else if (x % 7 == 1) {
-                        T += time
+                        T += time + "\n,"
                     }
                     else if (x % 7 == 2) {
-                        W += time
+                        W += time + "\n,"
                     }
                     else if (x % 7 == 3) {
-                        Th += time
+                        Th += time + "\n,"
                     }
                     else if (x % 7 == 4) {
-                        F += time
+                        F += time + "\n,"
                     }
                     else if (x % 7 == 5) {
-                        S += time
+                        S += time + "\n,"
                     }
                     else {
-                        Sun += time
+                        Sun += time + ","
                     }
 
                 }
@@ -218,6 +222,12 @@
 
 
             });
+            if (Min_1 < 1)
+            {
+                alert("Failed to add more than one text");
+                return;
+            }
+
             document.getElementById("Monday").value = M;
             document.getElementById("Tuesday").value = T;
             document.getElementById("Wednesday").value = W;
