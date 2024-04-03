@@ -22,8 +22,7 @@
             <div class="col-md-4">
                 <h1 class="form-group">Edit Booking</h1> <br>
 
-                <form th:action="@{/user/editinfo/{bid}(bid=${booking.bid})}" onsubmit="return timeCheck()"
-                    method="post">
+                <form th:action="@{/user/editinfo/{bid}(bid=${booking.bid})}" method="post">
                     <div class="mb-3">
 
                         <label for="name">Name:</label>
@@ -39,25 +38,8 @@
                     <input type="time" id="startTime" name="startTime" th:value="${booking.startTime}" required> <br>
 
                     <label for="endTime">End Time:</label>
-                    <input type="time" id="endTime" name="endTime" th:value="${booking.endTime}" required>
-                    <div id="timeerror" class="inputalert"></div>
+                    <input type="time" id="endTime" name="endTime" th:value="${booking.endTime}" required> <br> <br>
 
-                    <script>
-                        function timeCheck() {
-                            // prevents user from creating a booking with a startTime after endTime
-                            var startTime = document.getElementById("startTime").value;
-                            var endTime = document.getElementById("endTime").value;
-
-                            if (endTime <= startTime) {
-                                // error message, prevent form submission
-                                document.getElementById("timeerror").innerHTML = "End time must be after start time";
-                                return false;
-                            }
-                            document.getElementById("timeerror").innerHTML = "";
-                            return true;
-                        }
-                    </script>
-                    <br> <br>
                     <!-- submit button -->
                     <div class="d-grid gap-2">
                         <input class="dashbutton" type="submit" value="Submit"></input>
