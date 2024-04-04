@@ -14,12 +14,12 @@
 
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <!-- Adjusted column size for form -->
+            <div class="col-md-3">
                 <h1 class="text-center mt-5 mb-4">Sign Up</h1>
-                <!-- Thymeleaf action added, using the object for binding -->
                 <form th:action="@{/signup}" th:object="${user}" method="post">
                     <div th:if="${error}" class="alert alert-danger" role="alert">
-                        Existing username or invalid password.
+                        <span th:text="${error}">Existing username or invalid password.</span>
                     </div>
                     <div class="mb-3">
                         <input type="text" th:field="*{name}" class="form-control form-control-lg" placeholder="Name" required>
@@ -33,16 +33,25 @@
                             <option value="ADMIN">Admin</option>
                         </select>
                     </div>
-                    <!-- Submit button -->
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" type="submit">Sign up</button>
                     </div>
                     <br>
                 </form>
-                <!-- Simplified back button using Thymeleaf -->
                 <div class="d-grid gap-2">
                     <a href="../html/home.html" class="btn btn-secondary">Back</a>
                 </div>
+            </div>
+            <!-- New column for password requirements -->
+            <div class="col-md-3 mt-4">
+                <h2 class="mt-5 mb-4 ">Password Requirements:</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">At least 8 characters long</li>
+                    <li class="list-group-item">Contains at least one digit</li>
+                    <li class="list-group-item">Contains at least one lowercase character</li>
+                    <li class="list-group-item">Contains at least one uppercase character</li>
+                    <li class="list-group-item">Contains at least one special character (@, #, $, etc.)</li>
+                </ul>
             </div>
         </div>
     </div>

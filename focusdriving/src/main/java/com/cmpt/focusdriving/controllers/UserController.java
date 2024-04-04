@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import com.cmpt.focusdriving.models.Security.PasswordValidator;
 import com.cmpt.focusdriving.models.User.User;
 import com.cmpt.focusdriving.models.User.UserRepository;
 
@@ -32,6 +33,11 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+private PasswordValidator passwordValidator;
+
+
+
     // Method to show the signup form
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
@@ -47,6 +53,11 @@ public String processSignup(@ModelAttribute("user") User user, Model model) {
     if (existingUser.isPresent()) {
         // User exists, add an error message to the model
         model.addAttribute("error", "Username already taken!");
+        model.addAttribute("user", new User()); // Optionally reset the form
+        return "user/signup"; // Return to the signup form
+    }
+    else if(!passwordValidator.validate(user.getPassword())){
+        model.addAttribute("error", "Invalid password, please try again!");
         model.addAttribute("user", new User()); // Optionally reset the form
         return "user/signup"; // Return to the signup form
     }

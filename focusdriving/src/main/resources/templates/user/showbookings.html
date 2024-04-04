@@ -22,9 +22,12 @@
     <!-- add new booking form -->
     <div class="row bookingbox">
         <h2>Add a new booking</h2> <br>
-        <form action="/user/addbooking" onsubmit="return timeCheck()" method="post">
+        <form action="/user/addbooking" method="post">
             <label for="sid">Student ID:</label>
-            <input class="form-control form-control-lg" type="text" id="sid" name="sid" required> <br>
+            <select name="sid" id="sid" class="form-select">
+                <option value="">Select</option>
+                <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}"></option>
+            </select> <br>
 
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required> <br>
@@ -33,26 +36,8 @@
             <input type="time" id="startTime" name="startTime" required> <br>
 
             <label for="endTime">End Time:</label>
-            <input type="time" id="endTime" name="endTime" required>
-            <div id="timeerror" class="inputalert"></div>
-            
-            <script>
-                function timeCheck() {
-                    // prevents user from creating a booking with a startTime after endTime
-                    var startTime = document.getElementById("startTime").value;
-                    var endTime = document.getElementById("endTime").value;
+            <input type="time" id="endTime" name="endTime" required> <br> <br>
 
-                    if (endTime <= startTime) {
-                        // error message, prevent form submission
-                        document.getElementById("timeerror").innerHTML = "End time must be after start time";
-                        return false;
-                    }
-                    document.getElementById("timeerror").innerHTML = "";
-                    return true;
-                }
-            </script>
-
-            <br> <br>
             <button class="dashbutton" type="submit">Submit</button>
 
         </form>

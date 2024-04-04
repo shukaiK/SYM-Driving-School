@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +31,24 @@ public class BookingController {
     @Autowired
     private StudentRepository studentRepo;
 
-    @GetMapping("/bookingview")
+    public String getCurrentUsername() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+    if (authentication != null && authentication.isAuthenticated()) {
+        return authentication.getName();
+    }
+    
+    // Return null or handle the case where no user is authenticated
+    return null;
+}
+
+    @GetMapping("/user/bookingview")
     public String getAllBookings(Model model) {
-        List<Booking> bookings = bookingRepo.findAll();
+        List<Booking> bookings = bookingRepo.findByStudent_InstructorContaining(getCurrentUsername());
+        List<Student> students = studentRepo.findByInstructor(getCurrentUsername());
         model.addAttribute("books", bookings);
-        return "user/showbookings";
+        model.addAttribute("students", students);
+        return "/user/showbookings";
     }
 
     @PostMapping("/user/addbooking")
@@ -41,6 +56,12 @@ public class BookingController {
             @RequestParam("date") LocalDate date,
             @RequestParam("startTime") LocalTime startTime,
             @RequestParam("endTime") LocalTime endTime) {
+
+        if (sid.isEmpty() || sid.equals("")) { // Check if sid is empty or only contains "Select" value
+    // Handle error: Student not selected
+    return "redirect:/user/addbooking?error=studentNotSelected"; // Redirect with error message
+  }
+
         Student student = (studentRepo.findBySid(Integer.parseInt(sid))).get(0); // Retrieve student from repository
 
         // create new booking
@@ -52,7 +73,7 @@ public class BookingController {
 
         // save new booking
         bookingRepo.save(booking);
-        return "redirect:/bookingview";
+        return "redirect:/user/bookingview";
     }
 
     @GetMapping("/edit/{bid}")
@@ -63,7 +84,7 @@ public class BookingController {
         }
         // pass the booking so its info appears on edit page
         model.addAttribute("booking", booking);
-        return "user/editbooking";
+        return "/user/editbooking";
     }
 
     @PostMapping("/user/editinfo/{bid}")
@@ -76,7 +97,7 @@ public class BookingController {
         booking.setEndTime(LocalTime.parse(newinfo.get("endTime")));
 
         bookingRepo.save(booking);
-        return "redirect:/bookingview";
+        return "redirect:/user/bookingview";
     }
 
     @PostMapping("/user/deletebooking/{bid}")
@@ -84,7 +105,7 @@ public class BookingController {
             HttpServletResponse response) {
         Booking booking = (bookingRepo.findByBid(bid)).get(0); // .orElse(null);
         bookingRepo.delete(booking);
-        return "redirect:/bookingview";
+        return "redirect:/user/bookingview";
     }
 
 }
