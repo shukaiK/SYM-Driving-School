@@ -30,6 +30,19 @@
 
     </div>
 
+    <h1>Upload/Delete Photos</h1>
+    <!-- upload photo form -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo" accept="image/*" />
+        <button type="submit">Upload Photo</button>
+    </form>
+
+    <!-- delete photo form -->
+    <form action="/delete" method="post">
+        <input type="hidden" name="photo_id" value="YOUR_PHOTO_ID_HERE" />
+        <button type="submit">Delete Photo</button>
+    </form>
+
 </body>
 
 </html>
