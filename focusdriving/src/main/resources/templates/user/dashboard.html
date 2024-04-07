@@ -18,12 +18,20 @@
             <h1>Instructor Dashboard</h1>
         </div>
     </div>
-
+    
     <!-- button to go to bookingsview page -->
     <div class="main-content">
         <div>Click the button to view all bookings:</div>
         <form th:action="@{/user/bookingview}" method="get">
             <button type="submit" class="dashbutton">View Bookings</button>
+        </form>
+    </div>
+
+    <!-- button to go to SCHEDULE page -->
+    <div class="main-content">
+        <div>Click the button to go to schedule:</div>
+        <form th:action="@{/user/viewschedule}" method="get">
+            <button type="submit" class="dashbutton">Schedule</button>
         </form><br><br>
     </div>
 

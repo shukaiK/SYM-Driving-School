@@ -17,24 +17,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/signup", "/stylesheets/**", "/javascript/**", "/images/**", "/html/**")
-                .permitAll()
-                .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated())
-            .csrf(csrf -> csrf.disable())
-            .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-                .successHandler(loginSuccessHandler())
-                .failureUrl("/login?error=true"))
-            .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID"));
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/signup", "/stylesheets/**", "/javascript/**", "/images/**",
+                                "/html/**")
+                        .permitAll()
+                        .requestMatchers("/user/**", "/api/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(loginSuccessHandler())
+                        .failureUrl("/login?error=true"))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"));
 
         return http.build();
     }
@@ -52,7 +53,7 @@ public class SecurityConfig {
                 response.sendRedirect("/admin/dashboard");
             } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
                 response.sendRedirect("/user/dashboard");
-            } 
+            }
         };
     }
 }

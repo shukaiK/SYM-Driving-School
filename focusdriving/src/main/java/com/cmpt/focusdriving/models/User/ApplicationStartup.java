@@ -35,10 +35,10 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             newUser.setRole("ADMIN");
             List<String> availability = new ArrayList<>();
         String[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
-        
+
         // Assume the user's availability status for each day
         String[] userAvailability = { "\nAvailable", "\nNot Available", "\nAvailable", "\nAvailable", "\nNot Available", "\nAvailable", "\nAvailable" };
-        
+
         for (int i = 0; i < daysOfWeek.length; i++) {
             String day = daysOfWeek[i];
             String availabilityStatus = userAvailability[i];
@@ -52,6 +52,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
             Student newStudent = new Student("student","red@gmail.com","778-never","1800537","class 7","Sfu burnaby",availability);
             studentRepository.save(newStudent);
+
+            Student newStudent2 = new Student("another","nlue@gmail.com","778-never","1800876","class 7","Sfu burnaby",availability, "user");
+            studentRepository.save(newStudent2);
 
             return userRepository.save(newUser);
         });

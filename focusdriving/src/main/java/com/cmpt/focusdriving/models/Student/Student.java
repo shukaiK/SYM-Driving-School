@@ -34,14 +34,13 @@ public class Student implements Serializable{
         this.phoneNumber = phoneNumber;
     }
 
-    
-
     public Student(String name) {
         this.name = name;
     }
 
     // Full constructor including availability
-    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address, List<String> availability) {
+    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
+            List<String> availability) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -50,7 +49,21 @@ public class Student implements Serializable{
         this.address = address;
         this.availability = availability;
         this.instructor = "Pending";
-        
+
+    }
+
+    // Constructor with pre-assigned instructor (testing purposes)
+    public Student(String name, String email, String phoneNumber, String licenseNum, String experience, String address,
+            List<String> availability, String instructor) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.licenseNum = licenseNum;
+        this.experience = experience;
+        this.address = address;
+        this.availability = availability;
+        this.instructor = instructor;
+
     }
 
     // Getters and setters (only showing new or modified ones for brevity)
@@ -62,7 +75,6 @@ public class Student implements Serializable{
     public void setAvailability(List<String> availability) {
         this.availability = availability;
     }
-
 
     public String getLicenseNum() {
         return licenseNum;
@@ -128,7 +140,3 @@ public class Student implements Serializable{
         this.instructor = instructor;
     }
 }
-  
-
-
-    
