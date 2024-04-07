@@ -10,7 +10,27 @@
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
+    <script>
+        function createStarList(numStars, ulId) {
+            // Create the <ul> element with the specified ID
+            var ulElement = document.createElement("ul");
+            ulElement.id = "name";
 
+            // Create list items with star icons based on the number provided
+            for (var i = 0; i < numStars; i++) {
+                var listItem = document.createElement("li");
+                var icon = document.createElement("i");
+                icon.className = "fa-solid fa-star";
+                listItem.appendChild(icon);
+                ulElement.appendChild(listItem);
+            }
+
+
+        }
+
+
+
+    </script>
     <style>
         * {
             margin: 0;
@@ -156,17 +176,35 @@
                         <div class="clientImage">
                             <span th:text="${review.first_name + ' ' + review.last_name}"></span>
                         </div>
-                        <ul>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-regular fa-star"></i></li>
-                            <li><i class="fa-regular fa-star"></i></li>
+                        <ul id="starRating">
+                            <input type="hidden" th:value="${review.stars}" id="stars">
                         </ul>
+                        
+                        <script>
+                            // Wait for the DOM to be fully loaded
+                            document.addEventListener("DOMContentLoaded", function() {
+                                let starValue = parseInt(document.getElementById("stars").value);
+                        
+                                // Get the ul element to append stars
+                                let starRating = document.getElementById("starRating");
+                        
+                                // Generate stars based on starValue
+                                for (let i = 1; i <= 5; i++) {
+                                    let star = document.createElement("li");
+                                    if (i <= starValue) {
+                                        star.innerHTML = '<i class="fa-solid fa-star"></i>';
+                                    } else {
+                                        star.innerHTML = '<i class="fa-regular fa-star"></i>';
+                                    }
+                                    starRating.appendChild(star);
+                                }
+                            });
+                        </script>
+                        
                     </div>
                     <article>
                         <p class="review" th:text="${review.feedback}"> </p>
-                        <p>Jan 01, 2023</p>
+                        <p th:text="${review.date}"></p>
                     </article>
                 </div>
             </div>
@@ -194,76 +232,12 @@
                 </article>
             </div>
 
-            <div class="reviewItem">
-                <div class="top">
-                    <div class="clientImage">
-                        <span>Raju Sheoran</span>
-                    </div>
-                    <ul class="starRating">
-                        <!-- Add dynamic stars here -->
-                    </ul>
-                </div>
-                <article>
-                    <p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
-                        voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
-                        facere exercitationem!</p>
-                    <p>Jan 01, 2023</p>
-                </article>
-            </div>
-            <!-- Clients Review-2 Section Starts from Here  -->
-            <!-- <div class="reviewItem">
-                <div class="top">
-                    <div class="clientImage">
-                        
-                        <span>Raju Sheoran</span>
-                    </div>
-                    <ul>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                    </ul>
-                </div>
-                <article>
-                    <p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
-                        voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
-                        facere exercitationem!</p>
-                    <p>Jan 01, 2023</p>
-                </article>
-            </div> -->
 
-            <!-- Clients Review-3 Section Starts from Here  -->
-            <!-- <div class="reviewItem">
-                <div class="top">
-                    <div class="clientImage">
-                       
-                        <span>Raju Sheoran</span>
-                    </div>
-                    <ul>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                    </ul>
-                </div>
-                <article>
-                    <p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
-                        voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
-                        facere exercitationem!</p>
-                    <p>Jan 01, 2023</p>
-                </article>
-            </div> -->
+
         </div>
     </div>
 </body>
 
-<script>
 
-
-
-
-</script>
 
 </html>
