@@ -1,5 +1,6 @@
 package com.cmpt.focusdriving.controllers;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,24 +31,25 @@ public class reviewController
         String feedbackString = user.get("feedback");
         String firstString = user.get("first");
         String lastString = user.get("last");
+        String DateString = user.get("date");
         review reviews;
         if (firstString.isEmpty() && lastString.isEmpty())
         {
-            reviews = new review(StarString,feedbackString);
+            reviews = new review(StarString,feedbackString,DateString);
         }
         else if(lastString.isEmpty())
         {
-           reviews = new review(StarString,feedbackString,firstString," ");
+           reviews = new review(StarString,feedbackString,firstString," ",DateString);
 
         }
         else if (firstString.isEmpty())
         {
-            reviews = new review(StarString,feedbackString," ",lastString);
+            reviews = new review(StarString,feedbackString," ",lastString,DateString);
 
         }
         else
         {
-            reviews = new review(StarString,feedbackString,firstString,lastString);
+            reviews = new review(StarString,feedbackString,firstString,lastString,DateString);
         }
 
 
@@ -66,21 +68,31 @@ public class reviewController
 
     @PostMapping("/admin/reviews")
     public String postMethodName(@RequestParam Map<String,String> review) {
-        // String optionString = review.get("display_review");
-        // int getID =  Integer.parseInt(review.get("rid"));
-        // List<review> getobject = reviewRepo.findById(getID);
-        // if (optionString.equals("Remove"))
-        // {
-        //     review reviews = getobject.get(0);
-        //     reviewRepo.delete(reviews);
-        // }
-        // else
-        // {
-        //     review reviews = getobject.get(0);
-        //     reviews.setDisplay(optionString);
+         String optionString = review.get("display_review");
+         int getID =  Integer.parseInt(review.get("rid"));
+        List<review> getobject = reviewRepo.findById(getID);
+        review reviews = getobject.get(0);
+        if (optionString.equals("Remove"))
+        {
+            
+            reviewRepo.delete(reviews);
+        }
+        else
+        {
+            
+             reviews.setDisplay(optionString);
+             reviewRepo.save(reviews);
 
-        // }
+        }
         return "redirect:/admin/privatereviews";
+    }
+
+    @GetMapping("/html/publicreviews")
+    public String publicReviews(Model model) 
+    {
+        List<review> reviews = reviewRepo.findByDisplay("show");
+        model.addAttribute("reviews",reviews);
+       return "user/UserReview";
     }
     
     

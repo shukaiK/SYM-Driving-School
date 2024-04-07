@@ -12,53 +12,54 @@
 
 <body>
 
-  <button id="openModalBtn"> <img src="/focusdriving/src/main/resources/static/images/RateUs.jpg" alt=""
-      style="max-height: 50px; border-radius: 3px; padding: -40px; "> </button>
+  <button id="openModalBtn" style="margin-left: 60%;"> <img src="../images/RateUs.jpg" alt=""
+      style="max-height: 50px; border-radius: 3px; padding: -40px;"> </button>
+
 
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <P style="margin-top: 10%;  text-align: center;"><b>PLEASE RATE US</b> </P>
       <form action="/html/review" method="post">
-      <label for="first">First Name (optional)</label>
-      <input type="text" name="first" id="first">
-      <label for="last">Last Name (optional)</label>
-      <input type="text" name="last" id="last">
+        <label for="first">First Name (optional)</label>
+        <input type="text" name="first" id="first">
+        <label for="last">Last Name (optional)</label>
+        <input type="text" name="last" id="last">
 
 
-      <p style="color: gold; text-align: center; margin-bottom: 0px;">___________________</p>
-      <div style="margin-left: 90px;">
-        <div class="rate">
-          <input type="radio" id="star5" name="rate" value="5" required/>
-          <label for="star5" title="text">5 stars</label>
-          <input type="radio" id="star4" name="rate" value="4" />
-          <label for="star4" title="text">4 stars</label>
-          <input type="radio" id="star3" name="rate" value="3" />
-          <label for="star3" title="text">3 stars</label>
-          <input type="radio" id="star2" name="rate" value="2" />
-          <label for="star2" title="text">2 stars</label>
-          <input type="radio" id="star1" name="rate" value="1" />
-          <label for="star1" title="text">1 star</label>
+        <p style="color: gold; text-align: center; margin-bottom: 0px;">___________________</p>
+        <div style="margin-left: 90px;">
+          <div class="rate">
+            <input type="radio" id="star5" name="rate" value="5" required />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
         </div>
-      </div>
-      <p style="color: gold; text-align: center;">__________________________</p>
+        <p style="color: gold; text-align: center;">__________________________</p>
 
-      <div style="padding-top: 5%;" style="text-align: center;">
-       
-
-        <label for="feedback" text-align: center;><b>Great!</b> Do You Mind telling us how we are doing?</label>
-        <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 5%;" required></textarea>
-        <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden;">
-
-        <input id="submits" type="submit" style="visibility: hidden;">
-        </form>
-      </div>
-
-      <button id="submitButton" class="btn btn-primary" style="margin-left: 6%; margin-top: -10px;">Submit</button>
+        <div style="padding-top: 5%;" style="text-align: center;">
 
 
-
+          <label for="feedback" text-align: center;><b>Great!</b> Do You Mind telling us how we are doing?</label>
+          <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 5%;" required></textarea>
+          <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden;">
+          <input id="date" name="date" type="text" style="visibility: hidden;">
+          <input id="submits" type="submit" style="visibility: hidden;">
+      </form>
     </div>
+
+    <button id="submitButton" class="btn btn-primary" style="margin-left: 6%; margin-top: -10px;">Submit</button>
+
+
+
+  </div>
   </div>
 
 
@@ -99,6 +100,22 @@
     }
   }
 
+  const currentDate = new Date();
+
+
+  function addLeadingZero(number) {
+    return number < 10 ? "0" + number : number;
+  }
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const year = currentDate.getFullYear();
+  const monthIndex = currentDate.getMonth(); // Months are zero-based, so January is 0
+  const monthName = monthNames[monthIndex];
+  const day = addLeadingZero(currentDate.getDate());
+
+
+
   var subbtn = document.getElementById("submitButton");
 
 
@@ -114,6 +131,7 @@
       }
     }
     document.getElementById("star_val").value = selectedValue;
+    document.getElementById("date").value = monthName + " " + day + " ," + year;
     document.getElementById("submits").click();
 
 

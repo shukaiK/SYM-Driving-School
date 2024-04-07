@@ -14,9 +14,10 @@
             <p><span th:text="${'Name: '+ review.first_name + ' ' + review.last_name}"></span></p>
             <p><span th:text="${'The Number of Stars: ' +review.stars}"></span></p>
             <p><span th:text="${'Review: '+ review.feedback}"></span></p>
-            <input type="hidden" th:name="rid" th:value="${review.rid}">
+            <p><span th:text="${'Date: '+ review.date}"></span></p>
+            <input type="hidden" name="rid" id="rid" th:value="${review.rid}">
             <select name="display_review" id="display_review">
-                <option value="">Select</option>
+                <option value="" disabled>Select</option>
                 <option value="Remove">Remove Review</option>
                 <option value="show">Show Review</option>
             </select>

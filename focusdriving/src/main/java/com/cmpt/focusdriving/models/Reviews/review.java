@@ -3,7 +3,7 @@ package com.cmpt.focusdriving.models.Reviews;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
+
 @Entity
 @Table(name = "review")
 public class review implements Serializable{
@@ -16,10 +16,33 @@ public class review implements Serializable{
     private String first_name;
     private String last_name;
     private String display;
+    private String date;
     
 
     
     
+    public review(String stars, String feedback, String first_name, String last_name, String date) {
+        this.stars = stars;
+        this.feedback = feedback;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.date = date;
+        this.display = "hide";
+    }
+
+    
+
+    public review(String stars, String feedback, String date) {
+        this.stars = stars;
+        this.feedback = feedback;
+        this.date = date;
+        this.first_name = " ";
+        this.last_name = " ";
+        this.display = "hide";
+    }
+
+
+
     public review() {
     }
     public int getRid() {
@@ -72,6 +95,12 @@ public class review implements Serializable{
     }
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
 
     
