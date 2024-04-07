@@ -176,31 +176,13 @@
                         <div class="clientImage">
                             <span th:text="${review.first_name + ' ' + review.last_name}"></span>
                         </div>
-                        <ul id="starRating">
-                            <input type="hidden" th:value="${review.stars}" id="stars">
+                        <ul class="starRating">
+                            <input type="hidden" th:value="${review.stars}" class="stars">
                         </ul>
                         
-                        <script>
-                            // Wait for the DOM to be fully loaded
-                            document.addEventListener("DOMContentLoaded", function() {
-                                let starValue = parseInt(document.getElementById("stars").value);
                         
-                                // Get the ul element to append stars
-                                let starRating = document.getElementById("starRating");
                         
-                                // Generate stars based on starValue
-                                for (let i = 1; i <= 5; i++) {
-                                    let star = document.createElement("li");
-                                    if (i <= starValue) {
-                                        star.innerHTML = '<i class="fa-solid fa-star"></i>';
-                                    } else {
-                                        star.innerHTML = '<i class="fa-regular fa-star"></i>';
-                                    }
-                                    starRating.appendChild(star);
-                                }
-                            });
-                        </script>
-                        
+
                     </div>
                     <article>
                         <p class="review" th:text="${review.feedback}"> </p>
@@ -208,7 +190,30 @@
                     </article>
                 </div>
             </div>
-
+            <script>
+                // Wait for the DOM to be fully loaded
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Select all elements with the class "starRating"
+                    let starRatingElements = document.querySelectorAll(".starRating");
+            
+                    // Iterate over each starRating element
+                    starRatingElements.forEach(function(starRating) {
+                        // Get the stars value for this review
+                        let starValue = parseInt(starRating.querySelector(".stars").value);
+            
+                        // Generate stars based on starValue
+                        for (let i = 1; i <= 5; i++) {
+                            let star = document.createElement("li");
+                            if (i <= starValue) {
+                                star.innerHTML = '<i class="fa-solid fa-star"></i>';
+                            } else {
+                                star.innerHTML = '<i class="fa-regular fa-star"></i>';
+                            }
+                            starRating.appendChild(star);
+                        }
+                    });
+                });
+            </script>
             <!-- Clients Review-1 Section Starts from Here  -->
             <div class="reviewItem">
                 <div class="top">
