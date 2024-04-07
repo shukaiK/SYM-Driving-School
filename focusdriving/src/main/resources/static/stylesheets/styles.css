@@ -35,6 +35,8 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: #333;
+  font-size: 30px; /*made a change here */
+  font-weight: bold;
 }
 
 .nav-link {

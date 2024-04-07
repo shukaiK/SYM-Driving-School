@@ -35,6 +35,8 @@
   nav ul li {
     display: inline;
     margin-right: 50px;
+    font-size: 30px; /*made a change here */
+    font-weight: bold;
   }
   
   nav ul li a {
