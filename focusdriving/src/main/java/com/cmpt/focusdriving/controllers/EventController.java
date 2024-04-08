@@ -26,7 +26,6 @@ public class EventController {
     @Autowired
     EventRepository eventRepo;
 
-
     @GetMapping("/api/events")
     List<Event> all() {
         return eventRepo.findAll();
@@ -47,9 +46,18 @@ public class EventController {
         return e;
     }
 
+    // @PostMapping("/api/events/update")
+    // void updateEventText(@RequestBody EventUpdateParams params) {
+
+    //     Event e = eventRepo.findById(params.id).get();
+    //     e.setText(params.text);
+    //     eventRepo.save(e);
+
+    //     // return e;
+    // }
+
     @PostMapping("/api/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @Transactional
     Event moveEvent(@RequestBody EventMoveParams params) {
 
         Event e = eventRepo.findById(params.id).get();
@@ -74,11 +82,43 @@ public class EventController {
         return e;
     }
 
+    @PostMapping("/api/events/delete")
+    Event deleteEvent(@RequestBody EventUpdateParams params) {
+
+        Event e = eventRepo.findById(params.id).get();
+        eventRepo.delete(e);
+        return e;
+    }
+
     public static class EventCreateParams {
         public LocalDateTime start;
         public LocalDateTime end;
         public String text;
         public Long resource;
+    }
+
+    public static class EventUpdateParams {
+        private Long id;
+        private String text;
+
+        public EventUpdateParams() {
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
     }
 
     public static class EventMoveParams {

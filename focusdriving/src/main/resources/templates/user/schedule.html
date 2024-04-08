@@ -78,11 +78,27 @@
                     end: args.end,
                     text: modal.result
                 };
-                console.log("parameters created")
+
                 const { data } = await DayPilot.Http.post("/api/events/create", params);
-                console.log("created an event")
                 dp.events.add(data);
-                console.log("event added to data");
+                console.log("event created");
+            },
+
+            onEventClicked: async args => {
+
+                const form = [
+                    { name: "Text", id: "text" },
+                    { name: "Student", id: "student", type: "form-select" },
+                    // { name: "Start", id: "start", type: "datetime" },
+                    // { name: "End", id: "end", type: "datetime" },
+                ];
+
+                const modal = await DayPilot.Modal.form(form, args.e.data);
+
+                if (modal.canceled) {
+                    return;
+                }
+                dp.events.update(modal.result);
             },
             onEventMove: async (args) => {
                 const params = {
@@ -117,12 +133,6 @@
             },
             contextMenu: new DayPilot.Menu({
                 items: [
-                {
-                        text: "Delete event",
-                        icon: "icon icon-blue",
-                        color: "#1066a8",
-                        // onClick: (args) => app.data.e. delete event
-                    },
                     {
                         text: "Blue",
                         icon: "icon icon-blue",
@@ -152,6 +162,19 @@
         });
         dp.init();
 
+        // delete handling
+        dp.eventDeleteHandling = "Update";
+        dp.onEventDelete = function (args) {
+            if (!confirm("Do you really want to delete this event?")) {
+                args.preventDefault();
+            }
+        };
+        dp.onEventDeleted = function (args) {
+            const params = {
+                id: args.e.id(),
+            };
+            DayPilot.Http.post("/api/events/delete", params);
+        };
 
         const app = {
             init: () => {
