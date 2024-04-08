@@ -63,6 +63,8 @@ public class reviewController
     {
         List<review> reviews = reviewRepo.findByDisplay("hide");
         model.addAttribute("reviews",reviews);
+        List<review> reviewVisable = reviewRepo.findByDisplay("show");
+        model.addAttribute("reviewVisable",reviewVisable);
        return "user/ownerReviews";
     }
 
