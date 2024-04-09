@@ -36,6 +36,13 @@
         </form><br><br>
     </div>
 
+    <div class="main-content" th:if="${adminUser}">
+        <div>Return to admin dashboard</div>
+        <form th:action="@{/user/viewAssignedStudents}" method="get">
+            <button type="submit" class="dashbutton">Admin Dashboard</button>
+        </form><br><br>
+    </div>
+
 </body>
 
 </html>

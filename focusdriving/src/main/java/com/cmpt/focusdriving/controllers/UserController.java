@@ -99,7 +99,10 @@ public String showLoginForm(HttpServletRequest request, Model model, @RequestPar
 }
 
     @GetMapping("/user/dashboard")
-    public String showDashboard() {
+    public String showDashboard(Model model) {
+
+    model.addAttribute("adminUser", "Admin Dashboard");
+
         return "user/dashboard"; // Name of the Thymeleaf template without the .html extension
     }
 
