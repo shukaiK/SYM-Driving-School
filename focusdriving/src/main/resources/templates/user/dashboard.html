@@ -95,25 +95,20 @@
         <h1>Instructor Dashboard</h1>
     </div>
 
-    <!-- <div class="main-content">
-        <div>Click the button to view all bookings:</div>
-        <form th:action="@{/user/bookingview}" method="get">
-            <button type="submit" class="dashbutton">View Bookings</button>
-        </form><br><br>
+    <div>
+        <form action="">
+            <div class="subtitle">
+                <label for="sid">New booking for:</label>
+                <select name="sid" id="sid" class="form-select">
+                    <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}">
+                    </option>
+                </select> <br>
+            </div>
+        </form>
     </div>
 
-    <div class="main-content">
-        <div>View your assigned students and their information</div>
-        <form th:action="@{/user/viewAssignedStudents}" method="get">
-            <button type="submit" class="dashbutton">View My Students</button>
-        </form><br><br>
-    </div>
 
-    <div th:if="${adminUser}">
-        <form th:action="@{/admin/dashboard}" method="get">
-            <button type="submit" class="dashbutton">Admin Dashboard</button>
-        </form><br><br>
-    </div> -->
+    
 
 </body>
 
