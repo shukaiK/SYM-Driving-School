@@ -76,6 +76,7 @@
                     <option value="">Select</option>
                     <option value="learner">Learner (Getting class 7)</option>
                     <option value="class7">Class 7 (Getting class 5)</option>
+                    <option value="class5">Class 5 (Getting class 4)</option>
                 </select>
             </div>
 
@@ -244,67 +245,68 @@
             console.log(Sun);
             document.getElementById("formbutton").click();
         }
+        
         var map = L.map('map');
-    var geocodeUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}';
-    var marker;
+        var geocodeUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}';
+        var marker;
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
 
-    // Function to add marker at a specific location
-    function addMarker(latlng) {
-        if (marker) {
-            map.removeLayer(marker);
+        // Function to add marker at a specific location
+        function addMarker(latlng) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(latlng).addTo(map);
+            reverseGeocode(latlng);
         }
-        marker = L.marker(latlng).addTo(map);
-        reverseGeocode(latlng);
-    }
 
-    // Function to perform reverse geocoding
-    function reverseGeocode(latlng) {
-        fetch(geocodeUrl.replace('{lat}', latlng.lat).replace('{lon}', latlng.lng))
-            .then(response => response.json())
-            .then(data => {
-                const address = data.display_name || "Location not provided";
-                document.getElementById('address').value = address;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const address = "Location not provided";
-                document.getElementById('address').value = address;
-            });
-    }
-
-    // Set user's location as default marker
-    function setDefaultMarker(pos) {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        const accuracy = pos.coords.accuracy;
-
-        const latlng = L.latLng(lat, lng);
-        addMarker(latlng);
-
-        map.setView(latlng, 13);
-    }
-
-    // Handle errors in getting user's location
-    function error(err) {
-        if (err.code == 1) {
-            console.log("Location access denied, location has not been recorded");
-        } else {
-            console.log("Failed to get user location, location has not been recorded");
+        // Function to perform reverse geocoding
+        function reverseGeocode(latlng) {
+            fetch(geocodeUrl.replace('{lat}', latlng.lat).replace('{lon}', latlng.lng))
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.display_name || "Location not provided";
+                    document.getElementById('address').value = address;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const address = "Location not provided";
+                    document.getElementById('address').value = address;
+                });
         }
-    }
 
-    // Get user's location and set default marker
-    navigator.geolocation.getCurrentPosition(setDefaultMarker, error);
+        // Set user's location as default marker
+        function setDefaultMarker(pos) {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            const accuracy = pos.coords.accuracy;
 
-    // Allow user to click on the map to place a marker
-    map.on('click', function(e) {
-        addMarker(e.latlng);
-    });
+            const latlng = L.latLng(lat, lng);
+            addMarker(latlng);
+
+            map.setView(latlng, 13);
+        }
+
+        // Handle errors in getting user's location
+        function error(err) {
+            if (err.code == 1) {
+                console.log("Location access denied, location has not been recorded");
+            } else {
+                console.log("Failed to get user location, location has not been recorded");
+            }
+        }
+
+        // Get user's location and set default marker
+        navigator.geolocation.getCurrentPosition(setDefaultMarker, error);
+
+        // Allow user to click on the map to place a marker
+        map.on('click', function(e) {
+            addMarker(e.latlng);
+        });
     </script>
 
 </body>

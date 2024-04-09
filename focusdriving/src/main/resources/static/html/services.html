@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driving School</title>
+    <title>SYM Driving School</title>
     <link rel="stylesheet" href="../stylesheets/services.css">
+    <style>
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,14 +23,15 @@
         </a>
         <nav>
             <ul>
-                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <!--<li><a href="#" class="nav-link">Testimonials</a></li> -->
                 <li><a href="#" class="nav-link">Services</a></li>
                 <li><a href="popup.html" class="nav-link">Reviews</a></li>
             </ul>
         </nav>
         <div class="language buttons">
-            <button class="language-button" id="english">EN</button>
-            <button class="language-button" id="chinese">CN</button>
+            <button class="language-button" id="english" onclick="window.location.href='/html/services.html'">EN</button>
+            <button class="language-button" id="chinese" onclick="window.location.href='/html/cn/services_cn.html'">中文</button>
         </div>
         <div class="buttons">
             <button class="log-in" onclick="window.location.href='/login'">Log In</button>
@@ -32,20 +40,39 @@
     </div>
     </header>
     
-    
     <div class="title">
         <h1>Services Offered</h1>
     </div>
     <div class="subtitle">
-        <h1>Below Are a Few of the Services we Provide</h1>
+        <h1>Below are few of the services we provide:</h1>
     </div>
 
-    <div class="main-content">
-        <p class="paragraph">* Single Driving Lesson Rates</p>
-        <p class="paragraph">* Car Rentals for Road Tests</p>
-        <p class="paragraph">* Road Test Booking for You</p>
-        
-    </div>    
+    <div class="main-container">
+        <p class="paragraph">Regular Driving Lessons</p>
+        <p class="subtitle">60 minute of lesson time. Rates fluctuates and include pick up and drop off. Please contact for more info</p>
+        <p class="paragraph">Car Rentals for Road Tests</p>
+        <p class="subtitle">Car rental for road test includes a 60 minute warm-up before road test. If customer is not a 
+            student of SYM Driving School, an 1 hour driving skill assessment will be required. Rates are the same as Regular 
+            Driving Lessons. Please contact for more info</p>
+        <p class="paragraph">Road Test Booking Service</p>
+        <p class="subtitle">SYM Driving School can book your road test for you (you need your own vehicle)</p>
+        <p class="paragraph">Additional Passenger</p>
+        <p class="subtitle">We allow 1 additional passenger to observe the lesson. Please contact for more info</p>
+
+        <br><h2 class="title">Additional Info:</h2>
+        <b><p class="subtitle">There will be no refunds for lessons that have taken place, unused lessons balance will be refunded upon request. 
+            Please email us at SYMCHOW@gmail.com for refund requests.
+        </p>
+        <p class="subtitle">Lesson cancellations must be done atleast 24-hours in advanced to avoid being charged 50% of the lesson fee as 
+            cancellation fee. Cancellation must be done by e-mail, phone or text. If a student is absent for a booked lesson, they will be 
+            charged the full amount for that lesson.
+        </p>
+        <p class="subtitle">Road test cancellations must be done atleast 72-hours in advance for us to alert ICBC. Failure to give 72-hour
+            notice in advance will result in a late cancellation fee charged by ICBC.
+        </p>
+        <p class="subtitle">SYM Driving School reserve the right to claim against the student who cause an accident during a lesson or road test.
+        </p></b>
+    </div>
     
     <footer>
         <p class="copyright">2024 Driving School. All rights reserved. </p>

@@ -3,6 +3,3 @@ document.querySelectorAll('.nav-link').forEach(function(link) {
       this.style.setProperty('--width', this.offsetWidth + 'px');
     });
   });
-  
-
-  
