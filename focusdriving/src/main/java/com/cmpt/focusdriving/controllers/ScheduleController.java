@@ -46,33 +46,6 @@ public class ScheduleController {
         return null;
     }
 
-    // @GetMapping("/user/viewschedule/{uid}")
-    // public String showSchedule(@PathVariable("uid") Integer uid, Model model) {
-    // // String username = (userRepo.findByUid(uid).get(0).getName());
-    // Optional<User> userOptional = userRepo.findByUid(uid);
-    // if (userOptional.isPresent()) {
-    // User user = userOptional.get();
-    // String username = user.getName();
-    // model.addAttribute("username", username);
-    // }
-
-    // return "/user/schedule";
-    // }
-
-    // @GetMapping("/user/viewschedule/{name}")
-    // public String showSchedule(@PathVariable("currentUser") String name, Model
-    // model) {
-    // // String username = (userRepo.findByUid(uid).get(0).getName());
-    // Optional<User> userOptional = userRepo.findByName(name);
-    // if (userOptional.isPresent()) {
-    // User user = userOptional.get();
-    // String username = user.getName();
-    // model.addAttribute("currentUser", username);
-    // }
-
-    // return "/user/schedule";
-    // }
-
     @GetMapping("/user/viewschedule")
     public String showSchedule(Model model) {
         List<Student> students = studentRepo.findByInstructor(getCurrentUsername());
@@ -86,26 +59,4 @@ public class ScheduleController {
         return "/user/schedule";
     }
 
-    // @GetMapping(value = "/username")
-    // public String currentUserName(Authentication authentication) {
-    // return authentication.getName();
-    // }
-
-    // @PostMapping("/user/viewschedule")
-    // public String submitBooking(@RequestParam("uid") String uid) {
-
-    // Student student = (studentRepo.findBySid(Integer.parseInt(sid))).get(0); //
-    // Retrieve student from repository
-
-    // // create new booking
-    // Booking booking = new Booking();
-    // booking.setStudent(student);
-    // booking.setDate(date);
-    // booking.setStartTime(startTime);
-    // booking.setEndTime(endTime);
-
-    // // save new booking
-    // bookingRepo.save(booking);
-    // return "redirect:/user/bookingview";
-    // }
 }

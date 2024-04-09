@@ -49,21 +49,43 @@ public class EventController {
         return null;
     }
 
-    @GetMapping("/api/events")
-    List<Event> all() {
+    @GetMapping("/api/allevents")
+    List<Event> allEvents() {
         Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
+        
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             System.out.println(user.getName());
+
+            if (user.getRole().equals("ADMIN")) {
+                return eventRepo.findAll();
+            } else {
+
+                return null;
+            }
+        } else {
+
+            // if user not found
+            return null;
+        }
+    }
+
+    @GetMapping("/api/instructorevents")
+    List<Event> instructorEvents() {
+        Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             if (user.getRole().equals("USER")) {
+
                 return eventRepo.findByInstructorName(user.getName());
             } else {
-                return eventRepo.findAll();
-            }
 
+                return null;
+            }
         } else {
-            // handle case if user not found
-            System.out.println("User not found");
+
+            // if user not found
             return null;
         }
     }
@@ -129,6 +151,12 @@ public class EventController {
         eventRepo.delete(e);
         return e;
     }
+
+    // @GetMapping("/api/studentName")
+    // public String studentName() {
+    // return "name";
+    // }
+    // }
 
     public static class EventCreateParams {
         public LocalDateTime start;

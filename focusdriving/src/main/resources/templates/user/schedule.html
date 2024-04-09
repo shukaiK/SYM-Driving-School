@@ -55,6 +55,7 @@
     <script th:inline="javascript">
 
         var studentId = parseInt(document.getElementById("sid").value);
+        // var studentName = await DayPilot.Http.post("/api/studentName");
 
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
@@ -63,7 +64,11 @@
             onTimeRangeSelected: (args) => {
                 dp.startDate = args.day;
                 dp.update();
-                dp.events.load("/api/events");
+                // THE LOADING MAPPING WILL BE DIFFERENT:
+                // /api/allevents IF THIS CODE IS IN OWNER DASHBOARD
+                // /api/instructorevents INSTRUCTOR DASHBOARD
+                // ALSO CHANGE THE MAPPING ON LINE 158
+                dp.events.load("/api/instructorevents");
             }
         });
         datePicker.init();
@@ -98,10 +103,13 @@
 
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
+                var studentName = 'jj';
                 const form = [
                     { name: "Text", id: "text" },
-                    { name: "ssss", id: "text2" },
-
+                    // {
+                    //     type: 'html',
+                    //     html: studentName,
+                    // },
                 ];
                 const modal = await DayPilot.Modal.form(form, args.e.data);
                 if (modal.canceled) {
@@ -187,7 +195,7 @@
 
         const app = {
             init: () => {
-                dp.events.load("/api/events");
+                dp.events.load("/api/instructorevents");
             },
             async updateColor(e, color) {
                 const params = {
