@@ -2,6 +2,7 @@ package com.cmpt.focusdriving.controllers;
 
 import com.cmpt.focusdriving.models.Events.Event;
 import com.cmpt.focusdriving.models.Events.EventRepository;
+import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
 import com.cmpt.focusdriving.models.User.User;
 import com.cmpt.focusdriving.models.User.UserRepository;
@@ -21,7 +22,9 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
@@ -52,7 +55,7 @@ public class EventController {
     @GetMapping("/api/allevents")
     List<Event> allEvents() {
         Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
-        
+
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             System.out.println(user.getName());
@@ -152,11 +155,141 @@ public class EventController {
         return e;
     }
 
-    // @GetMapping("/api/studentName")
-    // public String studentName() {
-    // return "name";
-    // }
-    // }
+    @GetMapping("/api/eventTitle")
+    @ResponseBody
+    public String eventTitle(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+
+            return event.getText();
+
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    @GetMapping("/api/eventInstructor")
+    @ResponseBody
+    public String eventInstructor(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+            String eventInstructor = event.getInstructorName();
+
+            return eventInstructor;
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    @GetMapping("/api/studentName")
+    @ResponseBody
+    public String studentName(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+            Optional<Student> optionalStudent = studentRepo.findById(event.getSid());
+
+            if (optionalStudent.isPresent()) { // student is valid
+                Student student = optionalStudent.get();
+                String studentName = student.getName();
+                return studentName;
+            } else {
+                // if student not found
+                return "STUDENT NOT FOUND";
+            }
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    @GetMapping("/api/studentLocation")
+    @ResponseBody
+    public String studentLocation(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+            Optional<Student> optionalStudent = studentRepo.findById(event.getSid());
+
+            if (optionalStudent.isPresent()) { // student is valid
+                Student student = optionalStudent.get();
+                String studentLocation = student.getAddress();
+                return studentLocation;
+            } else {
+                // if student not found
+                return "STUDENT NOT FOUND";
+            }
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    @GetMapping("/api/studentEmail")
+    @ResponseBody
+    public String studentEmail(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+            Optional<Student> optionalStudent = studentRepo.findById(event.getSid());
+
+            if (optionalStudent.isPresent()) { // student is valid
+                Student student = optionalStudent.get();
+                String studentEmail = student.getEmail();
+                return studentEmail;
+            } else {
+                // if student not found
+                return "STUDENT NOT FOUND";
+            }
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    @GetMapping("/api/studentPhone")
+    @ResponseBody
+    public String studentPhone(@RequestParam Long id) {
+        Optional<Event> optionalEvent = eventRepo.findById(id);
+
+        if (optionalEvent.isPresent()) { // event is valid
+            Event event = optionalEvent.get();
+            Optional<Student> optionalStudent = studentRepo.findById(event.getSid());
+
+            if (optionalStudent.isPresent()) { // student is valid
+                Student student = optionalStudent.get();
+                String studentPhone = student.getPhoneNumber();
+                return studentPhone;
+            } else {
+                // if student not found
+                return "STUDENT NOT FOUND";
+            }
+        } else {
+            // if user not found
+            return "ERROR";
+        }
+    }
+
+    public static class StudentNameParams {
+        public Long id;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setSid(Long id) {
+            this.id = id;
+        }
+    }
 
     public static class EventCreateParams {
         public LocalDateTime start;

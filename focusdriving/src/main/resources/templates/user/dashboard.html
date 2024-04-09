@@ -131,7 +131,6 @@
     <script th:inline="javascript">
 
         var studentId = parseInt(document.getElementById("sid").value);
-        // var studentName = await DayPilot.Http.post("/api/studentName");
 
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
@@ -173,15 +172,90 @@
                 console.log("event created");
             },
 
-
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
-                var studentName = 'jj';
+                // delate studentName before the fetch to try and make it work
+                var studentName;
+
+                const id = args.e.id();
+
+                // getters for student information --------------------------------------
+                // get the student's name to display in onclick popup
+                const nameurl = `/api/studentName?id=${id}`;
+                await fetch(nameurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentName = data;
+
+                        console.log(studentName);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's location to display in onclick popup
+                const locationurl = `/api/studentLocation?id=${id}`;
+                await fetch(locationurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentLocation = data;
+
+                        console.log(studentLocation);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's email to display in onclick popup
+                const emailurl = `/api/studentEmail?id=${id}`;
+                await fetch(emailurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentEmail = data;
+
+                        console.log(studentEmail);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's phone to display in onclick popup
+                const phoneurl = `/api/studentPhone?id=${id}`;
+                await fetch(phoneurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentPhone = data;
+
+                        console.log(studentPhone);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                // end of getters for student information ---------------------------
+
+                // the popup window when the event is clicked
                 const form = [
-                    { name: "Text", id: "text" },
+                    // edit the title of the event
+                    { name: "Title", id: "text" },
                     {
                         type: 'html',
-                        html: studentName,
+                        html: 'Student Information:', // display the student's name
+                    },
+                    {
+                        type: 'html',
+                        html: 'Name: ' + studentName, // display the student's name
+                    },
+                    {
+                        type: 'html',
+                        html: 'Location: ' + studentLocation, // display the student's location
+                    },
+                    {
+                        type: 'html',
+                        html: 'Email: ' + studentEmail, // display the student's email
+                    },
+                    {
+                        type: 'html',
+                        html: 'Phone number: ' + studentPhone, // display the student's phone number
                     },
                 ];
                 const modal = await DayPilot.Modal.form(form, args.e.data);

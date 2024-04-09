@@ -130,7 +130,6 @@
     <script th:inline="javascript">
 
         var studentId = parseInt(document.getElementById("sid").value);
-        // var studentName = await DayPilot.Http.post("/api/studentName");
 
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
@@ -142,6 +141,7 @@
                 dp.events.load("/api/allevents");
             }
         });
+        
         datePicker.init();
 
         const dp = new DayPilot.Calendar("dp", {
@@ -162,9 +162,6 @@
                     sid: studentId,
                 };
 
-                console.log("student id: " + studentId);
-                console.log("student id type: " + typeof (studentId));
-
                 const { data } = await DayPilot.Http.post("/api/events/create", params);
                 console.log("retrieved from create mapping")
                 dp.events.add(data);
@@ -174,13 +171,112 @@
 
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
-                var studentName = 'jj';
+                var etext = args.text;
+                console.log("event text: " + etext)
+                console.log("event instructor: " + args.instructor);
+                // delate studentName before the fetch to try and make it work
+                var studentName;
+
+                const id = args.e.id();
+
+                // getters for event information --------------------------------------
+                // get the event's title to display in onclick popup
+                const titleurl = `/api/eventTitle?id=${id}`;
+                await fetch(titleurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        eventTitle = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the event's instructor to display in onclick popup
+                const instructorurl = `/api/eventInstructor?id=${id}`;
+                await fetch(instructorurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        eventInstructor = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's name to display in onclick popup
+                const nameurl = `/api/studentName?id=${id}`;
+                await fetch(nameurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentName = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's location to display in onclick popup
+                const locationurl = `/api/studentLocation?id=${id}`;
+                await fetch(locationurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentLocation = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's email to display in onclick popup
+                const emailurl = `/api/studentEmail?id=${id}`;
+                await fetch(emailurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentEmail = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's phone to display in onclick popup
+                const phoneurl = `/api/studentPhone?id=${id}`;
+                await fetch(phoneurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentPhone = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                // end of getters for student information ---------------------------
+
+                // the popup window when the event is clicked
                 const form = [
-                    { name: "Text", id: "text" },
-                    // {
-                    //     type: 'html',
-                    //     html: studentName,
-                    // },
+                    {
+                        type: 'html',
+                        html: 'Title: ' + eventTitle, // display the title of the event
+                    },
+                    {
+                        type: 'html',
+                        html: 'Instructor: ' + eventInstructor, // display the instructor
+                    },
+                    {
+                        type: 'html',
+                        html: 'Student Information:',
+                    },
+                    {
+                        type: 'html',
+                        html: 'Name: ' + studentName, // display the student's name
+                    },
+                    {
+                        type: 'html',
+                        html: 'Location: ' + studentLocation, // display the student's location
+                    },
+                    {
+                        type: 'html',
+                        html: 'Email: ' + studentEmail, // display the student's email
+                    },
+                    {
+                        type: 'html',
+                        html: 'Phone number: ' + studentPhone, // display the student's phone number
+                    },
                 ];
                 const modal = await DayPilot.Modal.form(form, args.e.data);
                 if (modal.canceled) {
@@ -225,6 +321,7 @@
                     }
                 ];
             },
+            // colour menu
             contextMenu: new DayPilot.Menu({
                 items: [
                     {
@@ -270,6 +367,7 @@
             DayPilot.Http.post("/api/events/delete", params);
         };
 
+        // handle changing the colour of the event
         const app = {
             init: () => {
                 dp.events.load("/api/allevents");
