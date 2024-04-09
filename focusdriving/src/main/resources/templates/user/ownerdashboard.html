@@ -139,10 +139,6 @@
             onTimeRangeSelected: (args) => {
                 dp.startDate = args.day;
                 dp.update();
-                // THE LOADING MAPPING WILL BE DIFFERENT:
-                // /api/allevents IF THIS CODE IS IN OWNER DASHBOARD
-                // /api/instructorevents INSTRUCTOR DASHBOARD
-                // ALSO CHANGE THE MAPPING ON LINE 158
                 dp.events.load("/api/allevents");
             }
         });
