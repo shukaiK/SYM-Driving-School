@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Reviews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        .border {
+            border: 3px solid #333;
+            border-radius: 5px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+        .review-container {
+            border: 2px solid #8f0707;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+        
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        select {
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Owner Reviews</h1>
+    </nav>
+    <h2>Pending Reviews</h2>
+    <div class="border">
+        <div th:each="review : ${reviews}">
+            <div class="review-container">
+                <form action="/admin/reviews" method="post">
+                    <p><strong>Name:</strong> <span th:text="${review.first_name + ' ' + review.last_name}"></span></p>
+                    <p><strong>The Number of Stars:</strong> <span th:text="${review.stars}"></span></p>
+                    <p><strong>Review:</strong> <span th:text="${review.feedback}"></span></p>
+                    <p><strong>Date:</strong> <span th:text="${review.date}"></span></p>
+                    <input type="hidden" name="rid" th:value="${review.rid}">
+                    <select name="display_review">
+                        <option value="" disabled selected>Select</option>
+                        <option value="Remove">Remove Review</option>
+                        <option value="show">Show Review</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <h2>Change Visible Reviews Permission</h2>
+    <div class="border">
+        <div th:each="Visible : ${reviewVisable}">
+            <div class="review-container">
+                <form action="/admin/reviews" method="post">
+                    <p><strong>Name:</strong> <span th:text="${Visible.first_name + ' ' + Visible.last_name}"></span></p>
+                    <p><strong>The Number of Stars:</strong> <span th:text="${Visible.stars}"></span></p>
+                    <p><strong>Review:</strong> <span th:text="${Visible.feedback}"></span></p>
+                    <p><strong>Date:</strong> <span th:text="${Visible.date}"></span></p>
+                    <input type="hidden" name="rid" th:value="${Visible.rid}">
+                    <select name="display_review">
+                        <option value="" disabled selected>Select</option>
+                        <option value="Remove">Remove Review</option>
+                        <option value="show">Show Review</option>
+                        <option value="hide">Move to Pending</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>
