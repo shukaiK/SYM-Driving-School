@@ -4,52 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pop-Up Rating</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="">
-    <link rel="stylesheet" href="../stylesheets/popup_nav.css">
-    <style>
-      .nav-link:hover::after {
-        width: var(--width);
-      }
-    </style>
+  <title>Popup Example</title>
+ 
 
-    <script>
-      // Fetch and include navbar.html
-      window.addEventListener('DOMContentLoaded', function () {
-          fetch('navbar.html')
-              .then(response => response.text())
-              .then(data => {
-                  document.getElementById('navbar-container').innerHTML = data;
-              });
-      });
-  </script>
-
+  <link rel="stylesheet" href="../stylesheets/reviewbtn.css">
+  <script src="../javascript/review.js" defer></script>
+  <style>
+   .model{position:fixed;top:0;left:0;z-index:1060;display:none;width:100%;height:100%;overflow-x:hidden;overflow-y:auto;outline:0}
+   .modal-content{position:relative;display:flex;flex-direction:column;width:100%;pointer-events:auto;background-color:#fff;background-clip:padding-box;border:1px solid rgba(0,0,0,.2);border-radius:.3rem;outline:0}
+  </style>
 </head>
 
 <body>
 
-  <div id="navbar-container"></div>
-
-  <button id="openModalBtn" style="margin-left: 85%; margin-top: 2%; margin-right: 2%;"> <img src="../images/RateUs.jpg" alt=""
-      style="max-height: 50px; border-radius: 3px; padding: -40px;"> </button>
+  <button id="openModalBtn" class="feedbackBtn" > feedback </button>
 
 
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <P style="margin-top: 5%;  text-align: center;"><b>PLEASE RATE US</b> </P>
+      <P style="margin-top: 5%;  text-align: center; margin-bottom: 7%;"><b>PLEASE RATE US</b> </P>
       <form action="/html/review" method="post">
         <div style="text-align: center;">
           
-          <input type="text" name="first" id="first" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%;" placeholder="First Name (Optional)"> <br>
+          <input type="text" name="first" id="first" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size:14px;" placeholder="First Name (Optional)"> <br>
           
-          <input type="text" name="last" id="last" style="border: none; border-bottom: 1px solid black;" placeholder="Last Name (Optional)"> <br>
+          <input type="text" name="last" id="last" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size:14px;" placeholder="Last Name (Optional)"> <br>
         </div>
 
-        <p style="color: gold; text-align: center; margin-bottom: 0px;">___________________</p>
-        <div style="margin-left: 90px;">
-          <div class="rate">
+        <p style="color: gold; text-align: center; margin-bottom: 0px; ">____________________________</p> <br>
+     
+        <div style="margin-left: 180px; ">
+          <div class="rate" >
             <input type="radio" id="star5" name="rate" value="5" required />
             <label for="star5" title="text">5 stars</label>
             <input type="radio" id="star4" name="rate" value="4" />
@@ -61,214 +47,29 @@
             <input type="radio" id="star1" name="rate" value="1" />
             <label for="star1" title="text">1 star</label>
           </div>
-        </div>
-        <p style="color: gold; text-align: center;">__________________________</p>
+        </div> <br>
+      <p style="color: gold; text-align: center;">____________________________</p> <br>
 
-        <div style="padding-top: 5%;" style="text-align: center;">
+       
 
-
+        <div style="margin-left: 15%; ">
           <label for="feedback" style="text-align: center; margin-left: 10px;"><b>Great!</b> Do You Mind telling us how we are doing?</label>
-          <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 5%;" required></textarea>
-          <div id="charCount" style="margin-left: 290px;">0/217</div>
-          <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden; ">
+          <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 12%;" required></textarea>
+           <div id="charCount" style="margin-left: 270px;">0/217</div>
+    <button id="submitButton" class="button" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 3%; margin-top: -300px;">Submit</button>
+
+      </div>
+        <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden; ">
           <input id="date" name="date" type="text" style="visibility: hidden;">
-          <input id="submits" type="submit" maxlength="217" style="visibility: hidden;">
+          <input id="submits" type="submit" maxlength="217" style="visibility: hidden;"> 
           
       </form>
     </div>
 
-    <button id="submitButton" class="btn btn-primary" style="margin-left: 3%; margin-top: -30px;">Submit</button>
+
 
   </div>
   
 </body>
+
 </html>
-
-
-<script>
-  // Get the modal element
-  var modal = document.getElementById('myModal');
-
-  // Get the button that opens the modal
-  var btn = document.getElementById("openModalBtn");
-
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-
-  // When the user clicks the button, open the modal
-  btn.onclick = function () {
-    modal.style.display = "block";
-  }
-
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-
-  const currentDate = new Date();
-
-
-  function addLeadingZero(number) {
-    return number < 10 ? "0" + number : number;
-  }
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  const year = currentDate.getFullYear();
-  const monthIndex = currentDate.getMonth(); // Months are zero-based, so January is 0
-  const monthName = monthNames[monthIndex];
-  const day = addLeadingZero(currentDate.getDate());
-
-
-
-  var subbtn = document.getElementById("submitButton");
-
-
-  subbtn.addEventListener("click", function () {
-    var stars = document.getElementsByName('rate');
-
-    var selectedValue = "";
-
-    for (var i = 0; i < stars.length; i++) {
-      if (stars[i].checked) {
-        selectedValue = stars[i].value;
-        break;
-      }
-    }
-    document.getElementById("star_val").value = selectedValue;
-    document.getElementById("date").value = monthName + " " + day + " ," + year;
-    document.getElementById("submits").click();
-
-
-  })
-
-  var textarea = document.getElementById("feedback");
-
-
-  var charCount = document.getElementById("charCount");
-
-  // Add event listener for input event
-  textarea.addEventListener("input", function () {
-    // Get the current character count
-    var count = textarea.value.length;
-
-    // Check if the character count exceeds the limit
-    if (count > 217) {
-      // Trim the text to the limit
-      textarea.value = textarea.value.slice(0, 217);
-      count = 217; // Update the character count
-    }
-
-    // Update the character count display
-    charCount.textContent = count + "/217";
-  });
-
-</script>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  .rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-  }
-
-  .rate:not(:checked)>input {
-    position: absolute;
-    top: -9999px;
-  }
-
-  .rate:not(:checked)>label {
-    float: right;
-    width: 1em;
-    overflow: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 230%;
-    color: #ccc;
-  }
-
-  .rate:not(:checked)>label:before {
-    content: '★ ';
-  }
-
-  .rate>input:checked~label {
-    color: #ffc700;
-  }
-
-  .rate:not(:checked)>label:hover,
-  .rate:not(:checked)>label:hover~label {
-    color: #deb217;
-  }
-
-  .rate>input:checked+label:hover,
-  .rate>input:checked+label:hover~label,
-  .rate>input:checked~label:hover,
-  .rate>input:checked~label:hover~label,
-  .rate>label:hover~input:checked~label {
-    color: #c59b08;
-  }
-
-  .modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-  }
-
-  .modal-content {
-
-    background-color: #fefefe;
-    margin: 15% auto;
-
-    /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 25%;
-    /* Could be more or less, depending on screen size */
-    height: 600px;
-  }
-
-  /* Close button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-</style>
-
-
-
-
-
-
