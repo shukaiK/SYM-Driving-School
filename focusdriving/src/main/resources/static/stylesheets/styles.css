@@ -15,12 +15,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2%; /* 20px */
+  padding: 20px; /* 20px */
 }
 
 .logo img {
-  max-height: 10%; /* 100px */
-  max-width: 20%; /* 200px */
+  max-height: 100px; /* 100px */
+  max-width: 200px; /* 200px */
 }
 
 nav ul {
@@ -29,7 +29,7 @@ nav ul {
 
 nav ul li {
   display: inline;
-  margin-right: 5%; /* 50px */
+  margin-right: 50px; /* 50px */
 }
 
 nav ul li a {
@@ -46,13 +46,13 @@ nav ul li a {
 .nav-link:hover::after {
   content: '';
   display: block;
-  /*width: 100px;*/
-  height: 0.2%; /* 2px */
+  width: 100px;
+  height: 2px; /* 2px */
   background-color: #333;
   position: absolute;
-  bottom: -0.3%; /* -3px */
+  bottom: -3px; /* -3px */
   left: 0;
-  width: 100%; /* previously auto */
+  width: auto; /* previously auto */
   transition: width 0.3s ease;
 }
 
@@ -61,8 +61,8 @@ nav ul li a {
 }
 
 .buttons button {
-  padding: 1% 2%; /* 10px 20px */
-  margin-left: 0%; /* 0 */
+  padding: 10px 20px; /* 10px 20px */
+  margin-left: 0; /* 0 */
   border: none;
   cursor: pointer;
 }
@@ -79,14 +79,14 @@ nav ul li a {
 }
 
 .language-buttons {
-  margin-top: 2%; /* 20px */
+  margin-top: 20px; /* 20px */
 }
 
 .language-button {
-  padding: 1%, 2%; /* 10px 20px */
+  padding: 10px, 20px; /* 10px 20px */
   border: none;
   cursor: pointer;
-  font-size: 0.8em; /* 8px */
+  font-size: 8px; /* 8px */
 }
 
 #english {
@@ -106,42 +106,42 @@ nav ul li a {
 
 .title {
   text-align: center;
-  margin-top: 1%; /* 10px */
-  margin-bottom: 1%; /* 10px */
+  margin-top: 10px; /* 10px */
+  margin-bottom: 10px; /* 10px */
 }
 
 .title h1 {
-  font-size: 8vw; /* 96px */
+  font-size: 96px; /* 96px */
   color: #333;
 }
 
 .subtitle {
   text-align: center;
-  margin-top: 1%; /* 10px */
-  margin-bottom: 1%; /* 10px */
+  margin-top: 10px; /* 10px */
+  margin-bottom: 10px; /* 10px */
 }
 
 .subtitle h1 {
-  font-size: 4vw; /* 48px */
+  font-size: 48px; /* 48px */
   color: #333;
 }
 
 .paragraph {
   text-align: center;
-  margin: 2% auto; /* 20px auto */
-  max-width: 60%; /* 800px */
-  font-size: 2vw; /* 30px */
-  margin-bottom: 2%; /* 20px */
+  margin: 20px auto; /* 20px auto */
+  max-width: 800px; /* 800px */
+  font-size: 30px; /* 30px */
+  margin-bottom: 20px; /* 20px */
 }
 
 footer {
   text-align: center;
-  padding: 2%; /* 20px */
+  padding: 20px; /* 20px */
   background-color: #fafafa;
 }
 
 .copyright {
-  font-size: 1vw; /* 14px */
+  font-size: 14px; /* 14px */
   color: #fc0808;
 }
 
@@ -159,13 +159,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2%; /* 20px */
+    padding: 20px; /* 20px */
     width: 100%; /* made a change here */
   }
 
   .logo img {
-    max-height: 8%; /* 100px */
-    max-width: 15%; /* 200px */
+    max-height: 100px; /* 100px */
+    max-width: 200px; /* 200px */
   }
 
   nav ul {
@@ -190,19 +190,19 @@ header {
   nav ul li {
     display: block;
     margin: 0;
-    margin-bottom: 5%; /* 50px */
+    margin-bottom: 50px; /* 50px */
   }
 
   .language-buttons {
-    margin-top: 5%; /* 20px */
+    margin-top: 20px; /* 20px */
 
   }
 
   .language-button {
-    padding: 1%, 2%; /* 10px 20px */
+    padding: 10px, 20px; /* 10px 20px */
     border: none;
     cursor: pointer;
-    font-size: 0.6em; /* 8px */
+    font-size: 8px; /* 8px */
   }
 
   #english {
@@ -221,8 +221,8 @@ header {
 
   .title {
     text-align: center;
-    margin-top: 5%; /* 10px */
-    margin-bottom: 5%; /* 10px */
+    margin-top: 10px; /* 10px */
+    margin-bottom: 10px; /* 10px */
   }
 
   .title h1 {
@@ -232,8 +232,8 @@ header {
 
   .subtitle {
     text-align: center;
-    margin-top: 5%;   /* 10px */
-    margin-bottom: 5%; /* 10px */
+    margin-top: 10px;   /* 10px */
+    margin-bottom: 10px; /* 10px */
   }
 
   .subtitle h1 {
@@ -243,19 +243,19 @@ header {
 
   .paragraph {
     text-align: center;
-    margin: 5% auto; /* 20px auto*/
-    max-width: 80%; /* 800px */
-    font-size: 3vw;  /* 30px */
+    margin: 20px auto; /* 20px auto*/
+    max-width: 800px; /* 800px */
+    font-size: 30px;  /* 30px */
   }
 
   footer {
     text-align: center;
-    padding: 2%; /* 20px */
+    padding: 20px; /* 20px */
     background-color: #fafafa;
   }
 
   .copyright {
-    font-size: 1.5vw; /* 14px */
+    font-size: 14px; /* 14px */
     color: #fc0808;
   }
 
