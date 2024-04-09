@@ -64,7 +64,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
             Student newStudent2 = new Student("another", "nlue@gmail.com", "778-never", "1800876", "class 7",
                     "Sfu burnaby", availability);
-                    newStudent.setInstructor("user");
+            newStudent2.setInstructor("user");
             studentRepository.save(newStudent2);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -99,185 +99,201 @@
         <h1>Admin Dashboard</h1>
     </div>
 
- <!-- DayPilot Pro library-->
- <script src="../javascript/daypilot-all.min.js"></script>
+    <form action="">
+        <div class="subtitle">
+            <label for="sid">Student Name:</label>
+            <select name="sid" id="sid" class="form-select">
+                <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}">
+                </option>
+            </select> <br>
+        </div>
+    </form>
 
- <div style="padding-left: 30px; padding-right: 30px;">
-     <!-- calendar schedule -->
-     <div class="main" style="display: flex;">
-         <div style="margin-right: 10px;">
-             <!-- placeholder, day selector sidebar -->
-             <div id="nav"></div>
-         </div>
-         <div style="flex-grow: 1">
-             <!-- placeholder, this is where the calendar appears -->
-             <div id="dp"></div>
-         </div>
-     </div>
- </div>
+    <!-- DayPilot Pro library-->
+    <script src="../javascript/daypilot-all.min.js"></script>
 
-
- <script th:inline="javascript">
-
-     var studentId = parseInt(document.getElementById("sid").value);
-     // var studentName = await DayPilot.Http.post("/api/studentName");
-
-     const datePicker = new DayPilot.Navigator("nav", {
-         showMonths: 3,
-         skipMonths: 3,
-         selectMode: "week",
-         onTimeRangeSelected: (args) => {
-             dp.startDate = args.day;
-             dp.update();
-             // THE LOADING MAPPING WILL BE DIFFERENT:
-             // /api/allevents IF THIS CODE IS IN OWNER DASHBOARD
-             // /api/instructorevents INSTRUCTOR DASHBOARD
-             // ALSO CHANGE THE MAPPING ON LINE 158
-             dp.events.load("/api/instructorevents");
-         }
-     });
-     datePicker.init();
-
-     const dp = new DayPilot.Calendar("dp", {
-         viewType: "Week",
-         headerDateFormat: "d MMMM yyyy",
-         onTimeRangeSelected: async (args) => {
-             console.log("Times selected")
-             const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");
-             dp.clearSelection();
-             if (modal.canceled) {
-                 console.log("Canceled")
-                 return;
-             }
-             const params = {
-                 start: args.start,
-                 end: args.end,
-                 text: modal.result,
-                 sid: studentId,
-             };
-
-             console.log("student id: " + studentId);
-             console.log("student id type: " + typeof (studentId));
-
-             const { data } = await DayPilot.Http.post("/api/events/create", params);
-             console.log("retrieved from create mapping")
-             dp.events.add(data);
-             console.log("event created");
-         },
+    <div style="padding-left: 30px; padding-right: 30px;">
+        <!-- calendar schedule -->
+        <div class="main" style="display: flex;">
+            <div style="margin-right: 10px;">
+                <!-- placeholder, day selector sidebar -->
+                <div id="nav"></div>
+            </div>
+            <div style="flex-grow: 1">
+                <!-- placeholder, this is where the calendar appears -->
+                <div id="dp"></div>
+            </div>
+        </div>
+    </div>
 
 
-         onEventClicked: async args => {
-             console.log("student id: " + studentId);
-             var studentName = 'jj';
-             const form = [
-                 { name: "Text", id: "text" },
-                 // {
-                 //     type: 'html',
-                 //     html: studentName,
-                 // },
-             ];
-             const modal = await DayPilot.Modal.form(form, args.e.data);
-             if (modal.canceled) {
-                 return;
-             }
-             dp.events.update(modal.result);
-         },
-         onEventMove: async (args) => {
-             const params = {
-                 id: args.e.id(),
-                 start: args.newStart,
-                 end: args.newEnd
-             };
-             const { data } = await DayPilot.Http.post("/api/events/move", params);
-             console.log("Event moved");
-         },
-         onEventResize: async (args) => {
-             const params = {
-                 id: args.e.id(),
-                 start: args.newStart,
-                 end: args.newEnd
-             };
-             const { data } = await DayPilot.Http.post("/api/events/move", params);
-             console.log("Event resized");
-         },
-         onBeforeEventRender: (args) => {
-             args.data.barColor = args.data.color;
-             args.data.areas = [
-                 {
-                     top: 2,
-                     right: 2,
-                     icon: "icon-triangle-down",
-                     visibility: "Visible",
-                     action: "ContextMenu",
-                     style: "font-size: 12px; background-color: #f9f9f9; border: 1px solid #ccc; padding: 2px 2px 0px 2px; cursor:pointer;"
-                 }
-             ];
-         },
-         contextMenu: new DayPilot.Menu({
-             items: [
-                 {
-                     text: "Blue",
-                     icon: "icon icon-blue",
-                     color: "#1066a8",
-                     onClick: (args) => app.updateColor(args.source, args.item.color)
-                 },
-                 {
-                     text: "Green",
-                     icon: "icon icon-green",
-                     color: "#6aa84f",
-                     onClick: (args) => app.updateColor(args.source, args.item.color)
-                 },
-                 {
-                     text: "Yellow",
-                     icon: "icon icon-yellow",
-                     color: "#f1c232",
-                     onClick: (args) => app.updateColor(args.source, args.item.color)
-                 },
-                 {
-                     text: "Red",
-                     icon: "icon icon-red",
-                     color: "#cc0000",
-                     onClick: (args) => app.updateColor(args.source, args.item.color)
-                 },
-             ]
-         })
-     });
-     dp.init();
+    <script th:inline="javascript">
 
-     // handle deletions
-     dp.eventDeleteHandling = "Update";
-     dp.onEventDelete = function (args) {
-         if (!confirm("Do you really want to delete this event?")) {
-             args.preventDefault();
-         }
-     };
-     dp.onEventDeleted = function (args) {
-         const params = {
-             id: args.e.id(),
-         };
-         DayPilot.Http.post("/api/events/delete", params);
-     };
+        var studentId = parseInt(document.getElementById("sid").value);
+        // var studentName = await DayPilot.Http.post("/api/studentName");
 
-     const app = {
-         init: () => {
-             dp.events.load("/api/instructorevents");
-         },
-         async updateColor(e, color) {
-             const params = {
-                 id: e.id(),
-                 color: color
-             };
-             const { data } = await DayPilot.Http.post("/api/events/setColor", params);
-             e.data.color = color;
-             dp.events.update(e);
-             console.log("Color updated");
-         }
-     };
-     app.init();
+        const datePicker = new DayPilot.Navigator("nav", {
+            showMonths: 3,
+            skipMonths: 3,
+            selectMode: "week",
+            onTimeRangeSelected: (args) => {
+                dp.startDate = args.day;
+                dp.update();
+                // THE LOADING MAPPING WILL BE DIFFERENT:
+                // /api/allevents IF THIS CODE IS IN OWNER DASHBOARD
+                // /api/instructorevents INSTRUCTOR DASHBOARD
+                // ALSO CHANGE THE MAPPING ON LINE 158
+                dp.events.load("/api/allevents");
+            }
+        });
+        datePicker.init();
+
+        const dp = new DayPilot.Calendar("dp", {
+            viewType: "Week",
+            headerDateFormat: "d MMMM yyyy",
+            onTimeRangeSelected: async (args) => {
+                console.log("Times selected")
+                const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");
+                dp.clearSelection();
+                if (modal.canceled) {
+                    console.log("Canceled")
+                    return;
+                }
+                const params = {
+                    start: args.start,
+                    end: args.end,
+                    text: modal.result,
+                    sid: studentId,
+                };
+
+                console.log("student id: " + studentId);
+                console.log("student id type: " + typeof (studentId));
+
+                const { data } = await DayPilot.Http.post("/api/events/create", params);
+                console.log("retrieved from create mapping")
+                dp.events.add(data);
+                console.log("event created");
+            },
 
 
- </script>
-    
+            onEventClicked: async args => {
+                console.log("student id: " + studentId);
+                var studentName = 'jj';
+                const form = [
+                    { name: "Text", id: "text" },
+                    // {
+                    //     type: 'html',
+                    //     html: studentName,
+                    // },
+                ];
+                const modal = await DayPilot.Modal.form(form, args.e.data);
+                if (modal.canceled) {
+                    return;
+                }
+                dp.events.update(modal.result);
+            },
+            onEventMove: async (args) => {
+                if (!confirm("Do you really want to move this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                    args.preventDefault();
+                }
+                const params = {
+                    id: args.e.id(),
+                    start: args.newStart,
+                    end: args.newEnd
+                };
+                const { data } = await DayPilot.Http.post("/api/events/move", params);
+                console.log("Event moved");
+            },
+            onEventResize: async (args) => {
+                if (!confirm("Do you really want to resize this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                    args.preventDefault();
+                }
+                const params = {
+                    id: args.e.id(),
+                    start: args.newStart,
+                    end: args.newEnd
+                };
+                const { data } = await DayPilot.Http.post("/api/events/move", params);
+                console.log("Event resized");
+            },
+            onBeforeEventRender: (args) => {
+                args.data.barColor = args.data.color;
+                args.data.areas = [
+                    {
+                        top: 2,
+                        right: 2,
+                        icon: "icon-triangle-down",
+                        visibility: "Visible",
+                        action: "ContextMenu",
+                        style: "font-size: 12px; background-color: #f9f9f9; border: 1px solid #ccc; padding: 2px 2px 0px 2px; cursor:pointer;"
+                    }
+                ];
+            },
+            contextMenu: new DayPilot.Menu({
+                items: [
+                    {
+                        text: "Blue",
+                        icon: "icon icon-blue",
+                        color: "#1066a8",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Green",
+                        icon: "icon icon-green",
+                        color: "#6aa84f",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Yellow",
+                        icon: "icon icon-yellow",
+                        color: "#f1c232",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Red",
+                        icon: "icon icon-red",
+                        color: "#cc0000",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                ]
+            })
+        });
+        dp.init();
+
+        // handle deletions
+        dp.eventDeleteHandling = "Update";
+        dp.onEventDelete = function (args) {
+            if (!confirm("Do you really want to delete this event?")) {
+                args.preventDefault();
+            }
+        };
+        dp.onEventDeleted = function (args) {
+            const params = {
+                id: args.e.id(),
+            };
+            DayPilot.Http.post("/api/events/delete", params);
+        };
+
+        const app = {
+            init: () => {
+                dp.events.load("/api/allevents");
+            },
+            async updateColor(e, color) {
+                const params = {
+                    id: e.id(),
+                    color: color
+                };
+                const { data } = await DayPilot.Http.post("/api/events/setColor", params);
+                e.data.color = color;
+                dp.events.update(e);
+                console.log("Color updated");
+            }
+        };
+        app.init();
+
+
+    </script>
+
 
 
 
