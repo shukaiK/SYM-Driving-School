@@ -24,20 +24,21 @@ public class Event implements Serializable {
 
     String color;
 
-    String username;
+    Integer sid;
 
-    Student student;
+    String instructorName;
 
-    String instructor;
+    // Student student;
 
     public Event() {
 
     }
 
-    public Event(LocalDateTime start, LocalDateTime end, String text) {
+    public Event(LocalDateTime start, LocalDateTime end, String text, String instructorName) {
         this.start = start;
         this.end = end;
         this.text = text;
+        this.instructorName = instructorName;
     }
 
     public Long getId() {
@@ -80,11 +81,27 @@ public class Event implements Serializable {
         this.color = color;
     }
 
-    public Student getStudent() {
-        return student;
+    public Integer getSid() {
+        return sid;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
+    // public Student getStudent() {
+    // return student;
+    // }
+
+    // public void setStudent(Student student) {
+    // this.student = student;
+    // }
 }

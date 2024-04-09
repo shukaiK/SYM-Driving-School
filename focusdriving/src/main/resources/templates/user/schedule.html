@@ -14,41 +14,47 @@
         <div class="container dashheader">
             <form th:action="@{/login}" method="post">
                 <button type="submit" class="dashbutton">Back to Dashboard</button>
+
             </form>
         </div>
         <div class="subtitle">
             <h1>Lessons</h1> <br>
         </div>
 
-        Current user: <div th:text="${currentUser}"></div>
+        <form action="">
+            <div class="subtitle">
+                <label for="sid">Student Name:</label>
+                <select name="sid" id="sid" class="form-select">
+                    <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}">
+                    </option>
+                </select> <br>
+            </div>
+        </form>
+
 
     </div>
 
     <!-- DayPilot Pro library-->
     <script src="../javascript/daypilot-all.min.js"></script>
 
-    <!-- calendar schedule -->
-    <div class="main" style="display: flex;">
-        <div style="margin-right: 10px;">
-            <!-- day selector sidebar -->
-            <div id="nav"></div>
-        </div>
-        <div style="flex-grow: 1">
-            <!-- placeholder, this is where the calendar appears -->
-            <div id="dp"></div>
-        </div>
-    </div>
-
-    <div class="main" style="display: flex;">
-        <div style="margin-right: 10px;">
-            <div id="nav"></div>
-        </div>
-        <div style="flex-grow: 1">
-            <div id="dp"></div>
+    <div style="padding-left: 30px; padding-right: 30px;">
+        <!-- calendar schedule -->
+        <div class="main" style="display: flex;">
+            <div style="margin-right: 10px;">
+                <!-- placeholder, day selector sidebar -->
+                <div id="nav"></div>
+            </div>
+            <div style="flex-grow: 1">
+                <!-- placeholder, this is where the calendar appears -->
+                <div id="dp"></div>
+            </div>
         </div>
     </div>
 
-    <script>
+
+    <script th:inline="javascript">
+
+        var studentId = parseInt(document.getElementById("sid").value);
 
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
@@ -76,25 +82,28 @@
                 const params = {
                     start: args.start,
                     end: args.end,
-                    text: modal.result
+                    text: modal.result,
+                    sid: studentId,
                 };
 
+                console.log("student id: " + studentId);
+                console.log("student id type: " + typeof (studentId));
+
                 const { data } = await DayPilot.Http.post("/api/events/create", params);
+                console.log("retrieved from create mapping")
                 dp.events.add(data);
                 console.log("event created");
             },
 
-            onEventClicked: async args => {
 
+            onEventClicked: async args => {
+                console.log("student id: " + studentId);
                 const form = [
                     { name: "Text", id: "text" },
-                    { name: "Student", id: "student", type: "form-select" },
-                    // { name: "Start", id: "start", type: "datetime" },
-                    // { name: "End", id: "end", type: "datetime" },
+                    { name: "ssss", id: "text2" },
+
                 ];
-
                 const modal = await DayPilot.Modal.form(form, args.e.data);
-
                 if (modal.canceled) {
                     return;
                 }
@@ -162,7 +171,7 @@
         });
         dp.init();
 
-        // delete handling
+        // handle deletions
         dp.eventDeleteHandling = "Update";
         dp.onEventDelete = function (args) {
             if (!confirm("Do you really want to delete this event?")) {

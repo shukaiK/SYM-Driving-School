@@ -2,6 +2,9 @@ package com.cmpt.focusdriving.controllers;
 
 import com.cmpt.focusdriving.models.Events.Event;
 import com.cmpt.focusdriving.models.Events.EventRepository;
+import com.cmpt.focusdriving.models.Student.StudentRepository;
+import com.cmpt.focusdriving.models.User.User;
+import com.cmpt.focusdriving.models.User.UserRepository;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
@@ -19,6 +22,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 public class EventController {
@@ -26,9 +33,39 @@ public class EventController {
     @Autowired
     EventRepository eventRepo;
 
+    @Autowired
+    StudentRepository studentRepo;
+
+    @Autowired
+    UserRepository userRepo;
+
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();
+        }
+
+        return null;
+    }
+
     @GetMapping("/api/events")
     List<Event> all() {
-        return eventRepo.findAll();
+        Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            System.out.println(user.getName());
+            if (user.getRole().equals("USER")) {
+                return eventRepo.findByInstructorName(user.getName());
+            } else {
+                return eventRepo.findAll();
+            }
+
+        } else {
+            // handle case if user not found
+            System.out.println("User not found");
+            return null;
+        }
     }
 
     @PostMapping("/api/events/create")
@@ -36,25 +73,28 @@ public class EventController {
     @Transactional
     Event createEvent(@RequestBody EventCreateParams params) {
 
+        System.out.println("----------CREATE MAPPING TRIGGERED --------");
+        System.out.println("----------STUDENT ID: " + params.sid + " --------");
+
+        if (studentRepo.findBySid(params.sid).isEmpty()) {
+            // handle error: student not found
+            System.out.println("----------STUDENT NOT FOUND--------");
+            return null;
+        }
+
         Event e = new Event();
         e.setStart(params.start);
         e.setEnd(params.end);
         e.setText(params.text);
+        e.setSid(params.sid);
+        e.setInstructorName(getCurrentUsername());
 
         eventRepo.save(e);
 
+        System.out.println("----------REACHED END OF EVENT CREATE--------");
+
         return e;
     }
-
-    // @PostMapping("/api/events/update")
-    // void updateEventText(@RequestBody EventUpdateParams params) {
-
-    //     Event e = eventRepo.findById(params.id).get();
-    //     e.setText(params.text);
-    //     eventRepo.save(e);
-
-    //     // return e;
-    // }
 
     @PostMapping("/api/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -95,6 +135,15 @@ public class EventController {
         public LocalDateTime end;
         public String text;
         public Long resource;
+        public int sid;
+
+        public int getSid() {
+            return sid;
+        }
+
+        public void setSid(int sid) {
+            this.sid = sid;
+        }
     }
 
     public static class EventUpdateParams {
@@ -119,6 +168,7 @@ public class EventController {
         public void setText(String text) {
             this.text = text;
         }
+
     }
 
     public static class EventMoveParams {
