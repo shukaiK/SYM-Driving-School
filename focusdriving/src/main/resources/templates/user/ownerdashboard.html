@@ -3,48 +3,100 @@
 
 <head>
     <title>OWNER Dashboard</title>
-    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <style>
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        .nav-links ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+        }
+
+        .nav-links ul li {
+            margin-right: 10px;
+        }
+
+        .nav-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+
+        .dashheader {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dashcontent {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dashbutton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dashbutton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="">
-        <!-- logout button -->
-        <div class="container dashheader">
+    <div class="navigation">
+        <div class="nav-links">
+            <ul>
+                <li>
+                    <form th:action="@{/admin/manageInstructors}" method="get">
+                        <button type="submit" class="nav-button">Manage Instructors</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/admin/pending}" method="get">
+                        <button type="submit" class="nav-button">Manage Students</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/user/dashboard}" method="get">
+                        <button type="submit" class="nav-button">My User Dashboard</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="dashheader">
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="dashbutton">Logout</button>
             </form>
-            <form th:action="@{/admin/manageInstructors}" method="get">
-                <button type="submit" class="dashbutton">Manage Instructors</button>
-            </form>
-        </div>
-        <div class="subtitle">
-            <h1>Admin Dashboard</h1>
         </div>
     </div>
 
-    <!-- list of all bookings -->
-    <div class="dashcontent">
-        <div>Click the button to view all bookings</div>
-        <form th:action="@{/user/bookingview}" method="get">
-            <button type="submit" class="dashbutton">View Bookings</button>
-        </form><br><br>
-
-    </div>
-
-    <div class="dashcontent">
-        <div>Assign students to instructors</div>
-        <form th:action="@{/admin/pending}" method="get">
-            <button type="submit" class="dashbutton">Assign Students</button>
-        </form><br><br>
-
-        <div class="dashcontent">
-            <div>Personal User Dashboard/Calendar</div>
-            <form th:action="@{/user/dashboard}" method="get">
-                <button type="submit" class="dashbutton">My User Dashboard</button>
-            </form><br><br>
-
+    <div class="subtitle">
+        <h1>Admin Dashboard</h1>
     </div>
 
 </body>

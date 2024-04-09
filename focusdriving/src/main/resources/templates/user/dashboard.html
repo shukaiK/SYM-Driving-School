@@ -3,45 +3,117 @@
 
 <head>
     <title>USER Dashboard</title>
-    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <style>
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .nav-links ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+        }
+
+        .nav-links ul li {
+            margin-right: 10px;
+        }
+
+        .nav-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+
+        .dashheader {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .main-content {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dashbutton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dashbutton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-  
-    <div class="">
-        <!-- logout button -->
+    <div class="navigation">
+        <div class="nav-links">
+            <ul>
+                <li>
+                    <form th:action="@{/user/viewAssignedStudents}" method="get">
+                        <button type="submit" class="nav-button">View My Students</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
         <div class="d-flex justify-content-end dashheader">
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="dashbutton">Logout</button>
             </form>
-        </div>
-        <div class="subtitle">
-            <h1>Instructor Dashboard</h1>
+            <div th:if="${adminUser}">
+                <form th:action="@{/admin/dashboard}" method="get">
+                    <button type="submit" class="nav-button">Admin Dashboard</button>
+                </form><br><br>
+            </div>
+
         </div>
     </div>
 
-    <!-- button to go to bookingsview page -->
-    <div class="dashcontent">
+    <div class="subtitle">
+        <h1>Instructor Dashboard</h1>
+    </div>
+
+    <!-- <div class="main-content">
         <div>Click the button to view all bookings:</div>
         <form th:action="@{/user/bookingview}" method="get">
             <button type="submit" class="dashbutton">View Bookings</button>
         </form><br><br>
     </div>
 
-    <div class="dashcontent">
+    <div class="main-content">
         <div>View your assigned students and their information</div>
         <form th:action="@{/user/viewAssignedStudents}" method="get">
             <button type="submit" class="dashbutton">View My Students</button>
         </form><br><br>
     </div>
 
-    <div class="main-content" th:if="${adminUser}">
-        <div>Return to admin dashboard</div>
-        <form th:action="@{/user/viewAssignedStudents}" method="get">
+    <div th:if="${adminUser}">
+        <form th:action="@{/admin/dashboard}" method="get">
             <button type="submit" class="dashbutton">Admin Dashboard</button>
         </form><br><br>
-    </div>
+    </div> -->
 
 </body>
 
