@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="../images/logo.png" alt="Driving School Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="about.html" class="navbar-nav-link">About</a></li>
+                    <li><a href="services.html" class="navbar-nav-link">Services</a></li>
+                    <li><a href="popup.html" class="navbar-nav-link">Reviews</a></li>
+                </ul>
+            </nav>
+            <div class="navbar-language buttons">
+                <button class="navbar-language-button" id="english" onclick="window.location.href='/html/home.html'">EN</button>
+                <button class="navbar-language-button" id="chinese" onclick="window.location.href='/html/cn/home_cn.html'">中文</button>
+            </div>
+            <div class="navbar-buttons">
+                <button class="navbar-log-in" onclick="window.location.href='/login'">Log In</button>
+                <button class="navbar-book-appointment" onclick="window.location.href='/html/studentform.html'">Book Appointment</button>
+            </div>
+        </div>
+    </header>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/javascript/slideshow.js"></script>
+
+
+</body>
+</html>

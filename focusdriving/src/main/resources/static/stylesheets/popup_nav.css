@@ -1,0 +1,103 @@
+/* Styles for the navbar in popup.html */
+
+/* Styles for the navbar in popup.html */
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px;
+    background-color: #c96249;
+    max-width: 100%;
+  }
+  
+  .navbar-logo img {
+    max-height: 100px;
+    max-width: 200px;
+  }
+  
+  navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  navbar ul li {
+    display: inline;
+    margin-right: 50px;
+  }
+  
+  navbar ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #000000;
+    position: relative;
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .navbar-nav-link:hover::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #333;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: auto;
+    transition: width 0.3s ease;
+  }
+  
+  .navbar-nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .navbar-buttons button {
+    padding: 10px 20px;
+    margin-left: 0;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .navbar-log-in {
+    background-color: #00050b;
+    color: #fff;
+  }
+  
+  .navbar-book-appointment {
+    background-color: #ea1d19;
+    color: #fff;
+  }
+  
+  .navbar-language-buttons {
+    margin-top: 20px;
+  }
+  
+  .navbar-language-button {
+    padding: 10px, 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 8px;
+  }
+  
+  .navbar #english {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .navbar #chinese {
+    background-color: #ec540e;
+    color: #fff;
+  }
+  
+  .navbar #english:hover,
+  .navbar #chinese:hover {
+    opacity: 0.8;
+  }
+  
+  
