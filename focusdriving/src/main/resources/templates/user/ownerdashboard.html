@@ -143,7 +143,7 @@
                 // /api/allevents IF THIS CODE IS IN OWNER DASHBOARD
                 // /api/instructorevents INSTRUCTOR DASHBOARD
                 // ALSO CHANGE THE MAPPING ON LINE 158
-                dp.events.load("/api/instructorevents");
+                dp.events.load("/api/allevents");
             }
         });
         datePicker.init();
@@ -193,6 +193,9 @@
                 dp.events.update(modal.result);
             },
             onEventMove: async (args) => {
+                if (!confirm("Do you really want to move this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                    args.preventDefault();
+                }
                 const params = {
                     id: args.e.id(),
                     start: args.newStart,
@@ -202,6 +205,9 @@
                 console.log("Event moved");
             },
             onEventResize: async (args) => {
+                if (!confirm("Do you really want to resize this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                    args.preventDefault();
+                }
                 const params = {
                     id: args.e.id(),
                     start: args.newStart,
@@ -270,7 +276,7 @@
 
         const app = {
             init: () => {
-                dp.events.load("/api/instructorevents");
+                dp.events.load("/api/allevents");
             },
             async updateColor(e, color) {
                 const params = {
