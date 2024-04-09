@@ -16,7 +16,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 28px; /* 20px */
-  background-color: #c96249;
+  background-color: #fff;
 }
 
 .logo img {
@@ -280,6 +280,7 @@ header {
     margin: 20px auto; /* 20px auto*/
     max-width: 800px; /* 800px */
     font-size: 30px;  /* 30px */
+    color: #000000;
   }
 
   footer {

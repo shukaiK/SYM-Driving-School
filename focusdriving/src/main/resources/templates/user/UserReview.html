@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Clients Review UI </title>
+    <title> Student Reviews</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
     <script>
         function createStarList(numStars, ulId) {
             // Create the <ul> element with the specified ID
@@ -47,18 +46,30 @@
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            background-color: #e7e0e0;
+            background-color: #da781c;
+            /* background-color: #e7e0e0; */
+            background-image: linear-gradient(to bottom right, #ce3f3f, #524c4c);
+
         }
 
         h2 {
-            font-size: 2rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             text-align: center;
+            top: 20px; 
+            position: fixed;
+            text-decoration: underline;
+            text-underline-position: under;
         }
 
         .description {
             text-align: center;
             width: 43%;
+            font-size: 1.6rem;
+            margin-bottom: 1rem; 
+            top: 135px;
+            position: fixed;
+
         }
 
         .clientImage {
@@ -156,6 +167,33 @@
                 justify-content: center;
             }
         }
+
+        .buttons {
+            text-align: center; /* Align the button to the center */
+            margin-top: 20px; /* Add some spacing above the button */
+            top: 10px;
+            left: 20px;
+            position: fixed;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #242020;
+            color: #fff;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-to-home:hover {
+            background-color: #0056b3;
+        }
+
+
+
     </style>
 
 
@@ -165,7 +203,7 @@
     <!-- Main Container for Clients Review -->
     <div class="container">
         <h2> Our Happy Clients </h2>
-        <p class="description"> Please read from our past students</p>
+        <p class="description">** Please read from our past students **</p>
 
         <!-- Clients Review Section -->
         <div class="reviewSection">
@@ -180,7 +218,7 @@
                         <ul class="starRating">
                             <input type="hidden" th:value="${review.stars}" class="stars">
                         </ul>
-                                           
+
 
                     </div>
                     <article>
@@ -239,6 +277,12 @@
 
 
         </div>
+        <!---include back to homepage button below: -->
+        <div class="buttons">
+            <button class="back-to-home" onclick="window.location.href='/html/home.html'">Back to HomePage</button>
+        </div>
+
+
     </div>
 </body>
 
