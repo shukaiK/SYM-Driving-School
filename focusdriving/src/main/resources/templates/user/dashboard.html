@@ -7,6 +7,8 @@
 </head>
 
 <body>
+
+  
     <div class="">
         <!-- logout button -->
         <div class="d-flex justify-content-end dashheader">
@@ -20,10 +22,17 @@
     </div>
 
     <!-- button to go to bookingsview page -->
-    <div class="main-content">
+    <div class="dashcontent">
         <div>Click the button to view all bookings:</div>
         <form th:action="@{/user/bookingview}" method="get">
             <button type="submit" class="dashbutton">View Bookings</button>
+        </form><br><br>
+    </div>
+
+    <div class="dashcontent">
+        <div>View your assigned students and their information</div>
+        <form th:action="@{/user/viewAssignedStudents}" method="get">
+            <button type="submit" class="dashbutton">View My Students</button>
         </form><br><br>
     </div>
 

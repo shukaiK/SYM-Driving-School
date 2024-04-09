@@ -2,6 +2,8 @@ package com.cmpt.focusdriving.controllers;
 
 import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +41,17 @@ public class StudentController {
 
     @Autowired
     private BookingRepository bookingRepo;
+
+    public String getCurrentUsername() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+    if (authentication != null && authentication.isAuthenticated()) {
+        return authentication.getName();
+    }
+    
+    // Return null or handle the case where no user is authenticated
+    return null;
+}
 
     @PostMapping("/html/form")
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
@@ -132,8 +145,18 @@ public String assign(@RequestParam Map<String, String> submission, HttpServletRe
 }
 
 
-    
-    
-    
-    
+@GetMapping("/user/viewAssignedStudents")
+public String getAssignedStudents(Model model) {
+    System.out.println("Getting all students");
+    // get all students from the database
+    List<Student> students = studentRepo.findByInstructor(getCurrentUsername());
+    // end of database call
+    model.addAttribute("students", students);
+    return "user/viewAssignedStudents";
 }
+}
+    
+    
+  
+    
+
