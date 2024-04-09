@@ -52,7 +52,7 @@ public class EventController {
     @GetMapping("/api/allevents")
     List<Event> allEvents() {
         Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
-        
+
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             System.out.println(user.getName());
@@ -152,11 +152,10 @@ public class EventController {
         return e;
     }
 
-    // @GetMapping("/api/studentName")
-    // public String studentName() {
-    // return "name";
-    // }
-    // }
+    @GetMapping("/api/studentName")
+    public String studentName() {
+        return "name";
+    }
 
     public static class EventCreateParams {
         public LocalDateTime start;

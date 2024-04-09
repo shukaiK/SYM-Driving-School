@@ -56,6 +56,32 @@
 
         var studentId = parseInt(document.getElementById("sid").value);
         // var studentName = await DayPilot.Http.post("/api/studentName");
+        // fetch('/api/studentName')
+        //     .then(response => response.text()) // assuming the response is plain text
+        //     .then(data => {
+        //         // Store the returned name in a variable
+        //         const studentName = data;
+
+        //         // Now you can use the studentName variable as needed
+        //         console.log('Student Name:', studentName);
+
+        //         // Or perform any other operations with the studentName variable
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching student name:', error);
+        //     });
+
+        async function exampleFunction() {
+            try {
+                const studentName = await fetchStudentName();
+                console.log("student name async function called")
+                console.log('Student Name:', studentName);
+                console.log("type of studentName: " + typeof (studentName))
+                // Now you can use the studentName variable as needed
+            } catch (error) {
+                // Handle errors
+            }
+        }
 
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
@@ -101,15 +127,16 @@
             },
 
 
+
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
-                var studentName = 'jj';
+                // var studentName = 'jj';
                 const form = [
                     { name: "Text", id: "text" },
-                    // {
-                    //     type: 'html',
-                    //     html: studentName,
-                    // },
+                    {
+                        type: 'html',
+                        html: studentName,
+                    },
                 ];
                 const modal = await DayPilot.Modal.form(form, args.e.data);
                 if (modal.canceled) {
