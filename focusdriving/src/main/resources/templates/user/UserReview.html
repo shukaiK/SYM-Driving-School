@@ -6,31 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Student Reviews</title>
+    <link rel="stylesheet" href="../stylesheets/reviewbtn.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        function createStarList(numStars, ulId) {
-            // Create the <ul> element with the specified ID
-            var ulElement = document.createElement("ul");
-            ulElement.id = "name";
-
-            // Create list items with star icons based on the number provided
-            for (var i = 0; i < numStars; i++) {
-                var listItem = document.createElement("li");
-                var icon = document.createElement("i");
-                icon.className = "fa-solid fa-star";
-                listItem.appendChild(icon);
-                ulElement.appendChild(listItem);
-            }
-
-
+    
+    <style>
+        .model {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1060;
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            outline: 0;
         }
 
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: .3rem;
+            outline: 0;
+        }
 
-
-    </script>
-    <style>
         * {
             margin: 0;
             padding: 0;
@@ -191,15 +199,30 @@
         .back-to-home:hover {
             background-color: #0056b3;
         }
-
-
-
     </style>
 
+    <script>
+        function createStarList(numStars, ulId) {
+            // Create the <ul> element with the specified ID
+            var ulElement = document.createElement("ul");
+            ulElement.id = "name";
+
+            // Create list items with star icons based on the number provided
+            for (var i = 0; i < numStars; i++) {
+                var listItem = document.createElement("li");
+                var icon = document.createElement("i");
+                icon.className = "fa-solid fa-star";
+                listItem.appendChild(icon);
+                ulElement.appendChild(listItem);
+            }
+        }
+    </script>
 
 </head>
-
 <body>
+    <!-- Feedback Button -->
+    <button id="openModalBtn" class="feedbackBtn">Feedback</button>
+    
     <!-- Main Container for Clients Review -->
     <div class="container">
         <h2> Our Happy Clients </h2>
@@ -207,7 +230,6 @@
 
         <!-- Clients Review Section -->
         <div class="reviewSection">
-
 
             <div th:each="review : ${reviews}">
                 <div class="reviewItem">
@@ -251,41 +273,79 @@
                     });
                 });
             </script>
-            <!-- Clients Review-1 Section Starts from Here  -->
-            <div class="reviewItem">
-                <div class="top">
-                    <div class="clientImage">
-
-                        <span>Raju Sheoran</span>
+        </div>
+        <div class="model" id="myModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p style="margin-top: 5%; text-align: center; margin-bottom: 7%;"><b>PLEASE RATE US</b></p>
+                <!-- Feedback Form -->
+                <form action="/html/review" method="post">
+                    <div style="text-align: center;">
+                        <input type="text" name="first" id="first" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="First Name (Optional)"> <br>
+                        <input type="text" name="last" id="last" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="Last Name (Optional)"> <br>
                     </div>
-                    <ul>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                    </ul>
-                </div>
-                <article>
-                    <p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
-                        voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
-                        facere exercitationem!</p>
-                    <p>Jan 01, 2023</p>
-                </article>
+                    <p style="color: gold; text-align: center; margin-bottom: 0px; ">____________________________</p> <br>
+                    <div style="margin-left: 180px; ">
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" required />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                    </div> <br>
+                    <p style="color: gold; text-align: center;">____________________________</p> <br>
+                    <div style="margin-left: 15%; ">
+                        <label for="feedback" style="text-align: center; margin-left: 10px;"><b>Great!</b> Do You Mind telling us how we are doing?</label>
+                        <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 12%;" required></textarea>
+                        <div id="charCount" style="margin-left: 270px;">0/217</div>
+                        <button id="submitButton" class="button" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 3%; margin-top: -300px;">Submit</button>
+                    </div>
+                    <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden; ">
+                    <input id="date" name="date" type="text" style="visibility: hidden;">
+                    <input id="submits" type="submit" maxlength="217" style="visibility: hidden;">
+                </form>
             </div>
-
-
-
-        </div>
-        <!---include back to homepage button below: -->
-        <div class="buttons">
-            <button class="back-to-home" onclick="window.location.href='/html/home.html'">Back to HomePage</button>
-        </div>
-
+        </div>    
 
     </div>
+    <!---include back to homepage button below: -->
+    <div class="buttons">
+        <button class="back-to-home" onclick="window.location.href='/html/home.html'">Back to HomePage</button>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("openModalBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
 </body>
-
-
-
 </html>

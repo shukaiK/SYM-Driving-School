@@ -53,28 +53,27 @@
   /* Feedback Button */
   .feedbackBtn {
     position: fixed;
-    bottom: 20px;
+    top: 45px;
     right: 20px;
-    padding: 10px 20px;
-    background: linear-gradient(to right, #1e4e1e 90%, #17b017 90%);
+    padding: 10px 15px;
+    background: linear-gradient(to right, #0562ee 90%, #08c7e9 90%);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     z-index: 999;
     transition: background-color 0.3s ease;
+    font-size: 20px;
   }
   
   .feedbackBtn:hover {
-    background: #1aaf1a;
+    background: #0562ee;
   }
   
   .rate {
     float: left;
     height: 46px;
     padding: 0 10px;
-
-
   }
 
 

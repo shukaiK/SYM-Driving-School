@@ -131,7 +131,6 @@ nav ul li a {
   z-index: -1;
 }
 
-
 .content_2 {
   position: relative;
   z-index: 1;
@@ -144,7 +143,7 @@ nav ul li a {
 }
 
 .title h1 {
-  font-size: 96px; /* 96px */
+  font-size: 84px; /* 96px */
   color: #ffffff;
 }
 
