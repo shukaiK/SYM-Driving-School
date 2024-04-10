@@ -108,7 +108,7 @@
                 </select> <br>
             </div>
         </form>
-    </div>
+    </div> <br>
 
     <!-- DayPilot Pro library-->
     <script src="../javascript/daypilot-all.min.js"></script>
@@ -148,6 +148,7 @@
         const dp = new DayPilot.Calendar("dp", {
             viewType: "Week",
             headerDateFormat: "d MMMM yyyy",
+            cellHeight: 39,
             onTimeRangeSelected: async (args) => {
                 console.log("Times selected")
                 const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");

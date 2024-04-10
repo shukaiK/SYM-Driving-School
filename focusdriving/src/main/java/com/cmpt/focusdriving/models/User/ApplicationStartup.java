@@ -68,8 +68,8 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             studentRepository.save(newStudent2);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            Event newEvent = new Event(LocalDateTime.parse("2024-04-08 07:30:00", formatter),
-                    LocalDateTime.parse("2024-04-08 01:30:00", formatter), "BAD EVENT",
+            Event newEvent = new Event(LocalDateTime.parse("2024-04-08 09:30:00", formatter),
+                    LocalDateTime.parse("2024-04-08 13:30:00", formatter), "BAD EVENT",
                     "unknown");
             eventRepository.save(newEvent);
 

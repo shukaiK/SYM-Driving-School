@@ -99,7 +99,7 @@
         <h1>Admin Dashboard</h1>
     </div>
 
-    <form action="">
+    <form action="" style="display: none;">
         <div class="subtitle">
             <label for="sid">Student Name:</label>
             <select name="sid" id="sid" class="form-select">
@@ -129,6 +129,7 @@
 
     <script th:inline="javascript">
 
+        // get the ID of the student currently selected
         var studentId = parseInt(document.getElementById("sid").value);
 
         const datePicker = new DayPilot.Navigator("nav", {
@@ -141,42 +142,45 @@
                 dp.events.load("/api/allevents");
             }
         });
-        
+
         datePicker.init();
 
         const dp = new DayPilot.Calendar("dp", {
             viewType: "Week",
+            eventMoveHandling: "Disabled",
+            eventResizeHandling: "Disabled",
+            eventDeleteHandling: "Disabled",
+            eventRightClickHandling: "Disabled",
             headerDateFormat: "d MMMM yyyy",
+            cellHeight: 39,
             onTimeRangeSelected: async (args) => {
                 console.log("Times selected")
-                const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");
+                // const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");
                 dp.clearSelection();
-                if (modal.canceled) {
-                    console.log("Canceled")
-                    return;
-                }
-                const params = {
-                    start: args.start,
-                    end: args.end,
-                    text: modal.result,
-                    sid: studentId,
-                };
+                // if (modal.canceled) {
+                //     console.log("Canceled")
+                //     return;
+                // }
+                // const params = {
+                //     start: args.start,
+                //     end: args.end,
+                //     text: modal.result,
+                //     sid: studentId,
+                // };
 
-                const { data } = await DayPilot.Http.post("/api/events/create", params);
-                console.log("retrieved from create mapping")
-                dp.events.add(data);
-                console.log("event created");
+                // const { data } = await DayPilot.Http.post("/api/events/create", params);
+                // console.log("retrieved from create mapping")
+                // dp.events.add(data);
+                // console.log("event created");
             },
-
 
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
                 var etext = args.text;
                 console.log("event text: " + etext)
                 console.log("event instructor: " + args.instructor);
-                // delate studentName before the fetch to try and make it work
-                var studentName;
 
+                // declare the event ID
                 const id = args.e.id();
 
                 // getters for event information --------------------------------------
@@ -285,28 +289,28 @@
                 dp.events.update(modal.result);
             },
             onEventMove: async (args) => {
-                if (!confirm("Do you really want to move this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
-                    args.preventDefault();
-                }
-                const params = {
-                    id: args.e.id(),
-                    start: args.newStart,
-                    end: args.newEnd
-                };
-                const { data } = await DayPilot.Http.post("/api/events/move", params);
+                // if (!confirm("Do you really want to move this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                //     args.preventDefault();
+                // }
+                // const params = {
+                //     id: args.e.id(),
+                //     start: args.newStart,
+                //     end: args.newEnd
+                // };
+                // const { data } = await DayPilot.Http.post("/api/events/move", params);
                 console.log("Event moved");
             },
             onEventResize: async (args) => {
-                if (!confirm("Do you really want to resize this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
-                    args.preventDefault();
-                }
-                const params = {
-                    id: args.e.id(),
-                    start: args.newStart,
-                    end: args.newEnd
-                };
-                const { data } = await DayPilot.Http.post("/api/events/move", params);
-                console.log("Event resized");
+                // if (!confirm("Do you really want to resize this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
+                //     args.preventDefault();
+                // }
+                // const params = {
+                //     id: args.e.id(),
+                //     start: args.newStart,
+                //     end: args.newEnd
+                // };
+                // const { data } = await DayPilot.Http.post("/api/events/move", params);
+                // console.log("Event resized");
             },
             onBeforeEventRender: (args) => {
                 args.data.barColor = args.data.color;
@@ -353,21 +357,6 @@
         });
         dp.init();
 
-        // handle deletions
-        dp.eventDeleteHandling = "Update";
-        dp.onEventDelete = function (args) {
-            if (!confirm("Do you really want to delete this event?")) {
-                args.preventDefault();
-            }
-        };
-        dp.onEventDeleted = function (args) {
-            const params = {
-                id: args.e.id(),
-            };
-            DayPilot.Http.post("/api/events/delete", params);
-        };
-
-        // handle changing the colour of the event
         const app = {
             init: () => {
                 dp.events.load("/api/allevents");
