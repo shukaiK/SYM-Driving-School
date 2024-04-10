@@ -100,6 +100,7 @@
         <input type="text" name="Friday" id="Friday" class="Friday" style="display: none;">
         <input type="text" name="Saturday" id="Saturday" class="Saturday" style="display: none;">
         <input type="text" name="Sunday" id="Sunday" class="Sunday" style="display: none;">
+        <div id="warning"></div>
         <input type="submit" id="formbutton" style="display: none;">
     </form>
 
@@ -225,7 +226,9 @@
             });
             if (Min_1 < 1)
             {
-                alert("Failed to add more than one text");
+                var warningDiv = document.getElementById("warning");
+                warningDiv.textContent = "Warning: Needs to select at least one date";
+                warningDiv.style.color = "red";
                 return;
             }
 

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Student Reviews</title>
     <link rel="stylesheet" href="../stylesheets/reviewbtn.css">
+    <link rel="stylesheet" href="../stylesheets/navbar.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -56,7 +57,9 @@
             justify-content: center;
             background-color: #da781c;
             /* background-color: #e7e0e0; */
-            background-image: linear-gradient(to bottom right, #ce3f3f, #524c4c);
+            background-image: linear-gradient(to top, #720f0f, #8b2727);
+            background-image: linear-gradient(to bottom, #720f0f #8b2727);
+            
 
         }
 
@@ -64,10 +67,11 @@
             font-size: 3.5rem;
             margin-bottom: 1rem;
             text-align: center;
-            top: 20px; 
-            position: fixed;
+            top: 150px;
+            position: fixed; 
             text-decoration: underline;
             text-underline-position: under;
+            color: #fff;
         }
 
         .description {
@@ -75,8 +79,9 @@
             width: 43%;
             font-size: 1.6rem;
             margin-bottom: 1rem; 
-            top: 135px;
+            top: 295px;
             position: fixed;
+            color: #fff;
 
         }
 
@@ -109,7 +114,8 @@
             margin: 1rem;
             cursor: pointer;
             border-radius: 10px;
-            background-color: #ebe0e6;
+            font-weight: bold;
+            background-color: #f1e9e9;
             border: 1px solid #10102a;
             transition: all .2s linear;
         }
@@ -119,6 +125,12 @@
             transform: scale(1.01);
             background-color: #ebe0e6;
             box-shadow: 0 0px 5px 0px #d98c8c;
+        }
+
+        .review {
+            font-size: bold;
+            font-size: medium;
+            font-family: Arial, sans-serif;
         }
 
         .top {
@@ -176,29 +188,6 @@
             }
         }
 
-        .buttons {
-            text-align: center; /* Align the button to the center */
-            margin-top: 20px; /* Add some spacing above the button */
-            top: 10px;
-            left: 20px;
-            position: fixed;
-        }
-
-        .back-to-home {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #242020;
-            color: #fff;
-            font-size: 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .back-to-home:hover {
-            background-color: #0056b3;
-        }
     </style>
 
     <script>
@@ -220,6 +209,33 @@
 
 </head>
 <body>
+
+    <!-- Navigation bar -->
+    <header>
+        <div class="container1">
+            <a href="/html/home.html" class="logo-link">
+                <div class="logo">
+                    <img src="../images/logo.png" alt="Driving School Logo">
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="/html/publicreviews" class="nav-link">Reviews</a></li>
+                </ul>
+            </nav>
+            <div class="language buttons">
+                <button class="language-button" id="english" onclick="window.location.href='/html/home.html'">EN</button>
+                <button class="language-button" id="chinese" onclick="window.location.href='/html/cn/home_cn.html'">中文</button>
+            </div>
+            <div class="buttons">
+                <button class="log-in" onclick="window.location.href='/login'">Log In</button>
+                <button class="book-appointment" onclick="window.location.href='/html/studentform.html'">Book Appointment</button>
+            </div>
+        </div>
+    </header>
+        
     <!-- Feedback Button -->
     <button id="openModalBtn" class="feedbackBtn">Feedback</button>
     
@@ -274,6 +290,28 @@
                 });
             </script>
         </div>
+
+        <!-- Clients Review-1 Section Starts from Here  -->
+        <div class="reviewItem">
+            <div class="top">
+                <div class="clientImage">
+
+                    <span>Timothy Swartz</span>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-regular fa-star"></i></li>
+                    <li><i class="fa-regular fa-star"></i></li>
+                </ul>
+            </div>
+        <article>
+            <p class="review">SYM Driving School offers top-notch instruction with patient and knowledgeable instructors, making learning to drive a breeze.</p>
+            <p>Jan 01, 2024</p>
+        </article>
+    </div>
+
         <div class="model" id="myModal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -314,10 +352,6 @@
         </div>    
 
     </div>
-    <!---include back to homepage button below: -->
-    <div class="buttons">
-        <button class="back-to-home" onclick="window.location.href='/html/home.html'">Back to HomePage</button>
-    </div>
 
     <script>
         // Get the modal
@@ -345,7 +379,69 @@
                 modal.style.display = "none";
             }
         }
-    </script>
 
+        const currentDate = new Date();
+
+
+        function addLeadingZero(number) 
+        {
+            return number < 10 ? "0" + number : number;
+        }
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        const year = currentDate.getFullYear();
+        const monthIndex = currentDate.getMonth(); // Months are zero-based, so January is 0
+        const monthName = monthNames[monthIndex];
+        const day = addLeadingZero(currentDate.getDate());
+
+
+
+        var subbtn = document.getElementById("submitButton");
+
+
+        subbtn.addEventListener("click", function () 
+        {
+            var stars = document.getElementsByName('rate');
+
+            var selectedValue = "";
+
+            for (var i = 0; i < stars.length; i++) 
+            {
+                if (stars[i].checked) 
+                {
+                    selectedValue = stars[i].value;
+                    break;
+                }
+            }
+            document.getElementById("star_val").value = selectedValue;
+            document.getElementById("date").value = monthName + " " + day + " ," + year;
+            document.getElementById("submits").click();
+
+
+        })
+
+        var textarea = document.getElementById("feedback");
+
+
+        var charCount = document.getElementById("charCount");
+
+        // Add event listener for input event
+        textarea.addEventListener("input", function () {
+        // Get the current character count
+        var count = textarea.value.length;
+
+        // Check if the character count exceeds the limit
+        if (count > 217) 
+        {
+            // Trim the text to the limit
+            textarea.value = textarea.value.slice(0, 217);
+            count = 217; // Update the character count
+        }
+
+        // Update the character count display
+        charCount.textContent = count + "/217";
+        });
+    </script>
 </body>
 </html>

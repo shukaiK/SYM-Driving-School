@@ -15,7 +15,7 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 10px 10px;
         }
         h1 {
             margin: 0;
@@ -68,11 +68,36 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .buttons button {
+            padding: 10px 10px; /* 10px 20px */
+            margin-bottom: 15px; /* Add some spacing above the button */
+            top: 0px;
+            left: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            position: fixed;
+            text-align: center;
+            background-color: #333;
+            color: white;
+        }
+
+        .language-button {
+            padding: 10px, 10px; /* 10px 20px */
+            border: none;
+            cursor: pointer;
+            
+        }
     </style>
 </head>
 <body>
     <nav>
         <h1>Owner Reviews</h1>
+        <div class="buttons">
+            <button onclick="window.location.href='/admin/dashboard'">Dashboard</button>
+        </div>
     </nav>
     <h2>Pending Reviews</h2>
     <div class="border">
@@ -107,7 +132,6 @@
                     <select name="display_review">
                         <option value="" disabled selected>Select</option>
                         <option value="Remove">Remove Review</option>
-                        <option value="show">Show Review</option>
                         <option value="hide">Move to Pending</option>
                     </select>
                     <input type="submit" value="Submit">

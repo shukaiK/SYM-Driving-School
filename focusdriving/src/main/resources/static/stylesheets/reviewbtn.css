@@ -52,13 +52,16 @@
   
   /* Feedback Button */
   .feedbackBtn {
-    position: fixed;
-    top: 45px;
-    right: 20px;
-    padding: 10px 15px;
-    background: #0562ee;
+
+    position: fixed; 
+    margin-top: 20px;
+    top: 160px; 
+    right: 20px; 
+    padding: 10px 15px; 
+    background: #0562ee; 
+
     color: #fff;
-    border: none;
+    border: none; 
     border-radius: 10px;
     cursor: pointer;
     z-index: 999;
