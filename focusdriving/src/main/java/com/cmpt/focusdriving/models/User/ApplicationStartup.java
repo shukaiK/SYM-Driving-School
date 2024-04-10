@@ -69,8 +69,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             Event newEvent = new Event(LocalDateTime.parse("2024-04-08 09:30:00", formatter),
-                    LocalDateTime.parse("2024-04-08 13:30:00", formatter), "BAD EVENT",
-                    "unknown");
+                    LocalDateTime.parse("2024-04-08 13:30:00", formatter), "SAMPLE EVENT",
+                    "user");
+            newEvent.setSid(1);
             eventRepository.save(newEvent);
 
             return userRepository.save(newUser);
