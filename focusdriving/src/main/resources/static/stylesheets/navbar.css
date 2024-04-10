@@ -1,0 +1,365 @@
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px; /* 20px */
+    background-color: #fff;
+  }
+  
+  .logo img {
+    max-height: 100px; /* 100px */
+    max-width: 200px; /* 200px */
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0; /* 0 change*/
+    padding: 0; /* 0 change */
+    
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 50px; /* 50px */
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #000000;
+    position: relative;
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .nav-link:hover::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px; /* 2px */
+    background-color: #333;
+    position: absolute;
+    bottom: -3px; /* -3px */
+    left: 0;
+    width: auto; /* previously auto */
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .buttons button {
+    padding: 10px 20px; /* 10px 20px */
+    margin-left: 0; /* 0 */
+    border: none;
+    cursor: pointer;
+  }
+  
+  
+  .log-in {
+    background-color: #00050b;
+    color: #fff;
+  }
+  
+  .book-appointment {
+    background-color: #ea1d19;
+    color: #fff;
+  }
+  
+  .language-buttons {
+    margin-top: 20px; /* 20px */
+  }
+  
+  .language-button {
+    padding: 10px, 20px; /* 10px 20px */
+    border: none;
+    cursor: pointer;
+    font-size: 8px; /* 8px */
+  }
+  
+  #english {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  #chinese {
+    background-color: #ec540e;
+    color: #fff;
+  }
+  
+  #english:hover,
+  #chinese:hover {
+    opacity: 0.8;
+  }
+  
+  
+  .container_2 {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .background_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background-image: url('/images/background(1).jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+  
+  .content_2 {
+    position: relative;
+    z-index: 1;
+    padding-top: 100px;
+  }
+  
+  .title {
+    text-align: center;
+    margin-top: 10px; /* 10px */
+    margin-bottom: 10px; /* 10px */
+  }
+  
+  .title h1 {
+    font-size: 84px; /* 96px */
+  }
+  
+  .subtitle {
+    text-align: center;
+    margin-top: 10px; /* 10px */
+    margin-bottom: 10px; /* 10px */
+  }
+  
+  .subtitle h1 {
+    font-size: 48px; /* 48px */
+  }
+  
+  .paragraph {
+    text-align: center;
+    margin: 20px auto; /* 20px auto */
+    max-width: 800px; /* 800px */
+    font-size: 30px; /* 30px */
+    margin-bottom: 20px; /* 20px */
+  }
+  
+  footer {
+    text-align: center;
+    padding: 20px; /* 20px */
+    background-color: #fafafa;
+  }
+  
+  .copyright {
+    font-size: 14px; /* 14px */
+    color: #fc0808;
+  }
+  
+  header {
+    height: 20vh;
+  }
+  
+  .main-content {
+    height: calc(100vh - 100px);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container1 {
+  
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px; /* 20px */
+      width: 100%; /* made a change here */
+    }
+  
+    .logo img {
+      max-height: 100px; /* 100px */
+      max-width: 200px; /* 200px */
+    }
+  
+    nav ul {
+      list-style-type: none;
+    }
+  
+    nav ul li {
+      display: inline;
+      margin-right: 50px;
+    }
+  
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+  
+    }
+  
+    .logo {
+      margin-bottom: 20px;
+    }
+  
+    nav ul li {
+      display: block;
+      margin: 0;
+      margin-bottom: 50px; /* 50px */
+    }
+  
+    .language-buttons {
+      margin-top: 20px; /* 20px */
+  
+    }
+  
+    .language-button {
+      padding: 10px, 20px; /* 10px 20px */
+      border: none;
+      cursor: pointer;
+      font-size: 8px; /* 8px */
+    }
+  
+    #english {
+      background-color: #007bff;
+      color: #fff;
+    }
+  
+    #chinese {
+      background-color: #ec540e;
+      color: #fff;
+    }
+  
+    #english:hover, #chinese:hover {
+      opacity: 0.8;
+    }
+  
+    .title {
+      text-align: center;
+      margin-top: 10px; /* 10px */
+      margin-bottom: 10px; /* 10px */
+    }
+  
+    .title h1 {
+      font-size: 96px;
+      color: #333;
+    }
+  
+    .subtitle {
+      text-align: center;
+      margin-top: 10px;   /* 10px */
+      margin-bottom: 10px; /* 10px */
+    }
+  
+    .subtitle h1 {
+      font-size: 48px;
+      color: #333;
+    }
+  
+    .paragraph {
+      text-align: center;
+      margin: 20px auto; /* 20px auto*/
+      max-width: 800px; /* 800px */
+      font-size: 30px;  /* 30px */
+      color: #000000;
+    }
+  
+    footer {
+      text-align: center;
+      padding: 20px; /* 20px */
+      background-color: #fafafa;
+    }
+  
+    .copyright {
+      font-size: 14px; /* 14px */
+      color: #fc0808;
+    }
+  
+    header {
+      height: 20vh;
+    }
+  
+    .main-content {
+      height: calc(100vh - 100px); /* Adjust according to header and footer height */
+    }
+  
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+  
+      .logo {
+          margin-bottom: 20px;
+      }
+  
+      nav ul li {
+        display: block;
+        margin: 0;
+        margin-bottom: 10px;
+      }
+  
+      .language-buttons {
+        margin-top: 20px;
+        order: 1;
+      }
+    }
+  
+  }
+  .bookingbox {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+    font-size: 20px;
+    padding: 10px;
+  
+    border: solid black;
+    border-width: 5px;
+  }
+  
+  .dashbutton {
+    padding: 10px 20px;
+    margin-left: 0px;
+    border: none;
+    cursor: pointer;
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+  
+  .bookingblob {
+    padding: 10px 20px;
+    margin-left: 0px;
+    border: gray;
+  }
+  
+  .dashheader {
+    padding: 20px;
+  }
+  
+  .dashcontent {
+    padding: 40px;
+    font-size: 30px;
+  
+  }
+  
+  .inputalert {
+    color: red;
+    font-size: 15px;
+  }
+  

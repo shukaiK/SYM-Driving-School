@@ -43,7 +43,8 @@
  var subbtn = document.getElementById("submitButton");
 
 
- subbtn.addEventListener("click", function () {
+ subbtn.addEventListener("click", function () 
+ {
    var stars = document.getElementsByName('rate');
 
    var selectedValue = "";
