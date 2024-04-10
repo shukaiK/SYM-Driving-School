@@ -53,9 +53,9 @@
   /* Feedback Button */
   .feedbackBtn {
 
-    position: fixed; 
+    position: absolute; 
     margin-top: 20px;
-    top: 160px; 
+    top: 150px; 
     right: 20px; 
     padding: 10px 15px; 
     background: #0562ee; 
