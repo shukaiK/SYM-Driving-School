@@ -21,10 +21,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-      
-
-       
-
         form {
             display: inline-block;
             margin-top: 20px;
@@ -55,32 +51,50 @@
         .students_display {
         display: flex;
         flex-wrap: wrap;
-    }
+        }
 
-    .student_info {
-        flex: 1;
-        border: 2px solid #5c5b5b;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: space-between; /* Align children to take up entire space */
-       
-    }
+        .student_info {
+            flex: 1;
+            border: 2px solid #5c5b5b;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between; /* Align children to take up entire space */
+        }
 
-    .stu_data {
-        width: 16.5%; /* Adjust width as needed to accommodate all 6 items */
-        color: #007bff;
-        
-    }
+        .stu_data {
+            width: 16.5%; /* Adjust width as needed to accommodate all 6 items */
+            color: #007bff;
+        }
 
+        h1 {
+            text-align: center;
+        }
+
+        .return-button {
+            margin-left: 25px;
+            background-color: #c53131;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            margin-right: 90%;
+            top: 20px;
+        }
+
+        .return-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
 <body>
     <h1>My Assigned Students</h1>
     <nav>
-        <a th:href="@{/login}" class="return-button">Dashboard Home</a>
+        <button onclick="window.location.href='/user/dashboard'" class="return-button">Dashboard</button>
     </nav>
     <div class="students_display">
         <div th:each="student:${students}">
