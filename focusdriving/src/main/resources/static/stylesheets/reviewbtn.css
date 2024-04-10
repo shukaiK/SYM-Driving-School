@@ -52,12 +52,14 @@
   
   /* Feedback Button */
   .feedbackBtn {
+
     position: fixed; 
     margin-top: 20px;
     top: 160px; 
     right: 20px; 
     padding: 10px 15px; 
     background: #0562ee; 
+
     color: #fff;
     border: none; 
     border-radius: 10px;
