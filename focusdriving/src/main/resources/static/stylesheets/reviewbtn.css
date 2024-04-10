@@ -56,7 +56,7 @@
     top: 45px;
     right: 20px;
     padding: 10px 15px;
-    background: linear-gradient(to right, #0562ee 90%, #08c7e9 90%);
+    background: #0562ee;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -67,7 +67,7 @@
   }
   
   .feedbackBtn:hover {
-    background: #0562ee;
+    background: #08c7e9;
   }
   
   .rate {
