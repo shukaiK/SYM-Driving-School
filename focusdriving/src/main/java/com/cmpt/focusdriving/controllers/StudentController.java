@@ -2,6 +2,8 @@ package com.cmpt.focusdriving.controllers;
 
 import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.cmpt.focusdriving.models.email;
-import com.cmpt.focusdriving.models.Booking.Booking;
-import com.cmpt.focusdriving.models.Booking.BookingRepository;
+import com.cmpt.focusdriving.models.Events.Event;
+import com.cmpt.focusdriving.models.Events.EventRepository;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
 import com.cmpt.focusdriving.models.User.User;
@@ -22,8 +24,6 @@ import com.cmpt.focusdriving.models.User.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class StudentController {
@@ -37,8 +37,19 @@ public class StudentController {
     @Autowired
     private email senderService;
 
-    @Autowired
-    private BookingRepository bookingRepo;
+    @Autowired 
+    private EventRepository eventRepo;
+
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();
+        }
+
+        // Return null or handle the case where no user is authenticated
+        return null;
+    }
 
     @PostMapping("/html/form")
     public String form(@RequestParam Map<String, String> user, HttpServletResponse response) {
@@ -56,7 +67,7 @@ public class StudentController {
         String[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         for (String day : daysOfWeek) {
             String availabilityStatus = user.getOrDefault(day, "Not Available");
-            availability.add(day + ":   " + "\n" +availabilityStatus);
+            availability.add(day + ":   " + "\n" + availabilityStatus);
         }
 
         // Constructing the message for email
@@ -87,53 +98,53 @@ public class StudentController {
     }
 
     @GetMapping("/admin/pending")
-    public String getMethodName(Model model) 
-    {
+    public String getMethodName(Model model) {
         List<Student> students = studentRepo.findAll();
         List<User> users = userRepo.findAll();
         model.addAttribute("students", students);
-        model.addAttribute("users",users);
-        
+        model.addAttribute("users", users);
+
         return "user/requestAction";
     }
 
     @PostMapping("/admin/assignStudent")
-public String assign(@RequestParam Map<String, String> submission, HttpServletResponse response,@ModelAttribute Student student) {
-   
-    
-    String instructorString = submission.get("instructors");
-    int ID = Integer.parseInt(submission.get("ID"));
-    List<Student> students = studentRepo.findBySid(ID);
+    public String assign(@RequestParam Map<String, String> submission, HttpServletResponse response,
+            @ModelAttribute Student student) {
 
-    if(students.get(0).getInstructor()!=instructorString){
-    List<Booking> bookingsToReset=  bookingRepo.findByStudent_InstructorContaining(students.get(0).getInstructor());
-        for (Booking booking : bookingsToReset) {
-            if (booking.getStudent().getInstructor().equals(students.get(0).getInstructor())) {
-                bookingRepo.deleteById(booking.getBid()); // Save the updated student back to the repository
-            }
+        String instructorString = submission.get("instructors");
+        int ID = Integer.parseInt(submission.get("ID"));
+        List<Student> students = studentRepo.findBySid(ID);
+
+        if(students.get(0).getInstructor()!=instructorString){
+
+        List<Event> eventsToCancel=  eventRepo.findBySid(ID);
+        for (Event event: eventsToCancel) {
+                eventRepo.delete(event); // deletes associated events
         }
     }
-    
-    Student SendEmailConfirmation = students.get(0);
-    String compare = "Remove";
-    if (compare.equals(instructorString))
-    {
-        String getName = SendEmailConfirmation.getName();
-        String getEmail = SendEmailConfirmation.getEmail();
-        senderService.sendEmail(getEmail, "Alternate Booking", "Dear "+ getName + "\n\nYour booking time is full for the availabitly you have sent. ");
-        studentRepo.delete(SendEmailConfirmation);
-    } 
-    else
-    {
-        SendEmailConfirmation.setInstructor(instructorString);
-        studentRepo.save(SendEmailConfirmation); // Save changes including setting instructor
+
+        Student SendEmailConfirmation = students.get(0);
+        String compare = "Remove";
+        if (compare.equals(instructorString)) {
+            String getName = SendEmailConfirmation.getName();
+            String getEmail = SendEmailConfirmation.getEmail();
+            senderService.sendEmail(getEmail, "Alternate Booking",
+                    "Dear " + getName + "\n\nYour booking time is full for the availabitly you have sent. ");
+            studentRepo.delete(SendEmailConfirmation);
+        } else {
+            SendEmailConfirmation.setInstructor(instructorString);
+            studentRepo.save(SendEmailConfirmation); // Save changes including setting instructor
+        }
+        return "redirect:/admin/pending";
     }
-    return "redirect:/admin/pending";
-}
 
-
-    
-    
-    
-    
+    @GetMapping("/user/viewAssignedStudents")
+    public String getAssignedStudents(Model model) {
+        System.out.println("Getting all students");
+        // get all students from the database
+        List<Student> students = studentRepo.findByInstructor(getCurrentUsername());
+        // end of database call
+        model.addAttribute("students", students);
+        return "user/viewAssignedStudents";
+    }
 }

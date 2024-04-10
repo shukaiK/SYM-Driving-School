@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cmpt.focusdriving.models.Booking.Booking;
-import com.cmpt.focusdriving.models.Booking.BookingRepository;
+import com.cmpt.focusdriving.models.Events.Event;
+
+import com.cmpt.focusdriving.models.Events.EventRepository;
 import com.cmpt.focusdriving.models.Security.PasswordValidator;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
@@ -38,14 +39,14 @@ public class UserManagementController {
     private StudentRepository studentRepo;
 
     @Autowired
-    private BookingRepository bookingRepo;
+    private EventRepository eventRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private PasswordValidator passwordValidator;
 
-    
+
 
     @GetMapping("/admin/manageInstructors")
     public String getAllStudents(Model model) {
@@ -67,7 +68,7 @@ public String deleteStudent(@PathVariable("uid") int uid, HttpServletResponse re
         // Fetch students assigned to this instructor
         List<Student> studentsToReset = studentRepo.findByInstructor(user.getName());
 
-        
+
         // Iterate through each student and reset their instructor to "Pending"
         for (Student student : studentsToReset) {
             if (student.getInstructor().equals(user.getName())) {
@@ -76,14 +77,12 @@ public String deleteStudent(@PathVariable("uid") int uid, HttpServletResponse re
             }
         }
 
-        List<Booking> bookingsToReset=  bookingRepo.findByStudent_InstructorContaining(user.getName());
-        for (Booking booking : bookingsToReset) {
-            if (booking.getStudent().getInstructor().equals(user.getName())) {
-                bookingRepo.deleteById(booking.getBid()); // Save the updated student back to the repository
-            }
+        List<Event> eventsToReset=  eventRepo.findByInstructorName(user.getName());
+        for (Event event: eventsToReset) {
+                eventRepo.deleteById(event.getId()); // Save the updated student back to the repository
         }
 
-        
+
 
         // After resetting students, delete the instructor
         userRepo.deleteById(uid);

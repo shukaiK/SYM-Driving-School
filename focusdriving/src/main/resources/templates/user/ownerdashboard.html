@@ -3,35 +3,345 @@
 
 <head>
     <title>OWNER Dashboard</title>
-    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <style>
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        .nav-links ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+        }
+
+        .nav-links ul li {
+            margin-right: 10px;
+        }
+
+        .nav-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+
+        .dashheader {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dashcontent {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dashbutton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dashbutton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="">
-        <!-- logout button -->
-        <div class="container dashheader">
+    <div class="navigation">
+        <div class="nav-links">
+            <ul>
+                <li>
+                    <form th:action="@{/admin/manageInstructors}" method="get">
+                        <button type="submit" class="nav-button">Manage Instructors</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/admin/pending}" method="get">
+                        <button type="submit" class="nav-button">Manage Students</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/user/dashboard}" method="get">
+                        <button type="submit" class="nav-button">My User Dashboard</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="dashheader">
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="dashbutton">Logout</button>
             </form>
-            <form th:action="@{/admin/manageInstructors}" method="get">
-                <button type="submit" class="dashbutton">Manage Instructors</button>
-            </form>
-        </div>
-        <div class="subtitle">
-            <h1>Admin Dashboard</h1>
         </div>
     </div>
 
-    <!-- list of all bookings -->
-    <div class="dashcontent">
-        <div>Click the button to view all bookings</div>
-        <form th:action="@{/user/bookingview}" method="get">
-            <button type="submit" class="dashbutton">View Bookings</button>
-        </form><br><br>
-
+    <div class="subtitle">
+        <h1>Admin Dashboard</h1>
     </div>
+
+
+    <!-- DayPilot Pro library-->
+    <script src="../javascript/daypilot-all.min.js"></script>
+
+    <div style="padding-left: 30px; padding-right: 30px;">
+        <!-- calendar schedule -->
+        <div class="main" style="display: flex;">
+            <div style="margin-right: 10px;">
+                <!-- placeholder, day selector sidebar -->
+                <div id="nav"></div>
+            </div>
+            <div style="flex-grow: 1">
+                <!-- placeholder, this is where the calendar appears -->
+                <div id="dp"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:inline="javascript">
+        /*
+        DECLARATION OF MODIFYING CODE
+        THIS CODE TAKEN FROM DAYPILOT LIBRARY (EVENT CALENDAR) HAS BEEN MODIFIED
+        ANY EMPTY ONEVENT___ HAS BEEN MODIFIED
+        THIS IS ALLOWED PER THE APACHE 2.0 LICENSE THAT THIS LIBRARY IS UNDER
+        */
+
+        // configuration for the navigatoin month/week bar
+        const datePicker = new DayPilot.Navigator("nav", {
+            showMonths: 3,
+            skipMonths: 3,
+            selectMode: "week",
+            onTimeRangeSelected: (args) => {
+                dp.startDate = args.day;
+                dp.update();
+                dp.events.load("/api/allevents");
+            }
+        });
+
+        datePicker.init();
+
+        // configuration for the calendar
+        const dp = new DayPilot.Calendar("dp", {
+            viewType: "Week",
+            eventMoveHandling: "Disabled",
+            eventResizeHandling: "Disabled",
+            eventDeleteHandling: "Disabled",
+            eventRightClickHandling: "Disabled",
+            headerDateFormat: "d MMMM yyyy",
+            cellHeight: 39,
+            onTimeRangeSelected: async (args) => {
+                console.log("Times selected")
+                dp.clearSelection();
+            },
+
+            onEventClicked: async args => {
+
+                // declare the event ID
+                const id = args.e.id();
+
+                // getters for event information --------------------------------------
+                // get the event's title to display in onclick popup
+                const titleurl = `/api/eventTitle?id=${id}`;
+                await fetch(titleurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        eventTitle = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the event's instructor to display in onclick popup
+                const instructorurl = `/api/eventInstructor?id=${id}`;
+                await fetch(instructorurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        eventInstructor = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's name to display in onclick popup
+                const nameurl = `/api/studentName?id=${id}`;
+                await fetch(nameurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentName = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's location to display in onclick popup
+                const locationurl = `/api/studentLocation?id=${id}`;
+                await fetch(locationurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentLocation = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's email to display in onclick popup
+                const emailurl = `/api/studentEmail?id=${id}`;
+                await fetch(emailurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentEmail = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                // get the student's phone to display in onclick popup
+                const phoneurl = `/api/studentPhone?id=${id}`;
+                await fetch(phoneurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        studentPhone = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                // end of getters for student information ---------------------------
+
+                // the popup window when the event is clicked
+                const form = [
+                    {
+                        type: 'html',
+                        html: 'Title: ' + eventTitle, // display the title of the event
+                    },
+                    {
+                        type: 'html',
+                        html: 'Instructor: ' + eventInstructor, // display the instructor
+                    },
+                    {
+                        type: 'html',
+                        html: 'Student Information:',
+                    },
+                    {
+                        type: 'html',
+                        html: 'Name: ' + studentName, // display the student's name
+                    },
+                    {
+                        type: 'html',
+                        html: 'Location: ' + studentLocation, // display the student's location
+                    },
+                    {
+                        type: 'html',
+                        html: 'Email: ' + studentEmail, // display the student's email
+                    },
+                    {
+                        type: 'html',
+                        html: 'Phone number: ' + studentPhone, // display the student's phone number
+                    },
+                ];
+                const modal = await DayPilot.Modal.form(form, args.e.data);
+                if (modal.canceled) {
+                    return;
+                }
+                dp.events.update(modal.result);
+            },
+            onEventMove: async (args) => {
+                // empty because moving is disabled
+            },
+            onEventResize: async (args) => {
+                // empty because resizing is disabled
+            },
+            onBeforeEventRender: (args) => {
+                args.data.barColor = args.data.color;
+                args.data.areas = [
+                    {
+                        top: 2,
+                        right: 2,
+                        icon: "icon-triangle-down",
+                        visibility: "Visible",
+                        action: "ContextMenu",
+                        style: "font-size: 12px; background-color: #f9f9f9; border: 1px solid #ccc; padding: 2px 2px 0px 2px; cursor:pointer;"
+                    }
+                ];
+            },
+            // colour menu
+            contextMenu: new DayPilot.Menu({
+                items: [
+                    {
+                        text: "Blue",
+                        icon: "icon icon-blue",
+                        color: "#1066a8",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Green",
+                        icon: "icon icon-green",
+                        color: "#6aa84f",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Yellow",
+                        icon: "icon icon-yellow",
+                        color: "#f1c232",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                    {
+                        text: "Red",
+                        icon: "icon icon-red",
+                        color: "#cc0000",
+                        onClick: (args) => app.updateColor(args.source, args.item.color)
+                    },
+                ]
+            })
+        });
+        dp.init();
+
+        // update the colour of events
+        const app = {
+            init: () => {
+                dp.events.load("/api/allevents");
+            },
+            async updateColor(e, color) {
+                const params = {
+                    id: e.id(),
+                    color: color
+                };
+                const { data } = await DayPilot.Http.post("/api/events/setColor", params);
+                e.data.color = color;
+                dp.events.update(e);
+                console.log("Color updated");
+            }
+        };
+        app.init();
+
+
+    </script>
+
+
+
+
+
+
+
 
 </body>
 

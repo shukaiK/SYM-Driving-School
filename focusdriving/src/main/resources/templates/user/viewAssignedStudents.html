@@ -78,15 +78,15 @@
 </head>
 
 <body>
-    <h1>Assign Students To Instructors</h1>
+    <h1>My Assigned Students</h1>
     <nav>
-        <a th:href="@{/admin/dashboard}" class="return-button">Dashboard Home</a>
+        <a th:href="@{/login}" class="return-button">Dashboard Home</a>
     </nav>
     <div class="students_display">
         <div th:each="student:${students}">
             <div style="border: 2px solid #5c5b5b; margin-bottom: 20px; padding: 20px; border-radius: 5px;">
 
-                 <form action="/admin/assignStudent" method="post">
+                 <ul>
                         <span>Name: </span>
                         <span th:text="${student.name}" class="stu_data"> </span> 
                         <span>Email: </span>
@@ -96,7 +96,7 @@
                         <span>License: </span>
                         <span th:text="${student.licenseNum}" class="stu_data"></span> 
                         <span>Class: </span>
-                        <span th:text="${student.experience}" class="stu_data"></span> <br>
+                        <span th:text="${student.experience}" class="stu_data"></span> 
                         <span>Address: </span>
                         <span th:text="${student.address}" class="stu_data"></span> 
                   
@@ -122,21 +122,7 @@
                     <div class="student-availability">
                         <span th:text="${student.availability[6]}"></span>
                     </div> <br>
-                    <div class="student-availability">
-                        <span th:text="${student.Instructor}" class="stu_data"></span> 
-                    </div>
-                   
-                    
-                    <br>
-                    <input th:value="${student.sid}" type="hidden" name="ID" id="ID">
-                    <label for="exampleInputEmail1" class="form-label">Select Instructor</label>
-                    <select name="instructors" id="instructors" class="form-select">
-                        <option value="">Select</option>
-                        <option value="Remove">Remove Availability</option>
-                        <option th:each="user : ${users}" th:value="${user.name}" th:text="${user.name}"></option>
-                    </select>
-                    <input type="submit" value="Confirm">
-                </form> 
+                </ul> 
 
             </div>
         </div>
