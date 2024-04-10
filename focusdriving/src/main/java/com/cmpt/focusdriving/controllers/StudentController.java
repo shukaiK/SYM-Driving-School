@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.cmpt.focusdriving.models.email;
+import com.cmpt.focusdriving.models.Events.Event;
+import com.cmpt.focusdriving.models.Events.EventRepository;
 import com.cmpt.focusdriving.models.Student.Student;
 import com.cmpt.focusdriving.models.Student.StudentRepository;
 import com.cmpt.focusdriving.models.User.User;
@@ -34,6 +36,9 @@ public class StudentController {
 
     @Autowired
     private email senderService;
+
+    @Autowired 
+    private EventRepository eventRepo;
 
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -110,18 +115,13 @@ public class StudentController {
         int ID = Integer.parseInt(submission.get("ID"));
         List<Student> students = studentRepo.findBySid(ID);
 
-        // if(students.get(0).getInstructor()!=instructorString){
-        // List<Booking> bookingsToReset=
-        // bookingRepo.findByStudent_InstructorContaining(students.get(0).getInstructor());
-        // for (Booking booking : bookingsToReset) {
-        // if
-        // (booking.getStudent().getInstructor().equals(students.get(0).getInstructor()))
-        // {
-        // bookingRepo.deleteById(booking.getBid()); // Save the updated student back to
-        // the repository
-        // }
-        // }
-        // }
+        if(students.get(0).getInstructor()!=instructorString){
+
+        List<Event> eventsToCancel=  eventRepo.findBySid(ID);
+        for (Event event: eventsToCancel) {
+                eventRepo.delete(event); // deletes associated events
+        }
+    }
 
         Student SendEmailConfirmation = students.get(0);
         String compare = "Remove";

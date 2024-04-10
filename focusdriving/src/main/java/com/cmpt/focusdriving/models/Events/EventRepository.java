@@ -16,6 +16,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 			@Param("to") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime end);
 
 	public List<Event> findByInstructorName(String instructorName);
+	public List<Event> findBySid(int sid);
 
 	// public List<Event> findByInstructor();
 
