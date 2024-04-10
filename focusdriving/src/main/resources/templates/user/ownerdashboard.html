@@ -99,15 +99,6 @@
         <h1>Admin Dashboard</h1>
     </div>
 
-    <form action="" style="display: none;">
-        <div class="subtitle">
-            <label for="sid">Student Name:</label>
-            <select name="sid" id="sid" class="form-select">
-                <option th:each="student : ${students}" th:value="${student.sid}" th:text="${student.name}">
-                </option>
-            </select> <br>
-        </div>
-    </form>
 
     <!-- DayPilot Pro library-->
     <script src="../javascript/daypilot-all.min.js"></script>
@@ -128,10 +119,14 @@
 
 
     <script th:inline="javascript">
+        /*
+        DECLARATION OF MODIFYING CODE
+        THIS CODE TAKEN FROM DAYPILOT LIBRARY (EVENT CALENDAR) HAS BEEN MODIFIED
+        ANY EMPTY ONEVENT___ HAS BEEN MODIFIED
+        THIS IS ALLOWED PER THE APACHE 2.0 LICENSE THAT THIS LIBRARY IS UNDER
+        */
 
-        // get the ID of the student currently selected
-        var studentId = parseInt(document.getElementById("sid").value);
-
+        // configuration for the navigatoin month/week bar
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
             skipMonths: 3,
@@ -145,6 +140,7 @@
 
         datePicker.init();
 
+        // configuration for the calendar
         const dp = new DayPilot.Calendar("dp", {
             viewType: "Week",
             eventMoveHandling: "Disabled",
@@ -155,30 +151,10 @@
             cellHeight: 39,
             onTimeRangeSelected: async (args) => {
                 console.log("Times selected")
-                // const modal = await DayPilot.Modal.prompt("Create a new lesson:", "Lesson");
                 dp.clearSelection();
-                // if (modal.canceled) {
-                //     console.log("Canceled")
-                //     return;
-                // }
-                // const params = {
-                //     start: args.start,
-                //     end: args.end,
-                //     text: modal.result,
-                //     sid: studentId,
-                // };
-
-                // const { data } = await DayPilot.Http.post("/api/events/create", params);
-                // console.log("retrieved from create mapping")
-                // dp.events.add(data);
-                // console.log("event created");
             },
 
             onEventClicked: async args => {
-                console.log("student id: " + studentId);
-                var etext = args.text;
-                console.log("event text: " + etext)
-                console.log("event instructor: " + args.instructor);
 
                 // declare the event ID
                 const id = args.e.id();
@@ -289,28 +265,10 @@
                 dp.events.update(modal.result);
             },
             onEventMove: async (args) => {
-                // if (!confirm("Do you really want to move this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
-                //     args.preventDefault();
-                // }
-                // const params = {
-                //     id: args.e.id(),
-                //     start: args.newStart,
-                //     end: args.newEnd
-                // };
-                // const { data } = await DayPilot.Http.post("/api/events/move", params);
-                console.log("Event moved");
+                // empty because moving is disabled
             },
             onEventResize: async (args) => {
-                // if (!confirm("Do you really want to resize this event? IT WILL SEND AN EMAIL UPDATE TO THE STUDENT PLEASE DO NOT SPAM THE STUDENTS")) {
-                //     args.preventDefault();
-                // }
-                // const params = {
-                //     id: args.e.id(),
-                //     start: args.newStart,
-                //     end: args.newEnd
-                // };
-                // const { data } = await DayPilot.Http.post("/api/events/move", params);
-                // console.log("Event resized");
+                // empty because resizing is disabled
             },
             onBeforeEventRender: (args) => {
                 args.data.barColor = args.data.color;
@@ -357,6 +315,7 @@
         });
         dp.init();
 
+        // update the colour of events
         const app = {
             init: () => {
                 dp.events.load("/api/allevents");

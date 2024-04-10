@@ -9,26 +9,22 @@ import com.cmpt.focusdriving.models.User.UserRepository;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import ch.qos.logback.core.model.Model;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 
-import java.io.IOException;
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+// DECLARATION OF CHANGED CODE
+// THIS CODE TAKEN FROM THE DAYPILOT EVENT CALENDAR LIBRARY HAS BEEN MODIFIED
+// MAPPINGS INVOLVING THE CREATION OF EVENTS NOW INCLUDE STUDENT INFO HANDLING
+// THIS IS ALLOWED PER THE APACHE 2.0 LICENSE
 
 @RestController
 public class EventController {
@@ -52,6 +48,7 @@ public class EventController {
         return null;
     }
 
+    // retrieves all events to load
     @GetMapping("/api/allevents")
     List<Event> allEvents() {
         Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
@@ -73,6 +70,8 @@ public class EventController {
         }
     }
 
+    // retrieves only the events that belong to the currently logged-in instructor
+    // to load
     @GetMapping("/api/instructorevents")
     List<Event> instructorEvents() {
         Optional<User> optionalUser = userRepo.findByName(getCurrentUsername());
@@ -93,17 +92,14 @@ public class EventController {
         }
     }
 
+    // creates an event
     @PostMapping("/api/events/create")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
     Event createEvent(@RequestBody EventCreateParams params) {
 
-        System.out.println("----------CREATE MAPPING TRIGGERED --------");
-        System.out.println("----------STUDENT ID: " + params.sid + " --------");
-
         if (studentRepo.findBySid(params.sid).isEmpty()) {
             // handle error: student not found
-            System.out.println("----------STUDENT NOT FOUND--------");
             return null;
         }
 
@@ -116,11 +112,10 @@ public class EventController {
 
         eventRepo.save(e);
 
-        System.out.println("----------REACHED END OF EVENT CREATE--------");
-
         return e;
     }
 
+    // moves an event (changes the date and/or start and end times)
     @PostMapping("/api/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     Event moveEvent(@RequestBody EventMoveParams params) {
@@ -135,6 +130,7 @@ public class EventController {
         return e;
     }
 
+    // changes the colour of an event
     @PostMapping("/api/events/setColor")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
@@ -147,6 +143,7 @@ public class EventController {
         return e;
     }
 
+    // deletes an event
     @PostMapping("/api/events/delete")
     Event deleteEvent(@RequestBody EventUpdateParams params) {
 
@@ -155,6 +152,7 @@ public class EventController {
         return e;
     }
 
+    // returns the event's title
     @GetMapping("/api/eventTitle")
     @ResponseBody
     public String eventTitle(@RequestParam Long id) {
@@ -171,6 +169,7 @@ public class EventController {
         }
     }
 
+    // returns the event's instructor
     @GetMapping("/api/eventInstructor")
     @ResponseBody
     public String eventInstructor(@RequestParam Long id) {
@@ -187,6 +186,7 @@ public class EventController {
         }
     }
 
+    // returns the event's student's name
     @GetMapping("/api/studentName")
     @ResponseBody
     public String studentName(@RequestParam Long id) {
@@ -210,6 +210,7 @@ public class EventController {
         }
     }
 
+    // returns the event's student's location
     @GetMapping("/api/studentLocation")
     @ResponseBody
     public String studentLocation(@RequestParam Long id) {
@@ -233,6 +234,7 @@ public class EventController {
         }
     }
 
+    // returns the event's student's email
     @GetMapping("/api/studentEmail")
     @ResponseBody
     public String studentEmail(@RequestParam Long id) {
@@ -256,6 +258,7 @@ public class EventController {
         }
     }
 
+    // returns the event's student's phone number
     @GetMapping("/api/studentPhone")
     @ResponseBody
     public String studentPhone(@RequestParam Long id) {

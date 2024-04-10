@@ -129,9 +129,15 @@
 
 
     <script th:inline="javascript">
+        /*
+        DECLARATION OF MODIFYING CODE
+        THIS CODE TAKEN FROM DAYPILOT LIBRARY (EVENT CALENDAR) HAS BEEN MODIFIED
+        THIS IS ALLOWED PER THE APACHE 2.0 LICENSE THAT THIS LIBRARY IS UNDER
+        */
 
         var studentId = parseInt(document.getElementById("sid").value);
 
+        // configuration for the months/weeks naviagtion bar
         const datePicker = new DayPilot.Navigator("nav", {
             showMonths: 3,
             skipMonths: 3,
@@ -139,12 +145,13 @@
             onTimeRangeSelected: (args) => {
                 dp.startDate = args.day;
                 dp.update();
-                // loads just the events for the
+                // loads just the events for the instructor that's logged in
                 dp.events.load("/api/instructorevents");
             }
         });
         datePicker.init();
 
+        // configuration for calendar
         const dp = new DayPilot.Calendar("dp", {
             viewType: "Week",
             headerDateFormat: "d MMMM yyyy",
@@ -175,12 +182,22 @@
 
             onEventClicked: async args => {
                 console.log("student id: " + studentId);
-                // delate studentName before the fetch to try and make it work
-                var studentName;
 
+                // declare the id of the event
                 const id = args.e.id();
 
-                // getters for student information --------------------------------------
+                // getters for event information --------------------------------------
+                // get the event's title to display in onclick popup
+                const titleurl = `/api/eventTitle?id=${id}`;
+                await fetch(titleurl)
+                    .then(response => response.text())
+                    .then(data => {
+                        eventTitle = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
                 // get the student's name to display in onclick popup
                 const nameurl = `/api/studentName?id=${id}`;
                 await fetch(nameurl)
@@ -237,10 +254,13 @@
                 // the popup window when the event is clicked
                 const form = [
                     // edit the title of the event
-                    { name: "Title", id: "text" },
                     {
                         type: 'html',
-                        html: 'Student Information:', // display the student's name
+                        html: 'Title: ' + eventTitle, // display the title of the event
+                    },
+                    {
+                        type: 'html',
+                        html: 'Student Information:',
                     },
                     {
                         type: 'html',
@@ -265,6 +285,7 @@
                 }
                 dp.events.update(modal.result);
             },
+            // handle moving an event
             onEventMove: async (args) => {
                 const params = {
                     id: args.e.id(),
@@ -274,6 +295,7 @@
                 const { data } = await DayPilot.Http.post("/api/events/move", params);
                 console.log("Event moved");
             },
+            // handle resizing an event
             onEventResize: async (args) => {
                 const params = {
                     id: args.e.id(),
@@ -296,6 +318,7 @@
                     }
                 ];
             },
+            // menu when an event is right-clicked
             contextMenu: new DayPilot.Menu({
                 items: [
                     {
@@ -341,6 +364,7 @@
             DayPilot.Http.post("/api/events/delete", params);
         };
 
+        // handle changing an event's colours
         const app = {
             init: () => {
                 dp.events.load("/api/instructorevents");
