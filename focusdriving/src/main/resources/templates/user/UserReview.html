@@ -66,9 +66,10 @@
         h2 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
+            margin-top: 1rem;
             text-align: center;
             top: 150px;
-            position: fixed; 
+            position: absolute; /* originialy it was fixed*/
             text-decoration: underline;
             text-underline-position: under;
             color: #fff;
@@ -80,7 +81,7 @@
             font-size: 1.6rem;
             margin-bottom: 1rem; 
             top: 295px;
-            position: fixed;
+            position: absolute; /* originialy it was fixed*/
             color: #fff;
 
         }
@@ -101,6 +102,7 @@
 
         .reviewSection {
             padding: 1rem;
+            margin-top: 80px; /*new line of code */
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -110,8 +112,9 @@
         .reviewItem {
             width: 300px;
             min-height: 220px;
-            padding: 10px;
-            margin: 1rem;
+            padding: 5px; /*originally 10px */
+            margin: 5px; /*originally 1rem */
+            margin-top: 30px; /* new line code*/
             cursor: pointer;
             border-radius: 10px;
             font-weight: bold;
@@ -134,7 +137,7 @@
         }
 
         .top {
-            margin-bottom: 1rem;
+            margin-bottom: 1rem; 
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -291,11 +294,10 @@
             </script>
         </div>
 
-        <!-- Clients Review-1 Section Starts from Here  -->
+        <!--Clients Review-1 Section Starts from Here  -->
         <div class="reviewItem">
             <div class="top">
                 <div class="clientImage">
-
                     <span>Timothy Swartz</span>
                 </div>
                 <ul>
@@ -306,52 +308,51 @@
                     <li><i class="fa-regular fa-star"></i></li>
                 </ul>
             </div>
-        <article>
-            <p class="review">SYM Driving School offers top-notch instruction with patient and knowledgeable instructors, making learning to drive a breeze.</p>
-            <p>Jan 01, 2024</p>
-        </article>
-    </div>
-
-        <div class="model" id="myModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p style="margin-top: 5%; text-align: center; margin-bottom: 7%;"><b>PLEASE RATE US</b></p>
-                <!-- Feedback Form -->
-                <form action="/html/review" method="post">
-                    <div style="text-align: center;">
-                        <input type="text" name="first" id="first" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="First Name (Optional)"> <br>
-                        <input type="text" name="last" id="last" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="Last Name (Optional)"> <br>
+            <article>
+                <p class="review">SYM Driving School offers top-notch instruction with patient and knowledgeable instructors, making learning to drive a breeze.</p>
+                <p>Jan 01, 2024</p>
+            </article>
+        </div>
+    </div>    
+    <!--fixed div indentation, no affect to code or webpage  -->
+    <div class="model" id="myModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top: 5%; text-align: center; margin-bottom: 7%;"><b>PLEASE RATE US</b></p>
+            <!-- Feedback Form -->
+            <form action="/html/review" method="post">
+                <div style="text-align: center;">
+                    <input type="text" name="first" id="first" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="First Name (Optional)"> <br>
+                    <input type="text" name="last" id="last" style="border: none; border-bottom: 1px solid black; margin-bottom: 5%; font-size: 14px;" placeholder="Last Name (Optional)"> <br>
+                </div>
+                <p style="color: gold; text-align: center; margin-bottom: 0px; ">____________________________</p> <br>
+                <div style="margin-left: 180px; ">
+                    <div class="rate">
+                        <input type="radio" id="star5" name="rate" value="5" required />
+                        <label for="star5" title="text">5 stars</label>
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">4 stars</label>
+                        <input type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">3 stars</label>
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">2 stars</label>
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">1 star</label>
                     </div>
-                    <p style="color: gold; text-align: center; margin-bottom: 0px; ">____________________________</p> <br>
-                    <div style="margin-left: 180px; ">
-                        <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" required />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
-                        </div>
-                    </div> <br>
-                    <p style="color: gold; text-align: center;">____________________________</p> <br>
-                    <div style="margin-left: 15%; ">
-                        <label for="feedback" style="text-align: center; margin-left: 10px;"><b>Great!</b> Do You Mind telling us how we are doing?</label>
-                        <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 12%;" required></textarea>
-                        <div id="charCount" style="margin-left: 270px;">0/217</div>
-                        <button id="submitButton" class="button" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 3%; margin-top: -300px;">Submit</button>
-                    </div>
-                    <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden; ">
-                    <input id="date" name="date" type="text" style="visibility: hidden;">
-                    <input id="submits" type="submit" maxlength="217" style="visibility: hidden;">
-                </form>
-            </div>
-        </div>    
-
-    </div>
+                </div> <br>
+                <p style="color: gold; text-align: center;">____________________________</p> <br>
+                <div style="margin-left: 15%; ">
+                    <label for="feedback" style="text-align: center; margin-left: 10px;"><b>Great!</b> Do You Mind telling us how we are doing?</label>
+                    <textarea name="feedback" id="feedback" cols="35" rows="5" style="margin-left: 12%;" required></textarea>
+                    <div id="charCount" style="margin-left: 270px;">0/217</div>
+                    <button id="submitButton" class="button" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 3%; margin-top: -300px;">Submit</button>
+                </div>
+                <input id="star_val" name="star_val" type="number" value="5" style="visibility: hidden; ">
+                <input id="date" name="date" type="text" style="visibility: hidden;">
+                <input id="submits" type="submit" maxlength="217" style="visibility: hidden;">
+            </form>
+        </div>
+    </div>    
 
     <script>
         // Get the modal
