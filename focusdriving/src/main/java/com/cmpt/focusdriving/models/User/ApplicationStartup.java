@@ -17,9 +17,6 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-   
-    String javaHome = System.getenv("DEFAULT_PASS");
-
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -27,7 +24,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         userRepository.findByName(defaultUsername).orElseGet(() -> {
             User newUser = new User();
             newUser.setName(defaultUsername);
-            newUser.setPassword(passwordEncoder.encode(javaHome));
+            newUser.setPassword(passwordEncoder.encode("password"));
             newUser.setRole("ADMIN");
     
 
