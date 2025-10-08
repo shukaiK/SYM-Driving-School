@@ -1,5 +1,6 @@
 # SYM Driving School
 Authors: <br>
+
 Sloane Wensauer<br> Github: https://github.com/slnwnsr<br> LinkedIn: https://www.linkedin.com/in/sloane-wensauer-a20796254/<br><br>
 Paramroop Parmar<br> Github: https://github.com/Paramroop-SFU<br> LinkedIn: https://www.linkedin.com/in/paramroop-parmar-53367b290/<br><br>
 Navdeep Singh<br> Github: https://github.com/navdeep2002<br> LinkedIn: https://www.linkedin.com/in/navdeep-singh-bilin-a12b47175/<br><br>
